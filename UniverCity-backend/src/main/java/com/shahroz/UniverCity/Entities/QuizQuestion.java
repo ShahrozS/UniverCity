@@ -2,6 +2,8 @@ package com.shahroz.UniverCity.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 @Entity
@@ -25,6 +27,9 @@ public class QuizQuestion {
     private int difficultyLevel;
 
 
+    @ManyToOne
+    @JoinColumn(name = "quiz_id")
+    private Quiz quiz;
 
 
 

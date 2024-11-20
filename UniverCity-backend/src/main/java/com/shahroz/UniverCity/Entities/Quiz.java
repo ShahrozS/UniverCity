@@ -21,8 +21,7 @@ public class Quiz {
     private String university;
 
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "quiz_id")
+    @OneToMany(mappedBy = "quiz" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuizQuestion> questions;
 
 }

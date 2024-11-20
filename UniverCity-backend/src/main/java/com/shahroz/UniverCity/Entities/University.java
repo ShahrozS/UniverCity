@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @ToString
@@ -35,7 +37,6 @@ public class University {
 
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "university_id")
     private List<UniversityContact> universityContacts;
 
 
@@ -47,8 +48,11 @@ public class University {
     private List<Program> programs;
 
     @OneToMany(mappedBy = "university" , cascade = CascadeType.ALL)
-    @JoinColumn(name = "university_id")
     private List<UniversityReview> reviews;
+
+    @ManyToMany(mappedBy = "favoriteUniversities")
+    private Set<User> favoritedByUsers = new HashSet<>();
+
 
 
 

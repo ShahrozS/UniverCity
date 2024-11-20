@@ -1,9 +1,9 @@
 package com.shahroz.UniverCity.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Optional;
 
 @Entity
 @ToString
@@ -19,6 +19,11 @@ public class UniversityReview {
 
     private String review;
     private int rating;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name="university-id")
+    private University university;
+
 
     @OneToOne(mappedBy = "universityreview")
     private User user;

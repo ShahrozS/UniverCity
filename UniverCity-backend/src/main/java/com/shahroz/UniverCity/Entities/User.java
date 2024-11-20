@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @ToString
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @Getter
 @NoArgsConstructor
+@Table(name = "app_user")
 public class User {
 
 
@@ -41,6 +43,14 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Notification> notifications;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorites", // Name of the join table
+            joinColumns = @JoinColumn(name = "user_id"), // Foreign key in join table for User
+            inverseJoinColumns = @JoinColumn(name = "university_id") // Foreign key in join table for University
+    )
+    private Set<University> favoriteUniversities;
 
 
     // preferenceID
