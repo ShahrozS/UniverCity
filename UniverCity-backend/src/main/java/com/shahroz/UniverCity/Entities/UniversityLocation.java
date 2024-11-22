@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -14,6 +15,7 @@ import lombok.*;
 public class UniversityLocation {
 
     @Id
+    @GeneratedValue
     private long universitylocation_id;
 
     private String city;

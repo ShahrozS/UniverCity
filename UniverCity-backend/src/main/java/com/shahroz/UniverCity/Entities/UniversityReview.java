@@ -15,6 +15,7 @@ import java.util.Optional;
 public class UniversityReview {
 
     @Id
+    @GeneratedValue
     private long universityreview_id;
 
     private String review;

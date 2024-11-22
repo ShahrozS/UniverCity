@@ -16,6 +16,8 @@ import java.util.List;
 public class Quiz {
 
     @Id
+    @GeneratedValue
+
     private long quiz_id;
     private String subject;
     private String university;

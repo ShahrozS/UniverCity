@@ -1,9 +1,6 @@
 package com.shahroz.UniverCity.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Date;
@@ -19,6 +16,8 @@ import java.util.Date;
 public class Notification {
 
     @Id
+    @GeneratedValue
+
     private long notification_id;
 
     private String message;

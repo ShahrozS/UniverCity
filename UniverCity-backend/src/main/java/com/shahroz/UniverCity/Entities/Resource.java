@@ -2,6 +2,7 @@ package com.shahroz.UniverCity.Entities;
 
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -16,9 +17,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class Resource {
 
-
     @Id
+    @GeneratedValue
     private long resource_id;
+
 
     private String resourceName;
     private Date updloadedAt;

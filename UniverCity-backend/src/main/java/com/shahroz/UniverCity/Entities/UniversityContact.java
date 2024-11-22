@@ -1,10 +1,7 @@
 package com.shahroz.UniverCity.Entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,6 +15,7 @@ public class UniversityContact {
 
 
     @Id
+    @GeneratedValue
     private long universitycontact_id;
 
 

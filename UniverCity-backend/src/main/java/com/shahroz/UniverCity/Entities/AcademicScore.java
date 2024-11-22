@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.*;
 
@@ -12,9 +13,10 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public class AcademicScore {
-
     @Id
+    @GeneratedValue
     private long academicscore_id;
+
 
 
     private float matricScore;

@@ -18,8 +18,10 @@ import java.util.Set;
 public class University {
 
     @Id
+    @GeneratedValue
     private long university_id;
 
+    @Column(unique = true)
     private String name;
     private String about;
     private int rank;
