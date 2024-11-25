@@ -61,9 +61,6 @@ public class User implements UserDetails, Principal {
     private LocalDateTime lastModifiedData;
 
     //relationship
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "userlocation_id", referencedColumnName = "userlocation_id")
-    private UserLocation userLocation;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "academicscore_id", referencedColumnName = "academicscore_id")
@@ -125,7 +122,7 @@ return enabled;
     }
 
 
-    private String fullName(){
+    public String fullName(){
         return firstName + " " + lastName;
     }
 
@@ -134,8 +131,7 @@ return enabled;
 
 
 
-
-
+//================================for o auth-=
 
 
 }

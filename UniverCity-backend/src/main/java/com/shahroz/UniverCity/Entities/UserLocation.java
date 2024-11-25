@@ -1,8 +1,6 @@
 package com.shahroz.UniverCity.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -23,6 +21,11 @@ public class UserLocation {
     private String province;
     private String longitude;
     private String latitude;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
+
 }
 
 

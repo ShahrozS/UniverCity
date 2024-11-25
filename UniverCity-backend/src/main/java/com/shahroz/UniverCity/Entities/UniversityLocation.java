@@ -1,8 +1,6 @@
 package com.shahroz.UniverCity.Entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -17,11 +15,17 @@ public class UniversityLocation {
     @Id
     @GeneratedValue
     private long universitylocation_id;
-
     private String city;
     private String province;
     private float latitude;
     private float longitude;
+
+
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "university_id", referencedColumnName = "university_id")
+    private University university;
+
 
 
 }

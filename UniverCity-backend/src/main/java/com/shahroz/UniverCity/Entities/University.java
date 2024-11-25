@@ -33,9 +33,6 @@ public class University {
     private long averageFees;
 
     //relation
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "universitylocation_id", referencedColumnName = "universitylocation_id")
-    private UniversityLocation universityLocations;
 
 
     @OneToMany(cascade = CascadeType.ALL)
