@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/UniverCity
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: localhost
+    port: 1025
+    username: shahroz
+    password: shahroz
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: "http://localhost:9090/realms/UniverCity"
+#application:
+#  file:
+#    uploads:
+#      photos-output-path: ./uploads
+
+application:
+  security:
+    jwt:
+      secret-key: zqr70GooivT5urALsGX3IiqeEXqSTKJ5Pz4LnnEZeCPtpUFvd7gwbNZpNCvKTOwfYJOYynNOFYi46knIW5W8YA==
+      expiration: 31536000
+  mailing:
+      frontend:
+        activation-url: http://localhost:4200/activate-account
+
+server:
+  port: 8088
+
+# ----------------------------------------------------
