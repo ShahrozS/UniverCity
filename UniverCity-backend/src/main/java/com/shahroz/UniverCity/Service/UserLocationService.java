@@ -1,7 +1,6 @@
 package com.shahroz.UniverCity.Service;
 
 
-import com.shahroz.UniverCity.Entities.UniversityLocation;
 import com.shahroz.UniverCity.Entities.UserLocation;
 
 import java.util.Optional;

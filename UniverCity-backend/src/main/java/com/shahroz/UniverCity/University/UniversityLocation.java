@@ -1,4 +1,4 @@
-package com.shahroz.UniverCity.Entities;
+package com.shahroz.UniverCity.University;
 
 import jakarta.persistence.*;
 import lombok.*;

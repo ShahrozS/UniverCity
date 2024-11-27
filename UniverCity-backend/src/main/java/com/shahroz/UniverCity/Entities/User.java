@@ -1,15 +1,13 @@
 package com.shahroz.UniverCity.Entities;
 
 
+import com.shahroz.UniverCity.University.University;
+import com.shahroz.UniverCity.University.UniversityReview;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.repository.cdi.Eager;
-import org.springframework.scheduling.quartz.LocalDataSourceJobStore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

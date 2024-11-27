@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.Entities;
 
+import com.shahroz.UniverCity.University.University;
 import jakarta.persistence.*;
 import lombok.*;
 

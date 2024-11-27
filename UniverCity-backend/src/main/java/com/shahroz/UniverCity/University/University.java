@@ -1,7 +1,12 @@
-package com.shahroz.UniverCity.Entities;
+package com.shahroz.UniverCity.University;
 
+import com.shahroz.UniverCity.Entities.Facility;
+import com.shahroz.UniverCity.Entities.Program;
+import com.shahroz.UniverCity.Entities.User;
+import com.shahroz.UniverCity.Utility.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.util.Date;
 import java.util.HashSet;
@@ -10,27 +15,37 @@ import java.util.Set;
 
 @Entity
 @ToString
-@Builder
 @AllArgsConstructor
 @Setter
 @Getter
+@SuperBuilder
 @NoArgsConstructor
-public class University {
+public class University extends BaseEntity {
 
-    @Id
-    @GeneratedValue
-    private long university_id;
 
     @Column(unique = true)
     private String name;
     private String about;
     private int rank;
-    private int programCount;
     private Date applyDate;
     private Date startDate;
     private String websiteLink;
     private String accrediatetionBody;
-    private long averageFees;
+    private double averageFees;
+
+    @Transient
+    public int getProgramCount(){
+        if(programs == null || programs.isEmpty()){
+            return 0;
+        }
+        int count = (int) this.programs.stream().count();
+
+        return count;
+
+    }
+
+
+
 
     //relation
 

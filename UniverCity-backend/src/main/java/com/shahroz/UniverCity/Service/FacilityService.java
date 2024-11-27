@@ -2,7 +2,7 @@ package com.shahroz.UniverCity.Service;
 
 
 import com.shahroz.UniverCity.Entities.Facility;
-import com.shahroz.UniverCity.Entities.University;
+import com.shahroz.UniverCity.University.University;
 
 import java.util.ArrayList;
 import java.util.List;

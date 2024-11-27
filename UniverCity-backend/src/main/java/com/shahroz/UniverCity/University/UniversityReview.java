@@ -1,9 +1,8 @@
-package com.shahroz.UniverCity.Entities;
+package com.shahroz.UniverCity.University;
 
+import com.shahroz.UniverCity.Entities.User;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Optional;
 
 @Entity
 @ToString

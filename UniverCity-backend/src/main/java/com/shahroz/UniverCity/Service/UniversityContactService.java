@@ -1,7 +1,7 @@
 package com.shahroz.UniverCity.Service;
 
 
-import com.shahroz.UniverCity.Entities.UniversityContact;
+import com.shahroz.UniverCity.University.UniversityContact;
 
 import java.util.Optional;
 
