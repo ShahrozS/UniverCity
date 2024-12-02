@@ -19,12 +19,9 @@ public class Facility {
 
     private String facilityName;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "university_id",
-            referencedColumnName = "university_id"
-    )
-    private University university;
 
+    @ManyToOne
+    @JoinColumn(name = "university_id")
+    private University university;
 
 }

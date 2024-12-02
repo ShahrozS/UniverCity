@@ -54,8 +54,7 @@ public class University extends BaseEntity {
     private List<UniversityContact> universityContacts;
 
 
-    @OneToMany(mappedBy = "university" , cascade = CascadeType.ALL)
-    private List<Facility> facilities;
+
 
 
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -67,6 +66,13 @@ public class University extends BaseEntity {
     @ManyToMany(mappedBy = "favoriteUniversities")
     private Set<User> favoritedByUsers = new HashSet<>();
 
+    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Facility> facilities;
+
+
+
+    @OneToMany(mappedBy = "university", cascade = CascadeType.ALL)
+    private List<UniversityLocation> universityLocations;
 
 
 

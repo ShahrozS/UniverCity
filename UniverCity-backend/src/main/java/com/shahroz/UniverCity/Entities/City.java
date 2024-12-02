@@ -1,10 +1,11 @@
 package com.shahroz.UniverCity.Entities;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.shahroz.UniverCity.University.UniversityLocation;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @ToString
@@ -20,6 +21,12 @@ public class City {
     private Long city_id;
     private String name;
     private String province;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<UniversityLocation> universityLocations;
+
+    @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<UserLocation> userLocations;
 
 
 }

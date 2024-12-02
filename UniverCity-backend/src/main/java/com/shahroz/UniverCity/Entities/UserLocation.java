@@ -17,14 +17,23 @@ public class UserLocation {
     private long userlocation_id;
 
 
-    private String city;
-    private String province;
+
     private String longitude;
     private String latitude;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "city_id")
+    private City city;
+
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
+
+
+
 
 }
 

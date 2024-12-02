@@ -81,6 +81,10 @@ public class User implements UserDetails, Principal {
     )
     private Set<University> favoriteUniversities;
 
+    @OneToMany(mappedBy = "user")
+    private List<UserLocation> userLocations;
+
+
     @Override
     public String getName() {
         return email;

@@ -1,6 +1,8 @@
 package com.shahroz.UniverCity.University;
 
 
+import com.shahroz.UniverCity.Entities.Facility;
+import com.shahroz.UniverCity.Repositories.FacilityRepository;
 import com.shahroz.UniverCity.Repositories.UniversityRepository;
 import com.shahroz.UniverCity.Utility.PageResponse;
 import jakarta.persistence.EntityNotFoundException;
@@ -78,5 +80,20 @@ public class UniversityService {
 
 
 
+
+        }
+    public List<University> searchUniversityByKeyword(String keyword){
+
+        return repository.searchUniversities(keyword);
+
     }
+
+    FacilityRepository facilityRepository;
+
+    public List<Facility> getFacilitiesByUniversity(Long id)
+    {
+        return facilityRepository.getFacilitiesByUniversity_id(id);
+    }
+
+
 }
