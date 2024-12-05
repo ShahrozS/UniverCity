@@ -842,10 +842,10 @@
               "$ref": "#/components/schemas/GrantedAuthority"
             }
           },
-          "accountNonExpired": {
+          "credentialsNonExpired": {
             "type": "boolean"
           },
-          "credentialsNonExpired": {
+          "accountNonExpired": {
             "type": "boolean"
           },
           "accountNonLocked": {
