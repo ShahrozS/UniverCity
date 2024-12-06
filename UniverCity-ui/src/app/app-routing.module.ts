@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from './Pages/login/login.component';
 import {RegisterComponent} from './Pages/register/register.component';
 import {ActivateAccountComponent} from './Pages/activate-account/activate-account.component';
+import { AboutComponent } from './Pages/about/about.component';
+import { UniversityByProgramListComponent } from './Pages/university-by-program-list/university-by-program-list.component';
+import { CompareUniversityComponent } from './Pages/compare-university/compare-university.component';
 
 const routes: Routes = [
   {
@@ -16,7 +19,11 @@ const routes: Routes = [
   {
     path: 'activate-account',
     component: ActivateAccountComponent
-  }
+  },
+    {path: 'about', component: AboutComponent},
+    {path: 'compare-university', component: CompareUniversityComponent},
+    {path: 'university-by-program-list', component: UniversityByProgramListComponent},
+    {path: 'university-by-program-list/:program', component: UniversityByProgramListComponent}
 ];
 
 @NgModule({

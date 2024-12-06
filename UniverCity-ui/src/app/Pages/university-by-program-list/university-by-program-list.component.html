@@ -1,0 +1,17 @@
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <app-university-card
+      *ngFor="let university of universities"
+      [university]="university"
+      (selectionChanged)="onCardSelectionChange($event)">
+    </app-university-card>
+  </div>
+  
+  <div class="mt-6">
+    <button 
+      class="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+      [disabled]="selectedUniversities.length !== 2"
+      (click)="compareUniversities()">
+      Compare Selected Universities
+    </button>
+  </div>
+  
