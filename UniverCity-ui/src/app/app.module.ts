@@ -10,12 +10,14 @@ import {CodeInputModule} from 'angular-code-input';
 import {ActivateAccountComponent} from './Pages/activate-account/activate-account.component';
 import {RegisterComponent} from './Pages/register/register.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ActivateAccountComponent
+    ActivateAccountComponent,
+    
   ],
   imports: [
     BrowserModule,

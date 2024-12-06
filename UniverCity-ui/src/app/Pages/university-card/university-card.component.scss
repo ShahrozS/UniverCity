@@ -1,0 +1,96 @@
+/* Base Card Styles */
+.bg-white {
+    background-color: white;
+  }
+  
+  .p-4 {
+    padding: 16px;
+  }
+  
+  .rounded {
+    border-radius: 8px;
+  }
+  
+  .shadow-lg {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .w-full {
+    width: 100%;
+  }
+  
+  .h-48 {
+    height: 12rem;
+  }
+  
+  .object-cover {
+    object-fit: cover;
+  }
+  
+  .mb-4 {
+    margin-bottom: 1rem;
+  }
+  
+  .text-xl {
+    font-size: 1.25rem;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .text-sm {
+    font-size: 0.875rem;
+  }
+  
+  .text-gray-500 {
+    color: #6b7280;
+  }
+  
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem;
+  }
+  
+  .text-blue-500 {
+    color: #3b82f6;
+  }
+  
+  .block {
+    display: block;
+  }
+  
+  /* Hover and Transition Effects */
+  .transition-all {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .hover\:shadow-xl:hover {
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  }
+  
+  .hover\:transform:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Selected State */
+  .selected {
+    border: 2px solid #4caf50; /* Green border */
+    background-color: #e8f5e9; /* Light green background */
+  }
+  
+  .selected .text-green-600 {
+    color: #388e3c; /* Dark green text */
+  }
+  
+  .selected .shadow-selected {
+    box-shadow: 0 10px 25px rgba(56, 142, 60, 0.4);
+  }
+  
+  .selected:hover {
+    transform: translateY(-8px); /* Lift for selected state */
+  }
+  

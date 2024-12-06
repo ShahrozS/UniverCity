@@ -1,0 +1,16 @@
+
+
+<div class="bg-white p-4 rounded shadow-lg hover:bg-blue-400 transition-transform transform hover:scale-105" [class.selected]="isSelected" (click)="toggleSelection()">
+    <h3 class="text-xl font-semibold">{{ university?.universityname }}</h3>
+    <p class="text-sm text-gray-500">{{ university?.city }}</p>
+    <p class="text-lg mt-2">Sector: {{ university?.sector }}</p>
+    <p class="text-lg">Program: {{ university?.email }}</p>
+    <a 
+      [href]="university?.url" 
+      target="_blank" 
+      class="text-blue-500 mt-4 block hover:underline hover:text-blue-700"
+    >
+      Visit Website
+    </a>
+  </div>
+  

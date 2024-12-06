@@ -1,0 +1,8 @@
+<p>About
+    
+</p>
+
+<div *ngFor="let program of programs">
+    <a href="#" (click)="onLinkClick($event)" [attr.data-program]="program">{{ program }}</a><br>
+</div>
+  
