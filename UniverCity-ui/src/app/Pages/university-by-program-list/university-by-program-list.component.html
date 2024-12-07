@@ -1,17 +1,37 @@
+<div class="filter-container">
+  <h3>Filter Universities</h3>
+  <!-- Filter Controls -->
+  <label for="program">Program</label>
+
+  <!-- 
+    <input type="text" id="program" [(ngModel)]="filter.uniProgram" (ngModelChange)="onFilterChange()" placeholder="Search by program name" />
+  -->
+
+
+
+  <label for="minFees">Min Fees</label>
+  <input type="number" id="minFees" [(ngModel)]="filter.minFees" (ngModelChange)="onFilterChange()" placeholder="Min fees" />
+
+  <label for="maxFees">Max Fees</label>
+  <input type="number" id="maxFees" [(ngModel)]="filter.maxFees" (ngModelChange)="onFilterChange()" placeholder="Max fees" />
+
+  <label for="accreditation">Accreditation Bodies</label>
+  <input type="text" id="accreditation" [(ngModel)]="filter.accreditationBodies" (ngModelChange)="onFilterChange()" placeholder="Comma separated accreditation bodies" />
+</div>
+
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <app-university-card
-      *ngFor="let university of universities"
-      [university]="university"
-      (selectionChanged)="onCardSelectionChange($event)">
-    </app-university-card>
-  </div>
-  
-  <div class="mt-6">
-    <button 
-      class="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-      [disabled]="selectedUniversities.length !== 2"
-      (click)="compareUniversities()">
-      Compare Selected Universities
-    </button>
-  </div>
-  
+  <app-university-card
+    *ngFor="let university of filteredUniversities"
+    [university]="university"
+    (selectionChanged)="onCardSelectionChange($event)">
+  </app-university-card>
+</div>
+
+<div class="mt-6">
+  <button 
+    class="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+    [disabled]="selectedUniversities.length !== 2"
+    (click)="compareUniversities()">
+    Compare Selected Universities
+  </button>
+</div>

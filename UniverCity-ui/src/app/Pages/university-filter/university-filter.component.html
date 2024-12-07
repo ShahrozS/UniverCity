@@ -1,0 +1,85 @@
+<div class="filter-container">
+    <h2>Filter Universities</h2>
+  
+    <!-- Filters Section -->
+    <div class="filters">
+      <label for="accreditation">Accreditation Bodies</label>
+      <input
+        type="text"
+        id="accreditation"
+        [(ngModel)]="filter.filter.accreditationBodies"
+        placeholder="Enter accreditation bodies (comma separated)"
+      />
+  
+      <label for="cities">Cities</label>
+      <input
+        type="text"
+        id="cities"
+        [(ngModel)]="filter.filter.cities"
+        placeholder="Enter cities (comma separated)"
+      />
+  
+      <label for="minFees">Min Fees</label>
+      <input
+        type="number"
+        id="minFees"
+        [(ngModel)]="filter.filter.minFees"
+        placeholder="Minimum fees"
+      />
+  
+      <label for="maxFees">Max Fees</label>
+      <input
+        type="number"
+        id="maxFees"
+        [(ngModel)]="filter.filter.maxFees"
+        placeholder="Maximum fees"
+      />
+  
+      <label for="sectors">Sectors</label>
+      <input
+        type="text"
+        id="sectors"
+        [(ngModel)]="filter.filter.sectors"
+        placeholder="Enter sectors (comma separated)"
+      />
+  
+      <label for="startDate">Start Date</label>
+      <input
+        type="date"
+        id="startDate"
+        [(ngModel)]="filter.filter.startDate"
+      />
+  
+      <label for="endDate">End Date</label>
+      <input
+        type="date"
+        id="endDate"
+        [(ngModel)]="filter.filter.endDate"
+      />
+  
+      <button (click)="applyFilters()" [disabled]="loading">Apply Filters</button>
+      <button (click)="resetFilters()">Reset Filters</button>
+    </div>
+  
+    <!-- Displaying Universities -->
+    <div *ngIf="loading" class="loading">Loading...</div>
+  
+    <div *ngIf="error" class="error">{{ error }}</div>
+  
+    <div *ngIf="universities.length > 0">
+      <h3>Filtered Universities</h3>
+      <div class="university-list">
+        <div *ngFor="let university of universities" class="university-card">
+          <h4>{{ university.name }}</h4>
+          <p>Rank: {{ university.rank }}</p>
+          <p>Fees: {{ university.averageFees }}</p>
+          <a [href]="university.websiteLink" target="_blank">Visit Website</a>
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="universities.length === 0 && !loading">
+      <p>No universities found with the applied filters.</p>
+    </div>
+  </div>
+  

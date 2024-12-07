@@ -1,3 +1,4 @@
+import { FavoriteUniversitiesComponent } from './Pages/favorite-universities/favorite-universities.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {LoginComponent} from './Pages/login/login.component';
@@ -23,7 +24,8 @@ const routes: Routes = [
     {path: 'about', component: AboutComponent},
     {path: 'compare-university', component: CompareUniversityComponent},
     {path: 'university-by-program-list', component: UniversityByProgramListComponent},
-    {path: 'university-by-program-list/:program', component: UniversityByProgramListComponent}
+    {path: 'university-by-program-list/:program', component: UniversityByProgramListComponent},
+    {path: 'favorite-university', component: FavoriteUniversitiesComponent}
 ];
 
 @NgModule({

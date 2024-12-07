@@ -2,46 +2,45 @@ import { Component } from '@angular/core';
 import { UniversityCardComponent } from '../university-card/university-card.component';
 import { CommonModule } from '@angular/common';
 import { UniversityService } from '../../Services/services/university.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { University } from '../../Services/models/university';
-import { UniversityFilter } from '../../Services/models/university-filter';  // Import the filter model
-import { FormsModule } from '@angular/forms';
-
 
 @Component({
-  selector: 'app-university-by-program-list',
+  selector: 'app-favorite-universities',
+  templateUrl: './favorite-universities.component.html',
+  styleUrl: './favorite-universities.component.scss',
   standalone: true,
-  imports: [UniversityCardComponent, CommonModule, FormsModule],
-  templateUrl: './university-by-program-list.component.html',
-  styleUrls: ['./university-by-program-list.component.css'],
+  imports: [UniversityCardComponent]
 })
-export class UniversityByProgramListComponent {
+export class FavoriteUniversitiesComponent {
   universities: University[] = []; // List of universities
   filteredUniversities: University[] = []; // Filtered universities
   selectedUniversities: University[] = []; // Selected universities for comparison
-  uniProgram: string = ''; // Program name from query parameters
-  filter: UniversityFilter = {}; // Filter object for applying filters
+
 
   constructor(
     private universityService: UniversityService,
     private router: Router,
-    private route: ActivatedRoute
   ) {
-    // Get the program name from query parameters
-    this.route.queryParams.subscribe((params) => {
-      this.uniProgram = params['program'];
-    });
+    
 
-    // Fetch universities by program
+
     this.fetchUniversitiesByProgram();
   }
 
+  /**
+   * Fetch universities by user favorites
+   */
   fetchUniversitiesByProgram(): void {
+    //replace with find universities by user favorites
     this.universityService.findAllUniversity().subscribe(
       (response) => {
+        // Assuming the `content` field contains the list of universities
         const universityResponses = response.content || [];
-        this.universities = universityResponses.map((u) => this.mapToUniversity(u));
-        this.filteredUniversities = this.applyFilters(this.universities);  // Apply filters after fetching
+        this.universities = universityResponses.map((u) =>
+          this.mapToUniversity(u)
+        );
+        this.filteredUniversities = this.universities;
         console.log('Fetched universities:', this.universities);
       },
       (error) => {
@@ -50,6 +49,9 @@ export class UniversityByProgramListComponent {
     );
   }
 
+  /**
+   * Map a `UniversityResponse` object to a `University` object.
+   */
   private mapToUniversity(response: any): University {
     return {
       id: response.university_id,
@@ -64,6 +66,10 @@ export class UniversityByProgramListComponent {
     };
   }
 
+  /**
+   * Handles card selection change events.
+   * Allows selecting up to two universities for comparison.
+   */
   onCardSelectionChange(event: { isSelected: boolean; university: University }) {
     if (event.isSelected) {
       if (this.selectedUniversities.length < 2) {
@@ -73,10 +79,15 @@ export class UniversityByProgramListComponent {
         event.isSelected = false;
       }
     } else {
-      this.selectedUniversities = this.selectedUniversities.filter((u) => u !== event.university);
+      this.selectedUniversities = this.selectedUniversities.filter(
+        (u) => u !== event.university
+      );
     }
   }
 
+  /**
+   * Navigates to the comparison page with the selected universities.
+   */
   compareUniversities(): void {
     if (this.selectedUniversities.length === 2) {
       this.router.navigate(['/compare-university'], {
@@ -86,20 +97,5 @@ export class UniversityByProgramListComponent {
         },
       });
     }
-  }
-
-  applyFilters(universities: University[]): University[] {
-    return universities.filter((university) => {
-      const matchesProgram = !this.uniProgram || university.name?.toLowerCase().includes(this.uniProgram.toLowerCase());
-      const matchesMinFees = !this.filter.minFees || (university.averageFees != null && university.averageFees >= this.filter.minFees);
-      const matchesMaxFees = !this.filter.maxFees || (university.averageFees != null && university.averageFees <= this.filter.maxFees);
-      const matchesAccreditation = !this.filter.accreditationBodies || this.filter.accreditationBodies.some((body) => university.accrediatetionBody?.toLowerCase().includes(body.toLowerCase()));
-      
-      return matchesProgram && matchesMinFees && matchesMaxFees && matchesAccreditation;
-    });
-  }
-
-  onFilterChange(): void {
-    this.filteredUniversities = this.applyFilters(this.universities);
   }
 }

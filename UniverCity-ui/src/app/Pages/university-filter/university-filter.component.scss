@@ -1,0 +1,57 @@
+.filter-container {
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+  }
+  
+  .filters label {
+    font-weight: bold;
+    margin: 8px 0;
+  }
+  
+  .filters input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:disabled {
+    background-color: #d1d5db;
+  }
+  
+  .university-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .university-card {
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .loading {
+    font-size: 1.25rem;
+    color: #3b82f6;
+  }
+  
+  .error {
+    font-size: 1.25rem;
+    color: red;
+  }
+  

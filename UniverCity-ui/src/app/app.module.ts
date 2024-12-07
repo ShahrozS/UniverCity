@@ -11,12 +11,14 @@ import {ActivateAccountComponent} from './Pages/activate-account/activate-accoun
 import {RegisterComponent} from './Pages/register/register.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
     ActivateAccountComponent,
+    
     
   ],
   imports: [
