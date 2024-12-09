@@ -27,12 +27,9 @@
 
 
         <div class="flex items-center space-x-4 ml-4">
-          <button class="text-gray-600 hover:text-gray-900">
-          </button>
-          <button class="text-gray-600 hover:text-gray-900">
-          </button>
-          <button class="text-gray-600 hover:text-gray-900">
-          </button>
+          <button (click)="logout()">
+            <fa-icon class ="text-gray-100 text-2xl hover:text-gray-300" [icon]="faSignOut"></fa-icon>
+        </button>
         </div>
       </div>
     </div>

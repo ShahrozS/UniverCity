@@ -17,6 +17,7 @@ import { SearchbarComponent } from './Pages/searchbar/searchbar.component';
 import {FeeSliderComponent} from './Pages/filters/fee-slider/fee-slider.component';
 import {FiltersComponent} from './Pages/filters/filters.component';
 import {Button} from 'primeng/button';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {Button} from 'primeng/button';
   ],
   imports: [
     BrowserModule,
+    FontAwesomeModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
