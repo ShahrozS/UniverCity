@@ -82,7 +82,7 @@
 ::ng-deep .p-slider .p-slider-handle {
   width: 20px; /* Set the handle's width */
   height: 20px; /* Set the handle's height */
-  background-color: #131313; /* Set the handle color */
+  background-color: #726dff; /* Set the handle color */
   border-radius: 50%; /* Make it circular */
   border: 2px solid #fff; /* Optional: border around the handle */
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional: add a subtle shadow */
@@ -93,7 +93,7 @@
 
 /* Ensuring the slider track (bar) is visible */
 ::ng-deep .p-slider .p-slider-bar {
-  background-color: #1a1717; /* Light gray color for the empty track */
+  background-color: #726dff; /* Light gray color for the empty track */
   border-radius: 5px; /* Rounded corners for the track */
   height: 6px; /* Height of the track */
   position: relative; /* Ensure track is positioned relative to the slider */
@@ -102,7 +102,7 @@
 
 /* Adjust the filled range (the part of the slider that moves) */
 ::ng-deep .p-slider .p-slider-range {
-  background-color: #1d1f1d; /* Green color for the filled portion */
+  background-color: #726dff; /* Green color for the filled portion */
   border-radius: 5px; /* Rounded corners for the range */
   height: 6px; /* Match the height of the track */
   position: absolute; /* Ensure it moves with the range */
@@ -118,4 +118,18 @@
 /* Ensure correct spacing and no misalignment of handles */
 ::ng-deep .p-slider {
   position: relative; /* Ensure the entire slider is positioned correctly */
+}
+
+input[type="number"] {
+  color: #000; /* Set text color to black for visibility */
+  background-color: #fff; /* Ensure background is white or light */
+}
+
+input[type="number"]::placeholder {
+  color: #9ca3af; /* Lighter gray for placeholder text */
+}
+
+input[type="number"]:focus {
+  color: #000; /* Ensure focused input text is visible */
+  background-color: #fff; /* Ensure focused input background stays white */
 }
