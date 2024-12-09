@@ -8,7 +8,8 @@ services:
       PGDATA: /var/lib/postgresql/data
       POSTGRES_DB: UniverCity
     volumes:
-      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
     ports:
       - 5432:5432
     networks:
