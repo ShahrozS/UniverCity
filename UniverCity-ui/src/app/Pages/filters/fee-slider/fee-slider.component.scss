@@ -77,3 +77,59 @@
   left: 4px;
   top: 2px;
 }
+
+/* Adjusting the slider handle (thumb) size */
+::ng-deep .p-slider .p-slider-handle {
+  width: 20px; /* Set the handle's width */
+  height: 20px; /* Set the handle's height */
+  background-color: #726dff; /* Set the handle color */
+  border-radius: 50%; /* Make it circular */
+  border: 2px solid #fff; /* Optional: border around the handle */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Optional: add a subtle shadow */
+  position: absolute; /* Use absolute positioning to control the position */
+  top: -7px; /* Adjust the vertical position to align it with the bar */
+  z-index: 2; /* Ensure the handle stays on top of the track */
+}
+
+/* Ensuring the slider track (bar) is visible */
+::ng-deep .p-slider .p-slider-bar {
+  background-color: #726dff; /* Light gray color for the empty track */
+  border-radius: 5px; /* Rounded corners for the track */
+  height: 6px; /* Height of the track */
+  position: relative; /* Ensure track is positioned relative to the slider */
+  z-index: 0; /* Track is at the bottom */
+}
+
+/* Adjust the filled range (the part of the slider that moves) */
+::ng-deep .p-slider .p-slider-range {
+  background-color: #726dff; /* Green color for the filled portion */
+  border-radius: 5px; /* Rounded corners for the range */
+  height: 6px; /* Match the height of the track */
+  position: absolute; /* Ensure it moves with the range */
+  top: 0; /* Align it to the top of the slider */
+  z-index: 1; /* Keep the range below the handle */
+}
+
+/* Focus effect for the handle */
+::ng-deep .p-slider:focus-within .p-slider-handle {
+  box-shadow: 0 0 5px 2px rgba(76, 175, 80, 0.6); /* Focus effect */
+}
+
+/* Ensure correct spacing and no misalignment of handles */
+::ng-deep .p-slider {
+  position: relative; /* Ensure the entire slider is positioned correctly */
+}
+
+input[type="number"] {
+  color: #000; /* Set text color to black for visibility */
+  background-color: #fff; /* Ensure background is white or light */
+}
+
+input[type="number"]::placeholder {
+  color: #9ca3af; /* Lighter gray for placeholder text */
+}
+
+input[type="number"]:focus {
+  color: #000; /* Ensure focused input text is visible */
+  background-color: #fff; /* Ensure focused input background stays white */
+}
