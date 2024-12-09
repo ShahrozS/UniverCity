@@ -1,0 +1,128 @@
+<div class="w-72 mt-8 mx-auto filter">
+  <!-- Filter Container -->
+  <div class="bg-white border rounded-lg shadow-sm">
+    <div class="p-3">
+      <button 
+        (click)="clearFilter()" 
+        class="w-full py-2 bg-slate-900 text-white rounded-lg transition-colors duration-300 hover:bg-slate-700 active:bg-blue-800"
+      >
+        Clear Filter
+      </button>
+    </div>
+<div class="dropdowns">
+    <!-- By Location -->
+    <div class="border-b-4">
+      <button
+        class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-100 transition-colors duration-300"
+        (click)="toggleDropdown('location', $event)"
+      >
+        <span>By Location</span>
+        <span class="transform transition-transform duration-300" 
+              [class.rotate-180]="dropdowns.location">&#x25BC;</span>
+      </button>
+      <div 
+        *ngIf="dropdowns.location" 
+        [@dropDownMenu] 
+        class="menu flex flex-col px-6 py-2"
+      >
+      <label 
+      class="menu-item cursor-pointer hover:bg-gray-50 py-2 flex items-center"
+      *ngFor="let location of ['Karachi', 'Lahore', 'Islamabad']"
+    >
+      <input 
+        type="checkbox" 
+        class="mr-2" 
+        [checked]="filters.location.includes(location)"
+        (click)="toggleFilter('location', location, $event)"
+      > 
+      {{ location }}
+    </label>
+      </div>
+    </div>
+
+ <!-- Avg Fees -->
+<div class="border-b-4">
+  <button
+    class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-100 transition-colors duration-300"
+    (click)="toggleDropdown('avgFees', $event)"
+  >
+    <span>Avg Fees</span>
+    <span 
+      class="transform transition-transform duration-300" 
+      [class.rotate-180]="dropdowns.avgFees"
+    >
+      &#x25BC;
+    </span>
+  </button>
+  <div 
+    *ngIf="dropdowns.avgFees" 
+    [@dropDownMenu] 
+    class="menu flex flex-col px-6 py-2"
+  >
+    <div class="menu-item">
+      <app-fee-slider></app-fee-slider>
+    </div>
+  </div>
+</div>
+
+<!-- Accreditation Body -->
+<div class="border-b-4">
+  <button
+    class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-100 transition-colors duration-300"
+    (click)="toggleDropdown('accreditationBody', $event)"
+  >
+    <span>Accreditation Body</span>
+    <span 
+      class="transform transition-transform duration-300" 
+      [class.rotate-180]="dropdowns.accreditationBody"
+    >
+      &#x25BC;
+    </span>
+  </button>
+  <div 
+    *ngIf="dropdowns.accreditationBody" 
+    [@dropDownMenu] 
+    class="menu flex flex-col px-6 py-2"
+  >
+    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
+      <input type="checkbox" class="mr-2"> HEC (Pakistan)
+    </label>
+    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
+      <input type="checkbox" class="mr-2"> PEC (Pakistan)
+    </label>
+  </div>
+</div>
+
+<!-- By Discipline -->
+<div class="border-b-4">
+  <button
+    class="w-full text-left p-4 flex justify-between items-center hover:bg-gray-100 transition-colors duration-300"
+    (click)="toggleDropdown('discipline', $event)"
+  >
+    <span>By Discipline</span>
+    <span 
+      class="transform transition-transform duration-300" 
+      [class.rotate-180]="dropdowns.discipline"
+    >
+      &#x25BC;
+    </span>
+  </button>
+  <div 
+    *ngIf="dropdowns.discipline" 
+    [@dropDownMenu] 
+    class="menu flex flex-col px-6 py-2"
+  >
+    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
+      <input type="checkbox" class="mr-2"> Engineering
+    </label>
+    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
+      <input type="checkbox" class="mr-2"> Business
+    </label>
+    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
+      <input type="checkbox" class="mr-2"> Computer Science
+    </label>
+  </div>
+</div>
+</div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+<div class=" flex flex-col justify-content-center space-y-4">
+  <!-- Label -->
+
+
+  <!-- Min and Max Inputs -->
+  <div class="flex items-center space-x-4">
+    <!-- Min Input -->
+    <div>
+      <label class="block text-sm font-medium text-gray-500">Min</label>
+      <input
+        type="number"
+        [(ngModel)]="rangeValues[0]"
+        class="w-20 border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        placeholder="0"
+      />
+    </div>
+
+    <!-- Max Input -->
+    <div>
+      <label class="block text-sm font-medium text-gray-500">Max</label>
+      <input
+        type="number"
+        [(ngModel)]="rangeValues[1]"
+        class="w-24 border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        placeholder="735,971"
+      />
+    </div>
+  </div>
+
+  <!-- Slider -->
+  <div>
+    <p-slider
+      [(ngModel)]="rangeValues"
+      [range]="true"
+      [min]="20000"
+      [max]="20000000"
+      class="w-full"
+    ></p-slider>
+  </div>
+</div>

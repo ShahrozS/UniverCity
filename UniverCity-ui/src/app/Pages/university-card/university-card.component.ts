@@ -5,7 +5,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './university-card.component.html',
-  styleUrl: './university-card.component.css'
+  styleUrl: './university-card.component.scss'
 })
 export class UniversityCardComponent {
 @Input() university: any;

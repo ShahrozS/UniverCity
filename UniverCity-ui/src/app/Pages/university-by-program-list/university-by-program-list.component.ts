@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   standalone: true,
   imports: [UniversityCardComponent, CommonModule],
   templateUrl: './university-by-program-list.component.html',
-  styleUrl: './university-by-program-list.component.css'
+  styleUrl: './university-by-program-list.component.scss'
 })
 export class UniversityByProgramListComponent {
   universities: any[] = [];
@@ -43,11 +43,11 @@ export class UniversityByProgramListComponent {
 
     this.filteredUniversities = this.universities;
     */
-    
+
   }
 
 
-  
+
   onCardSelectionChange(event: any) {
     if (event.isSelected) {
       if (this.selectedUniversities.length < 2) {

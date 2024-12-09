@@ -7,7 +7,7 @@ import { UniversityCardComponent } from '../university-card/university-card.comp
   standalone: true,
   imports: [UniversityCardComponent],
   templateUrl: './compare-university.component.html',
-  styleUrl: './compare-university.component.css'
+  styleUrl: './compare-university.component.scss'
 })
 export class CompareUniversityComponent implements OnInit{
 university1: any;

@@ -8,15 +8,15 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './about.component.html',
-  styleUrl: './about.component.css'
+  styleUrl: './about.component.scss'
 })
 export class AboutComponent {
   programs: any[] = [];
-  
+
   constructor(private router: Router,private programService: ProgramService){
     programService.getProgramNames().subscribe(data => {
       this.programs = data;
-      
+
     });
   }
 
@@ -27,5 +27,5 @@ export class AboutComponent {
     // Use `clickedText` as needed, e.g., navigation or other logic
   }
 
-  
+
 }
