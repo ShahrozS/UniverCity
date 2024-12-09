@@ -70,5 +70,9 @@ export class FiltersComponent {
     Object.keys(this.dropdowns).forEach(key => {
       this.dropdowns[key as keyof Dropdowns] = false;
     });
+    Object.keys(this.filters).forEach(key => {
+      this.filters[key as keyof typeof this.filters] = [];
+    });
+    
   }
 }
