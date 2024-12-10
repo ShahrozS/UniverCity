@@ -1,52 +1,109 @@
-
-import { Component } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UniversityCardComponent } from '../university-card/university-card.component';
 import { CommonModule } from '@angular/common';
 import { UniversityService } from '../../Services/services/university.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { PageResponseUniversityResponse } from '../../Services/models/page-response-university-response';
+import { UniversityFilterService } from '../../Services/services/university-filter.service';
+import { HttpContext } from '@angular/common/http';
+import { University } from '../../Services/models/university';
+import { FilterInstitutions$Params } from '../../Services/fn/university/filter-institutions';
 
 @Component({
   selector: 'app-university-by-program-list',
   standalone: true,
   imports: [UniversityCardComponent, CommonModule],
   templateUrl: './university-by-program-list.component.html',
-  styleUrl: './university-by-program-list.component.scss'
+  styleUrls: ['./university-by-program-list.component.scss']
 })
-export class UniversityByProgramListComponent {
-  universities: any[] = [];
-  selectedUniversities: any[] = [];
-  uniProgram : any;
+export class UniversityByProgramListComponent implements OnChanges {
+  universities: University[] = [];
+  selectedUniversities: University[] = [];
+  uniProgram: string;
 
-  filteredUniversities = this.universities;
+  filteredUniversities: University[] = []; // Start with empty array to hold filtered results
+  @Input() filter: any; // The filter input
 
-  constructor(private universityListService: UniversityService, private router: Router, private route: ActivatedRoute) {
-    this.route.queryParams.subscribe(params => {
-      this.uniProgram = params['program'];
-    });
-
+  constructor(
+    private universityListService: UniversityService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private universityFilterService: UniversityFilterService
+  ) {
+    this.uniProgram = 'temp';
     this.fetchUniversitiesByProgram(this.uniProgram);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['filter'] && this.filter) {
+      // Whenever the filter input changes, we filter the universities
+      this.applyFilters();
+    }
+  }
+
   fetchUniversitiesByProgram(name: string): void {
-    //change to findUniverSity by Program Name
-    /*
-      this.universityListService.findAllUniversity().subscribe(
-      (data) => {
-        this.universities = data;
-        console.group(this.universities[1].universityname);
+    // Fetch universities by program (for now, mock the response)
+    const filterParams: FilterInstitutions$Params = {
+      filter : {
+        cities: this.filter?.location ?? [],
+        accreditationBodies: this.filter?.accreditationBody ?? [],
+        //discipline: this.filter?.discipline ?? []
+      }
+      
+      
+      
+    };
+
+    this.universityListService.findAllUniversity().subscribe(
+      (response: PageResponseUniversityResponse) => {
+        this.universities = response.content ?? []; // Use nullish coalescing to handle undefined
+        console.log(this.universities[1]?.name); // Safely access properties
+        this.filteredUniversities = this.universities; // Apply filtering after setting the array
       },
       (error) => {
         console.error('Error fetching universities by program:', error);
       }
     );
 
-    this.filteredUniversities = this.universities;
+    /*
+
+this.universityListService.filterInstitutions(filterParams).subscribe(
+      (response: University[]) => {
+        this.universities = response;
+        this.filteredUniversities = [...this.universities]; // Initially, no filter applied
+      },
+      (error) => {
+        console.error('Error fetching universities:', error);
+      }
+    );
     */
 
+    // Call the service to get filtered universities based on parameters
+    
   }
 
+  applyFilters(): void {
+    if (this.filter) {
+      // Update the parameters based on selected filters
+      const filterParams: FilterInstitutions$Params = {
+        filter : {
+          cities: this.filter?.location ?? [],
+          accreditationBodies: this.filter?.accreditationBody ?? [],
+          //discipline: this.filter?.discipline ?? []
+        }
+      };
 
+      // Fetch filtered universities
+      this.universityListService.filterInstitutions(filterParams).subscribe(
+        (response: University[]) => {
+          this.filteredUniversities = response;
+        },
+        (error) => {
+          console.error('Error applying filters:', error);
+        }
+      );
+    }
+  }
 
   onCardSelectionChange(event: any) {
     if (event.isSelected) {

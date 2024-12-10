@@ -27,12 +27,12 @@
       >
       <label 
       class="menu-item cursor-pointer hover:bg-gray-50 py-2 flex items-center"
-      *ngFor="let location of ['Karachi', 'Lahore', 'Islamabad']"
+      *ngFor="let location of cityMenu"
     >
       <input 
         type="checkbox" 
         class="mr-2" 
-        [checked]="filters.location.includes(location)"
+        [checked]="filters.location.includes(location.name)"
         (click)="toggleFilter('location', location, $event)"
       > 
       {{ location }}

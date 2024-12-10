@@ -29,6 +29,9 @@ export class LoginComponent {
         if (res && res.token) {
           console.log('Successful login:', res);
           this.router.navigate(['home']);
+          // Example: Storing the token in localStorage after login
+        localStorage.setItem('authToken', res.token);
+
         } else {
           console.log('Login failed:', res);
           this.errorMsg.push('Invalid credentials or login failed.');

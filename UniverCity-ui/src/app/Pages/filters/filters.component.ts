@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+
+import { City } from './../../Services/models/city';
+import { University } from './../../Services/models/university';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DropDownAnimation } from './animations';
+import { UniversityFilterService } from '../../Services/services';
 
 type Dropdowns = {
   location: boolean;
@@ -26,6 +30,21 @@ export class FiltersComponent {
     accreditationBody: [] as string[],
     discipline: [] as string[]
   };
+  cityMenu : any[] = [];
+
+  @Output() filtersChanged = new EventEmitter<typeof this.filters>();
+
+
+  constructor(universityFilterService : UniversityFilterService){
+    universityFilterService.getCities().subscribe({
+      next: (cities: any[]) => {
+        this.cityMenu = cities.map(city => city.name);
+      },
+      error: (err) => {
+        console.error('Failed to fetch cities:', err);
+      }
+    });
+  }
 
 
 
@@ -59,6 +78,7 @@ export class FiltersComponent {
     }
 
     console.log(`${filterType} filters:`, this.filters[filterType]); // Log after the change
+    this.filtersChanged.emit(this.filters);
   }
 
 
@@ -73,6 +93,8 @@ export class FiltersComponent {
     Object.keys(this.filters).forEach(key => {
       this.filters[key as keyof typeof this.filters] = [];
     });
+
+    this.filtersChanged.emit(this.filters);
 
   }
 }

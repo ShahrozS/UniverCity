@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { ProgramService } from '../../Services/services/program.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -13,11 +12,8 @@ import { CommonModule } from '@angular/common';
 export class AboutComponent {
   programs: any[] = [];
 
-  constructor(private router: Router,private programService: ProgramService){
-    programService.getProgramNames().subscribe(data => {
-      this.programs = data;
-
-    });
+  constructor(private router: Router){
+    
   }
 
   onLinkClick(event: Event) {

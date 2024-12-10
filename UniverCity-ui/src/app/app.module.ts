@@ -5,7 +5,7 @@ import { SliderModule } from 'primeng/slider';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {HttpClient, HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './Pages/login/login.component';
 import {FormsModule} from '@angular/forms';
 import {CodeInputModule} from 'angular-code-input';
@@ -18,6 +18,8 @@ import {FeeSliderComponent} from './Pages/filters/fee-slider/fee-slider.componen
 import {FiltersComponent} from './Pages/filters/filters.component';
 import {Button} from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AuthInterceptor } from './auth.interceptor';
+import { UniversityByProgramListComponent } from "./Pages/university-by-program-list/university-by-program-list.component";
 
 
 @NgModule({
@@ -42,10 +44,16 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     CodeInputModule,
     SliderModule,
     BrowserAnimationsModule,
-    Button
-  ],
+    Button,
+    UniversityByProgramListComponent
+],
   providers: [
-    HttpClient
+    HttpClient,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true, // Ensures this interceptor is part of the chain
+    }
   ],
   bootstrap: [AppComponent]
 })
