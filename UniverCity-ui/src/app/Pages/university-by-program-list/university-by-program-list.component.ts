@@ -35,7 +35,7 @@ export class UniversityByProgramListComponent {
     this.fetchUniversitiesByProgram(this.uniProgram);
   }
 
-  
+
 
   fetchUniversitiesByProgram(name: string): void {
     // Fetch universities by program (for now, mock the response)
@@ -82,14 +82,11 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
   applyFilters(filters: any, rangedVal: number[]): void  {
     console.log('Filters applied:', filters);
-  
+
     // Destructure the filter values for easier access
     const { location, accreditationBody,programNames } = filters?.filters || {};
-    let tempProgram : Program[] = [];
-    filters.program.forEach((element: string) => {
-      tempProgram.push({ name: element });
-    });
-  
+
+
     // Define the filter parameters including the range for fees
     const filterParams: FilterInstitutions$Params = {
       filter: {
@@ -97,11 +94,11 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
         accreditationBodies: filters.accreditationBody ?? [],
         minFees: rangedVal?.[0] ?? 20000,  // Default min fee if not provided
         maxFees: rangedVal?.[1] ?? 300000, // Default max fee if not provided
-        program: tempProgram
+        program: filters.program ?? []
         // Add other filter fields here as needed
       },
     };
-  
+
     // Call the service to filter universities with the updated filterParams
     this.universityListService.filterInstitutions(filterParams).subscribe(
       (response: University[]) => {
@@ -113,8 +110,8 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
       }
     );
   }
-  
-  
+
+
   onCardSelectionChange(event: any) {
     if (event.isSelected) {
       if (this.selectedUniversities.length < 2) {

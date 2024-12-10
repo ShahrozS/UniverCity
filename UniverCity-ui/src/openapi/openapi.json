@@ -861,14 +861,14 @@
           "name": {
             "type": "string"
           },
+          "username": {
+            "type": "string"
+          },
           "authorities": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
-          },
-          "username": {
-            "type": "string"
           },
           "credentialsNonExpired": {
             "type": "boolean"
@@ -942,7 +942,7 @@
           "program": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Program"
+              "type": "string"
             }
           }
         }

@@ -19,6 +19,6 @@ public class UniversityFilter {
     private List<String> sectors;
     private LocalDate startDate;
     private LocalDate endDate;
-    private List<Program> program;
+    private List<String> program;
     // Getters and setters
 }
