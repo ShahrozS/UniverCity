@@ -25,6 +25,7 @@ public class University extends BaseEntity {
 
     @Column(unique = true)
     private String name;
+    @Column(length = 5000)
     private String about;
     private int rank;
     private Date applyDate;
