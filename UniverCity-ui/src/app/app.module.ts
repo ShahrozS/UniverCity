@@ -20,6 +20,10 @@ import {Button} from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthInterceptor } from './auth.interceptor';
 import { UniversityByProgramListComponent } from "./Pages/university-by-program-list/university-by-program-list.component";
+import { UniversityListComponent } from './Pages/university-list/university-list.component';
+import { UniversityCardsComponent } from './Pages/university-cards/university-cards.component';
+import { CompareUniversitiesComponent } from './Pages/compare-universities/compare-universities.component';
+import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
 
 
 @NgModule({
@@ -33,6 +37,10 @@ import { UniversityByProgramListComponent } from "./Pages/university-by-program-
     SearchbarComponent,
     FiltersComponent,
     FeeSliderComponent,
+    UniversityListComponent,
+    UniversityCardsComponent,
+    CompareUniversitiesComponent,
+    UniversityDetailsComponent,
 
   ],
   imports: [
@@ -45,7 +53,7 @@ import { UniversityByProgramListComponent } from "./Pages/university-by-program-
     SliderModule,
     BrowserAnimationsModule,
     Button,
-    UniversityByProgramListComponent
+    UniversityByProgramListComponent,
 ],
   providers: [
     HttpClient,

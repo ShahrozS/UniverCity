@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { UniversityByProgramListComponent } from '../university-by-program-list/university-by-program-list.component';
+import { UniversityListComponent } from '../university-list/university-list.component';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +7,7 @@ import { UniversityByProgramListComponent } from '../university-by-program-list/
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  @ViewChild(UniversityByProgramListComponent) universityListComponent!: UniversityByProgramListComponent;
+  @ViewChild(UniversityListComponent) universityListComponent!: UniversityListComponent;
 
   onFiltersChanged({ filters, rangedValues }: { filters: any, rangedValues: number[] }): void {
     console.log('Filters updated:', filters);
