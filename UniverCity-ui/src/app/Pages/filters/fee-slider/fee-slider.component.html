@@ -14,6 +14,7 @@
       <input
         type="number"
         [(ngModel)]="rangeValues[0]"
+        (ngModelChange)="onRangeChange()"
         class="w-20 border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
         placeholder="0"
       />
@@ -25,6 +26,7 @@
       <input
         type="number"
         [(ngModel)]="rangeValues[1]"
+        (ngModelChange)="onRangeChange()"
         class="w-24 border rounded-md px-2 py-1 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
         placeholder="735,971"
       />
@@ -38,7 +40,8 @@
   [(ngModel)]="rangeValues"
   [range]="true"
   [min]="20000"
-  [max]="20000000"
+  [max]="300000"
+  (ngModelChange)="onSliderChange()"
   class="w-full px-1"
 ></p-slider>
 

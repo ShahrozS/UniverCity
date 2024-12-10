@@ -32,7 +32,7 @@
       <input 
         type="checkbox" 
         class="mr-2" 
-        [checked]="filters.location.includes(location.name)"
+        [checked]="filters.location.includes(location)"
         (click)="toggleFilter('location', location, $event)"
       > 
       {{ location }}
@@ -60,7 +60,7 @@
     class="menu flex flex-col px-6 py-2"
   >
     <div class="menu-item h-100 w-50">
-      <app-fee-slider></app-fee-slider>
+      <app-fee-slider (rangeChanged)="onRangeChanged($event)"></app-fee-slider>
     </div>
   </div>
 </div>
@@ -85,10 +85,12 @@
     class="menu flex flex-col px-6 py-2"
   >
     <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
-      <input type="checkbox" class="mr-2"> HEC (Pakistan)
+      <input type="checkbox" class="mr-2" [checked]="filters.accreditationBody.includes('HEC')"
+      (click)="toggleFilter('accreditationBody', 'HEC', $event)"> HEC (Pakistan)
     </label>
     <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
-      <input type="checkbox" class="mr-2"> PEC (Pakistan)
+      <input type="checkbox" class="mr-2" [checked]="filters.accreditationBody.includes('PEC')"
+      (click)="toggleFilter('accreditationBody', 'PEC', $event)"> PEC (Pakistan)
     </label>
   </div>
 </div>
@@ -112,15 +114,18 @@
     [@dropDownMenu] 
     class="menu flex flex-col px-6 py-2"
   >
-    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
-      <input type="checkbox" class="mr-2"> Engineering
-    </label>
-    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
-      <input type="checkbox" class="mr-2"> Business
-    </label>
-    <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
-      <input type="checkbox" class="mr-2"> Computer Science
-    </label>
+  <label 
+  class="menu-item cursor-pointer hover:bg-gray-50 py-2 flex items-center"
+  *ngFor="let program of programMenu"
+>
+  <input 
+    type="checkbox" 
+    class="mr-2" 
+    [checked]="filters.program.includes(program)"
+    (click)="toggleFilter('program',program, $event)"
+  > 
+  {{ program }}
+</label>
   </div>
 </div>
 </div>
