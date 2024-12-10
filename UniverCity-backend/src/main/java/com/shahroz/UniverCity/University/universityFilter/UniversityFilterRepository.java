@@ -51,6 +51,7 @@ public class UniversityFilterRepository {
 
         // Filter by program names
         if (filter.getProgram() != null && !filter.getProgram().isEmpty()) {
+            System.out.println("In programs + " + filter.getProgram().toString());
             predicates.add(programJoin.get("name").in(filter.getProgram()));
         }
 
