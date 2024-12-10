@@ -1,9 +1,6 @@
-
-import { City } from './../../Services/models/city';
-import { University } from './../../Services/models/university';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { DropDownAnimation } from './animations';
 import { UniversityFilterService } from '../../Services/services';
+import { DropDownAnimation } from './animations';
 
 type Dropdowns = {
   location: boolean;
@@ -11,6 +8,16 @@ type Dropdowns = {
   accreditationBody: boolean;
   discipline: boolean;
 };
+
+// Define an interface for the emitted object
+interface FilterData {
+  filters: {
+    location: string[];
+    accreditationBody: string[];
+    program: string[];
+  };
+  rangedValues: number[];
+}
 
 @Component({
   selector: 'app-filters',
@@ -25,17 +32,25 @@ export class FiltersComponent {
     accreditationBody: false,
     discipline: false
   };
-  filters = {
-    location: [] as string[],
-    accreditationBody: [] as string[],
-    discipline: [] as string[]
+
+  filters: {
+    location: string[];
+    accreditationBody: string[];
+    program: string[];
+  } = {
+    location: [],
+    accreditationBody: [],
+    program: []
   };
-  cityMenu : any[] = [];
-
-  @Output() filtersChanged = new EventEmitter<typeof this.filters>();
 
 
-  constructor(universityFilterService : UniversityFilterService){
+  cityMenu: string[] = [];
+  programMenu: string[] = ['BS - Mathematics','BS - Software Engineering','BS - Aviation Management','BS - Arabic','BS - Chemistry']
+  rangedValues: number[] = [20000, 300000]; // Add range values to track min/max
+
+  @Output() filtersChanged = new EventEmitter<FilterData>();
+
+  constructor(private universityFilterService: UniversityFilterService) {
     universityFilterService.getCities().subscribe({
       next: (cities: any[]) => {
         this.cityMenu = cities.map(city => city.name);
@@ -46,12 +61,13 @@ export class FiltersComponent {
     });
   }
 
-
-
-
+  // Emit range changes
+  onRangeChanged(rangedValues: number[]): void {
+    this.rangedValues = rangedValues;
+    this.emitFilters(); // Emit the filters when the range is updated
+  }
 
   toggleDropdown(filter: keyof Dropdowns, event?: Event): void {
-    // Prevent event propagation to ensure click works correctly
     if (event) {
       event.stopPropagation();
       event.preventDefault();
@@ -59,42 +75,38 @@ export class FiltersComponent {
     this.dropdowns[filter] = !this.dropdowns[filter];
   }
 
-
   toggleFilter(filterType: keyof typeof this.filters, value: string, event: Event): void {
-    // Prevent dropdown from toggling when interacting with checkboxes
     event.stopPropagation();
 
     const currentFilters = this.filters[filterType];
     const index = currentFilters.indexOf(value);
 
-    console.log('Before:', this.filters[filterType]); // Log before the change
-
     if (index > -1) {
-      // Remove filter if already exists
       this.filters[filterType] = currentFilters.filter(f => f !== value);
     } else {
-      // Add filter
       this.filters[filterType] = [...currentFilters, value];
     }
 
-    console.log(`${filterType} filters:`, this.filters[filterType]); // Log after the change
-    this.filtersChanged.emit(this.filters);
+    this.emitFilters(); // Emit filters whenever a filter is changed
   }
 
-
-
-
+  // Emit both filters and ranged values
+  private emitFilters(): void {
+    this.filtersChanged.emit({
+      filters: this.filters,
+      rangedValues: this.rangedValues
+    });
+  }
 
   clearFilter(): void {
-    // Reset all dropdowns to closed
     Object.keys(this.dropdowns).forEach(key => {
       this.dropdowns[key as keyof Dropdowns] = false;
     });
     Object.keys(this.filters).forEach(key => {
       this.filters[key as keyof typeof this.filters] = [];
     });
+    this.rangedValues = [20000, 300000]; // Reset the range to default values
 
-    this.filtersChanged.emit(this.filters);
-
+    this.emitFilters(); // Emit cleared filters and ranged values
   }
 }

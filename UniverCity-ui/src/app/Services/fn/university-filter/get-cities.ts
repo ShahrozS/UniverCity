@@ -8,12 +8,12 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { City } from '../../models/city';
+import { CityDto } from '../../models/city-dto';
 
 export interface GetCities$Params {
 }
 
-export function getCities(http: HttpClient, rootUrl: string, params?: GetCities$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<City>>> {
+export function getCities(http: HttpClient, rootUrl: string, params?: GetCities$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<CityDto>>> {
   const rb = new RequestBuilder(rootUrl, getCities.PATH, 'get');
   if (params) {
   }
@@ -23,7 +23,7 @@ export function getCities(http: HttpClient, rootUrl: string, params?: GetCities$
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<City>>;
+      return r as StrictHttpResponse<Array<CityDto>>;
     })
   );
 }

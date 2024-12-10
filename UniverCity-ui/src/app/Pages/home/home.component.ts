@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { UniversityByProgramListComponent } from '../university-by-program-list/university-by-program-list.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss',
-  
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  rangeValues: number[] = [0, 735]
-  selectedFilters: any = {}; // Store filters to pass to the university list
+  @ViewChild(UniversityByProgramListComponent) universityListComponent!: UniversityByProgramListComponent;
 
-  onFiltersChanged(filters: any): void {
+  onFiltersChanged({ filters, rangedValues }: { filters: any, rangedValues: number[] }): void {
     console.log('Filters updated:', filters);
-    this.selectedFilters = filters;
+    console.log('Ranged Values:', rangedValues);
+
+    // Pass filters and ranged values directly to UniversityByProgramListComponent
+    if (this.universityListComponent) {
+      this.universityListComponent.applyFilters(filters, rangedValues);
+    }
   }
- 
 }

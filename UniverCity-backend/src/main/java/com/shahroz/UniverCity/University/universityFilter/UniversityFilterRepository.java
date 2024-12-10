@@ -43,10 +43,10 @@ public class UniversityFilterRepository {
 
         // Filter by average fees
         if (filter.getMinFees() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(root.get("average_fees"), filter.getMinFees()));
+            predicates.add(cb.greaterThanOrEqualTo(root.get("averageFees"), filter.getMinFees()));
         }
         if (filter.getMaxFees() != null) {
-            predicates.add(cb.lessThanOrEqualTo(root.get("average_fees"), filter.getMaxFees()));
+            predicates.add(cb.lessThanOrEqualTo(root.get("averageFees"), filter.getMaxFees()));
         }
 
         // Filter by program names

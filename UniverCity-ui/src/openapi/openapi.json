@@ -173,7 +173,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/City"
+                    "$ref": "#/components/schemas/CityDTO"
                   }
                 }
               }
@@ -503,6 +503,17 @@
           }
         }
       },
+      "CityDTO": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          }
+        }
+      },
       "AcademicScore": {
         "type": "object",
         "properties": {
@@ -608,9 +619,6 @@
           },
           "degreeType": {
             "type": "string"
-          },
-          "university": {
-            "$ref": "#/components/schemas/University"
           }
         }
       },
@@ -761,9 +769,6 @@
           },
           "city": {
             "$ref": "#/components/schemas/City"
-          },
-          "university": {
-            "$ref": "#/components/schemas/University"
           }
         }
       },
@@ -856,19 +861,19 @@
           "name": {
             "type": "string"
           },
-          "username": {
-            "type": "string"
-          },
           "authorities": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/GrantedAuthority"
             }
           },
-          "accountNonExpired": {
-            "type": "boolean"
+          "username": {
+            "type": "string"
           },
           "credentialsNonExpired": {
+            "type": "boolean"
+          },
+          "accountNonExpired": {
             "type": "boolean"
           },
           "accountNonLocked": {
@@ -933,6 +938,12 @@
           "endDate": {
             "type": "string",
             "format": "date"
+          },
+          "program": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Program"
+            }
           }
         }
       }

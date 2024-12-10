@@ -1,3 +1,4 @@
+import { Program } from './../../Services/models/program';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UniversityCardComponent } from '../university-card/university-card.component';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,7 @@ import { FilterInstitutions$Params } from '../../Services/fn/university/filter-i
   templateUrl: './university-by-program-list.component.html',
   styleUrls: ['./university-by-program-list.component.scss']
 })
-export class UniversityByProgramListComponent implements OnChanges {
+export class UniversityByProgramListComponent {
   universities: University[] = [];
   selectedUniversities: University[] = [];
   uniProgram: string;
@@ -34,12 +35,7 @@ export class UniversityByProgramListComponent implements OnChanges {
     this.fetchUniversitiesByProgram(this.uniProgram);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['filter'] && this.filter) {
-      // Whenever the filter input changes, we filter the universities
-      this.applyFilters();
-    }
-  }
+  
 
   fetchUniversitiesByProgram(name: string): void {
     // Fetch universities by program (for now, mock the response)
@@ -47,7 +43,7 @@ export class UniversityByProgramListComponent implements OnChanges {
       filter : {
         cities: this.filter?.location ?? [],
         accreditationBodies: this.filter?.accreditationBody ?? [],
-        //discipline: this.filter?.discipline ?? []
+        program: this.filter?.Program ?? []
       }
 
 
@@ -84,31 +80,41 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
   }
 
-  applyFilters(): void {
-    if (this.filter) {
-      // Update the parameters based on selected filters
-      const filterParams: FilterInstitutions$Params = {
-        filter : {
-          cities: this.filter?.location ?? [],
-          accreditationBodies: this.filter?.accreditationBody ?? [],
-          //discipline: this.filter?.discipline ?? []
-        }
-      };
-
-      // Fetch filtered universities
-      this.universityListService.filterInstitutions(filterParams).subscribe(
-
-        (response: University[]) => {
-          this.filteredUniversities = response;
-          this.filteredUniversities = [...this.universities];
-        },
-        (error) => {
-          console.error('Error applying filters:', error);
-        }
-      );
-    }
+  applyFilters(filters: any, rangedVal: number[]): void  {
+    console.log('Filters applied:', filters);
+  
+    // Destructure the filter values for easier access
+    const { location, accreditationBody,programNames } = filters?.filters || {};
+    let tempProgram : Program[] = [];
+    filters.program.forEach((element: string) => {
+      tempProgram.push({ name: element });
+    });
+  
+    // Define the filter parameters including the range for fees
+    const filterParams: FilterInstitutions$Params = {
+      filter: {
+        cities: filters.location ?? [],
+        accreditationBodies: filters.accreditationBody ?? [],
+        minFees: rangedVal?.[0] ?? 20000,  // Default min fee if not provided
+        maxFees: rangedVal?.[1] ?? 300000, // Default max fee if not provided
+        program: tempProgram
+        // Add other filter fields here as needed
+      },
+    };
+  
+    // Call the service to filter universities with the updated filterParams
+    this.universityListService.filterInstitutions(filterParams).subscribe(
+      (response: University[]) => {
+        console.log('Filtered universities:', response);
+        this.filteredUniversities = response;
+      },
+      (error) => {
+        console.error('Error applying filters:', error);
+      }
+    );
   }
-
+  
+  
   onCardSelectionChange(event: any) {
     if (event.isSelected) {
       if (this.selectedUniversities.length < 2) {
