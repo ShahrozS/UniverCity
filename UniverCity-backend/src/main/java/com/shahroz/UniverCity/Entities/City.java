@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.University.UniversityLocation;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,9 +23,11 @@ public class City {
     private String name;
     private String province;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
     List<UniversityLocation> universityLocations;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
     List<UserLocation> userLocations;
 

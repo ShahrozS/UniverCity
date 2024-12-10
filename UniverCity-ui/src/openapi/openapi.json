@@ -159,6 +159,29 @@
         }
       }
     },
+    "/universityFilter/getCities": {
+      "get": {
+        "tags": [
+          "UniversityFilter"
+        ],
+        "operationId": "getCities",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/City"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/university/{university-id}": {
       "get": {
         "tags": [
@@ -842,10 +865,10 @@
               "$ref": "#/components/schemas/GrantedAuthority"
             }
           },
-          "credentialsNonExpired": {
+          "accountNonExpired": {
             "type": "boolean"
           },
-          "accountNonExpired": {
+          "credentialsNonExpired": {
             "type": "boolean"
           },
           "accountNonLocked": {

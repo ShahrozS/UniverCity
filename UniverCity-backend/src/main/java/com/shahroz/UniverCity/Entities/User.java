@@ -70,18 +70,18 @@ public class User implements UserDetails, Principal {
     private UniversityReview universityreview;
 
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Notification> notifications;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_favorites", // Name of the join table
             joinColumns = @JoinColumn(name = "user_id"), // Foreign key in join table for User
-            inverseJoinColumns = @JoinColumn(name = "university_id") // Foreign key in join table for University
+            inverseJoinColumns = @JoinColumn(name = "university_id")
     )
     private Set<University> favoriteUniversities;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
     private List<UserLocation> userLocations;
 
 

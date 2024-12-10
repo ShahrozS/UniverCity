@@ -44,12 +44,12 @@ export class FiltersComponent {
   toggleFilter(filterType: keyof typeof this.filters, value: string, event: Event): void {
     // Prevent dropdown from toggling when interacting with checkboxes
     event.stopPropagation();
-  
+
     const currentFilters = this.filters[filterType];
     const index = currentFilters.indexOf(value);
-    
+
     console.log('Before:', this.filters[filterType]); // Log before the change
-    
+
     if (index > -1) {
       // Remove filter if already exists
       this.filters[filterType] = currentFilters.filter(f => f !== value);
@@ -57,10 +57,10 @@ export class FiltersComponent {
       // Add filter
       this.filters[filterType] = [...currentFilters, value];
     }
-  
+
     console.log(`${filterType} filters:`, this.filters[filterType]); // Log after the change
   }
-  
+
 
 
 
@@ -73,6 +73,6 @@ export class FiltersComponent {
     Object.keys(this.filters).forEach(key => {
       this.filters[key as keyof typeof this.filters] = [];
     });
-    
+
   }
 }

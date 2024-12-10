@@ -8,6 +8,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UniversityService } from './services/university.service';
 import { AuthenticationService } from './services/authentication.service';
+import { UniversityFilterService } from './services/university-filter.service';
 
 /**
  * Module that provides all services and configuration.
@@ -19,6 +20,7 @@ import { AuthenticationService } from './services/authentication.service';
   providers: [
     UniversityService,
     AuthenticationService,
+    UniversityFilterService,
     ApiConfiguration
   ],
 })
