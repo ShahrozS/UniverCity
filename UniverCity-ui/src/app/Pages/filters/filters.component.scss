@@ -10,31 +10,45 @@
       // Ensure all elements are interactive
       cursor: pointer;
     }
-  
+
     button {
       // Explicitly set cursor and add transition
       cursor: pointer;
       transition: all 0.3s ease;
-  
+
       &:hover {
         background-color: theme('colors.gray.100');
       }
-  
+
       &:active {
         transform: scale(0.98);
       }
     }
-  
+
     .menu-item {
       transition: background-color 0.3s ease;
-  
+
       &:hover {
         background-color: theme('colors.gray.50');
       }
     }
-  
+
     // Rotate dropdown indicator
     .rotate-180 {
       transform: rotate(180deg);
     }
   }
+
+
+.selected-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  .filter-button {
+    display: flex;
+    align-items: center;
+    font-size: 0.875rem;
+    cursor: pointer;
+  }
+}

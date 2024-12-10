@@ -2,13 +2,48 @@
   <!-- Filter Container -->
   <div class="bg-white border rounded-lg shadow-sm">
     <div class="p-3">
-      <button 
-        (click)="clearFilter()" 
+      <button
+        (click)="clearFilter()"
         class="w-full py-2 bg-slate-900 text-white rounded-lg transition-colors duration-300 hover:bg-slate-700 active:bg-blue-800"
       >
         Clear Filter
       </button>
     </div>
+
+<!--    Filter tracking buttons -->
+
+    <div class="selected-filters p-4">
+      <div *ngFor="let location of filters.location" class="selected-filter">
+        <button
+          class="filter-button bg-blue-500 text-white py-1 px-3 rounded-full hover:bg-blue-700"
+          (click)="removeFilter('location', location)"
+        >
+          {{ location }}
+          <span class="ml-2">×</span>
+        </button>
+      </div>
+      <div *ngFor="let accreditationBody of filters.accreditationBody" class="selected-filter">
+        <button
+          class="filter-button bg-green-500 text-white py-1 px-3 rounded-full hover:bg-green-700"
+          (click)="removeFilter('accreditationBody', accreditationBody)"
+        >
+          {{ accreditationBody }}
+          <span class="ml-2">×</span>
+        </button>
+      </div>
+      <div *ngFor="let program of filters.program" class="selected-filter">
+        <button
+          class="filter-button bg-purple-500 text-white py-1 px-3 rounded-full hover:bg-purple-700"
+          (click)="removeFilter('program', program)"
+        >
+          {{ program }}
+          <span class="ml-2">×</span>
+        </button>
+      </div>
+    </div>
+
+
+    <!--    Drop down menus-->
 <div class="dropdowns">
     <!-- By Location -->
     <div class="border-b-4">
@@ -17,24 +52,24 @@
         (click)="toggleDropdown('location', $event)"
       >
         <span>By Location</span>
-        <span class="transform transition-transform duration-300" 
+        <span class="transform transition-transform duration-300"
               [class.rotate-180]="dropdowns.location">&#x25BC;</span>
       </button>
-      <div 
-        *ngIf="dropdowns.location" 
-        [@dropDownMenu] 
+      <div
+        *ngIf="dropdowns.location"
+        [@dropDownMenu]
         class="menu flex flex-col px-6 py-2"
       >
-      <label 
+      <label
       class="menu-item cursor-pointer hover:bg-gray-50 py-2 flex items-center"
       *ngFor="let location of cityMenu"
     >
-      <input 
-        type="checkbox" 
-        class="mr-2" 
+      <input
+        type="checkbox"
+        class="mr-2"
         [checked]="filters.location.includes(location)"
         (click)="toggleFilter('location', location, $event)"
-      > 
+      >
       {{ location }}
     </label>
       </div>
@@ -47,16 +82,16 @@
     (click)="toggleDropdown('avgFees', $event)"
   >
     <span>Avg Fees</span>
-    <span 
-      class="transform transition-transform duration-300" 
+    <span
+      class="transform transition-transform duration-300"
       [class.rotate-180]="dropdowns.avgFees"
     >
       &#x25BC;
     </span>
   </button>
-  <div 
-    *ngIf="dropdowns.avgFees" 
-    [@dropDownMenu] 
+  <div
+    *ngIf="dropdowns.avgFees"
+    [@dropDownMenu]
     class="menu flex flex-col px-6 py-2"
   >
     <div class="menu-item h-100 w-50">
@@ -72,16 +107,16 @@
     (click)="toggleDropdown('accreditationBody', $event)"
   >
     <span>Accreditation Body</span>
-    <span 
-      class="transform transition-transform duration-300" 
+    <span
+      class="transform transition-transform duration-300"
       [class.rotate-180]="dropdowns.accreditationBody"
     >
       &#x25BC;
     </span>
   </button>
-  <div 
-    *ngIf="dropdowns.accreditationBody" 
-    [@dropDownMenu] 
+  <div
+    *ngIf="dropdowns.accreditationBody"
+    [@dropDownMenu]
     class="menu flex flex-col px-6 py-2"
   >
     <label class="menu-item cursor-pointer hover:bg-gray-50 py-2">
@@ -102,28 +137,28 @@
     (click)="toggleDropdown('discipline', $event)"
   >
     <span>By Discipline</span>
-    <span 
-      class="transform transition-transform duration-300" 
+    <span
+      class="transform transition-transform duration-300"
       [class.rotate-180]="dropdowns.discipline"
     >
       &#x25BC;
     </span>
   </button>
-  <div 
-    *ngIf="dropdowns.discipline" 
-    [@dropDownMenu] 
+  <div
+    *ngIf="dropdowns.discipline"
+    [@dropDownMenu]
     class="menu flex flex-col px-6 py-2"
   >
-  <label 
+  <label
   class="menu-item cursor-pointer hover:bg-gray-50 py-2 flex items-center"
   *ngFor="let program of programMenu"
 >
-  <input 
-    type="checkbox" 
-    class="mr-2" 
+  <input
+    type="checkbox"
+    class="mr-2"
     [checked]="filters.program.includes(program)"
     (click)="toggleFilter('program',program, $event)"
-  > 
+  >
   {{ program }}
 </label>
   </div>

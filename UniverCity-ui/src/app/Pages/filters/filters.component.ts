@@ -109,4 +109,16 @@ export class FiltersComponent {
 
     this.emitFilters(); // Emit cleared filters and ranged values
   }
+
+
+
+  //filter button
+
+  removeFilter(filterType: keyof typeof this.filters, value: string): void {
+    const currentFilters = this.filters[filterType];
+    this.filters[filterType] = currentFilters.filter(f => f !== value);
+
+    this.emitFilters(); // Emit updated filters
+  }
+
 }
