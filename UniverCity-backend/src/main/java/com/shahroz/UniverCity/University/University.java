@@ -58,6 +58,7 @@ public class University extends BaseEntity {
 
 
 
+
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Program> programs;
 

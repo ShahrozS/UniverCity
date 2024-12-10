@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.University.University;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,6 +24,7 @@ public class Program {
     private String degreeType;
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;

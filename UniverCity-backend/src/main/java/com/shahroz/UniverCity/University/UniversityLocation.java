@@ -1,5 +1,7 @@
 package com.shahroz.UniverCity.University;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.Entities.City;
 import jakarta.persistence.*;
 import lombok.*;
@@ -24,12 +26,14 @@ public class UniversityLocation {
     private float latitude;
     private float longitude;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "city_id")
     private City city;
 
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "university_id")
     private University university;

@@ -49,13 +49,15 @@ export class UniversityByProgramListComponent implements OnChanges {
         accreditationBodies: this.filter?.accreditationBody ?? [],
         //discipline: this.filter?.discipline ?? []
       }
-      
-      
-      
+
+
+
     };
 
     this.universityListService.findAllUniversity().subscribe(
+
       (response: PageResponseUniversityResponse) => {
+        console.log("hello");
         this.universities = response.content ?? []; // Use nullish coalescing to handle undefined
         console.log(this.universities[1]?.name); // Safely access properties
         this.filteredUniversities = this.universities; // Apply filtering after setting the array
@@ -79,7 +81,7 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
     */
 
     // Call the service to get filtered universities based on parameters
-    
+
   }
 
   applyFilters(): void {
@@ -95,8 +97,10 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
       // Fetch filtered universities
       this.universityListService.filterInstitutions(filterParams).subscribe(
+
         (response: University[]) => {
           this.filteredUniversities = response;
+          this.filteredUniversities = [...this.universities];
         },
         (error) => {
           console.error('Error applying filters:', error);

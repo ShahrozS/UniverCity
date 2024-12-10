@@ -1,58 +1,63 @@
 package com.shahroz.UniverCity.University.universityFilter;
+
 import com.shahroz.UniverCity.Entities.City;
 import com.shahroz.UniverCity.University.University;
 import com.shahroz.UniverCity.University.UniversityLocation;
+import com.shahroz.UniverCity.Entities.Program;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.criteria.*;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class UniversityFilterRepository  {
-    
+public class UniversityFilterRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public List<University> findUniversitysByFilters(UniversityFilter filter) {
+    public List<University> findUniversitiesByFilters(UniversityFilter filter) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<University> query = cb.createQuery(University.class);
         Root<University> root = query.from(University.class);
 
-
-        Join<University, UniversityLocation> locationJoin = root.join("locations", JoinType.LEFT);
+        // Joins for related tables
+        Join<University, UniversityLocation> locationJoin = root.join("universityLocations", JoinType.LEFT);
         Join<UniversityLocation, City> cityJoin = locationJoin.join("city", JoinType.LEFT);
+        Join<University, Program> programJoin = root.join("programs", JoinType.LEFT);
 
-
-
+        // Predicate list to store filter conditions
         List<Predicate> predicates = new ArrayList<>();
 
+        // Filter by location (city name)
         if (filter.getCities() != null && !filter.getCities().isEmpty()) {
-            predicates.add(cb.equal(cityJoin.get("name"), filter.getCities()));
+            predicates.add(cityJoin.get("name").in(filter.getCities()));
         }
+
+        // Filter by accreditation body
         if (filter.getAccreditationBodies() != null && !filter.getAccreditationBodies().isEmpty()) {
-            predicates.add(root.get("accreditationBody").in(filter.getAccreditationBodies()));
+            predicates.add(root.get("accrediatetionBody").in(filter.getAccreditationBodies()));
         }
-        if (filter.getSectors() != null && !filter.getSectors().isEmpty()) {
-            predicates.add(root.get("sector").in(filter.getSectors()));
-        }
+
+        // Filter by average fees
         if (filter.getMinFees() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(root.get("tuitionFees"), filter.getMinFees()));
+            predicates.add(cb.greaterThanOrEqualTo(root.get("average_fees"), filter.getMinFees()));
         }
         if (filter.getMaxFees() != null) {
-            predicates.add(cb.lessThanOrEqualTo(root.get("tuitionFees"), filter.getMaxFees()));
+            predicates.add(cb.lessThanOrEqualTo(root.get("average_fees"), filter.getMaxFees()));
         }
 
-        if (filter.getStartDate() != null) {
-            predicates.add(cb.greaterThanOrEqualTo(root.get("date"), filter.getStartDate()));
-        }
-        if (filter.getEndDate() != null) {
-            predicates.add(cb.lessThanOrEqualTo(root.get("date"), filter.getEndDate()));
+        // Filter by program names
+        if (filter.getProgram() != null && !filter.getProgram().isEmpty()) {
+            predicates.add(programJoin.get("name").in(filter.getProgram()));
         }
 
+        // Apply predicates to query
         query.where(cb.and(predicates.toArray(new Predicate[0])));
+
+        // Return the filtered list of universities
         return entityManager.createQuery(query).getResultList();
     }
 }

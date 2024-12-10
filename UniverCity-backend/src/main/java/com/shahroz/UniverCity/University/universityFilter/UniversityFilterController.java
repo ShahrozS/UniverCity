@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.University.universityFilter;
 
+import com.shahroz.UniverCity.DTOs.CityDTO;
 import com.shahroz.UniverCity.Entities.City;
 import com.shahroz.UniverCity.Repositories.CityRepository;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,11 +19,11 @@ import java.util.List;
 public class UniversityFilterController {
 
 
-    private final CityRepository cityRepository;
 
+    private final UniversityFilterService universityFilterService;
     @GetMapping("/getCities")
-    ResponseEntity<List<City>> getCities(){
-        return ResponseEntity.ok(cityRepository.findAll());
+    ResponseEntity<List<CityDTO>> getCities(){
+        return ResponseEntity.ok(universityFilterService.findCities());
     }
 
 
