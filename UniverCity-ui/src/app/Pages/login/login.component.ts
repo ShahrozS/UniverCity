@@ -3,6 +3,7 @@ import {AuthenticationRequest} from "../../Services/models/authentication-reques
 import {Router} from "@angular/router";
 import {AuthenticationService} from "../../Services/services/authentication.service";
 import {AuthenticationResponse} from "../../Services/models/authentication-response";
+import {TokenService} from '../../Services/token/token.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent {
   constructor(
       private router: Router,
       private authService: AuthenticationService,
-      // another service
+     private tokenService: TokenService
   ) {
   }
 
@@ -28,9 +29,11 @@ export class LoginComponent {
       next: (res: AuthenticationResponse) => {
         if (res && res.token) {
           console.log('Successful login:', res);
+
+          this.tokenService.token = res.token as string;
+
           this.router.navigate(['home']);
           // Example: Storing the token in localStorage after login
-        localStorage.setItem('authToken', res.token);
 
         } else {
           console.log('Login failed:', res);

@@ -16,10 +16,10 @@ faSignOut = faSignOut;
   ) {
   }
   logout() {
-    // localStorage.removeItem('token');
-    // window.location.reload();
+    localStorage.removeItem('authToken');
+    window.location.reload();
 
-    this.router.navigate(['login']);
+    // this.router.navigate(['login']);
 
   }
 }
