@@ -94,3 +94,67 @@
     transform: translateY(-8px); /* Lift for selected state */
   }
   
+
+
+
+
+.card {
+  width: 100%; /* Fixed width */
+  height: 250px; /* Fixed height */
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.233);
+  background: linear-gradient(135deg, #ffffff, #f0f4f8);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card-rank {
+  font-size: 1rem;
+  color: #555;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.card-link {
+  display: block;
+  text-align: center;
+  font-size: 1rem;
+  color: #007bff;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.card-link:hover {
+  color: #0056b3;
+  text-decoration: underline;
+}
+
+.card-button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.card-button:hover {
+  background-color: #0056b3;
+}
+

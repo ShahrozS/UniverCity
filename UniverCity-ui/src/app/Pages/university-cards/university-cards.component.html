@@ -1,19 +1,66 @@
-<div class="bg-white p-4 rounded shadow-lg hover:bg-blue-400 transition-transform transform hover:scale-105" [class.selected]="isSelected" (click)="toggleSelection()">
-  <h3 class="text-xl font-semibold">{{ university?.name }}</h3>
-  <p class="text-lg mt-2">Rank: {{ university?.rank }}</p>
-  <a 
-    [href]="university?.url" 
-    target="_blank" 
-    class="text-blue-500 mt-4 block hover:underline hover:text-blue-700"
+
+<div 
+  class="card w-full max-w-full min-w-full"
+  [class.selected]="isSelected" 
+  (click)="toggleSelection()"
+>
+
+
+<div class="header flex flex-row justify-between">
+  <h3 class="card-title" style="width: 80%;">{{ university?.name }}</h3>
+  <fa-icon class="mr-5 mt-2 text-black text-2xl hover:text-gray-300" [icon]="faHeart"></fa-icon>
+</div>
+
+
+<!-- main box -->
+<div class="main  flex flex-row" style="height: 150px;">
+
+
+<!-- leftsection -->
+
+<div class="left justify-between flex flex-col " style="width: 50%;">
+  
+  <div class="accredation mt-7">
+    <p class="">Accredited by {{university?.accrediatetionBody}} / Public University</p>
+    <p class="bg-lime-300 w-[8rem] text-center rounded-full text-sm p-1 px-2 mt-2">Ranked at <b>#{{university?.rank}}</b> </p>
+  </div>
+ 
+  <div class="align-self-end">
+    <a 
+    target="_blank"
+    href="{{university?.websiteLink}}" 
+    class="underline  text-purple-900 self-end"
   >
     Visit Website
   </a>
+  </div>
 
-  <!-- View Details Button -->
-  <button 
+</div>
+
+
+
+<!-- rijht section -->
+
+<div class="right h-full  flex mt-8 justify-end mr-5 " style="width: 50%;">
+
+  <div class="avgFees  flex items-end flex-col ">
+    <p class="font-bold">~ {{university?.averageFees}} PKR /semester</p>
+    <p class="font-bold mb-8">8 Semesters</p>
+    
+    
+    <button 
     (click)="viewDetails()" 
-    class="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+    class="w-26 self-end  p-2 font-semibold hover:bg-yellow-500 rounded-md bg-yellow-300"
   >
     View Details
   </button>
+  </div>
+
+ 
+</div>
+
+</div>
+
+  <!-- View Details Button -->
+ 
 </div>
