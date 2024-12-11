@@ -31,14 +31,13 @@ public class UniversityService {
 
 
 
-
-    Long createUniversity(UniversityRequest universityRequest){
+    public Long createUniversity(UniversityRequest universityRequest){
 
         University university = mapper.toUniversity(universityRequest);
         return repository.save(university).getId();
 
     }
-    UniversityResponse findById(Long id){
+    public UniversityResponse findById(Long id){
 
         return repository.findById(id)
                 .map(mapper::toUniversityResponse)
@@ -88,7 +87,7 @@ public class UniversityService {
 
     }
 
-    FacilityRepository facilityRepository;
+    private final FacilityRepository facilityRepository;
 
     public List<Facility> getFacilitiesByUniversity(Long id)
     {
