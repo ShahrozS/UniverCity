@@ -1,9 +1,56 @@
 <app-navbar></app-navbar>
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- Display the first selected university -->
-    <app-university-cards [university]="university1"></app-university-cards>
-    
-    <!-- Display the second selected university -->
-    <app-university-cards [university]="university2"></app-university-cards>
+<div class="container mx-auto p-6 bg-gray-900 text-white">
+  <h1 class="text-4xl font-bold text-center mb-8 text-yellow-400">University Comparison</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <!-- University 1 Card -->
+    <div class="border rounded-lg p-6 shadow-lg bg-white text-black">
+      <h2 class="text-2xl font-semibold mb-4">{{ university1?.name }}</h2>
+      <p class="mb-2"><strong>Rank:</strong> {{ university1?.rank }}</p>
+      <p class="mb-2"><strong>Accreditation Body:</strong> {{ university1?.accrediatetionBody }}</p>
+      <p class="mb-2"><strong>Average Fees:</strong> Rs. {{ university1?.averageFees }}</p>
+      <p class="mb-2"><strong>Apply By:</strong> {{ university1?.applyDate | date:'longDate' }}</p>
+      <p class="mb-2"><strong>Start Date:</strong> {{ university1?.startDate | date:'longDate' }}</p>
+      <p class="mb-4 text-lg"><strong>About:</strong> {{ university1?.about | slice:0:100 }}....<span (click)="openUniversity(university1)" class="font-semibold">View Full Page</span></p>
+      <a
+        href="{{ university1?.websiteLink }}"
+        target="_blank"
+        class="text-purple-700 font-semibold underline">Visit Website</a>
+    </div>
+
+    <!-- University 2 Card -->
+    <div class="border rounded-lg p-6 shadow-lg bg-white text-black">
+      <h2 class="text-2xl font-semibold mb-4">{{ university2?.name }}</h2>
+      <p class="mb-2"><strong>Rank:</strong> {{ university2?.rank }}</p>
+      <p class="mb-2"><strong>Accreditation Body:</strong> {{ university2?.accrediatetionBody }}</p>
+      <p class="mb-2"><strong>Average Fees:</strong> Rs. {{ university2?.averageFees }}</p>
+      <p class="mb-2"><strong>Apply By:</strong> {{ university2?.applyDate | date:'longDate' }}</p>
+      <p class="mb-2"><strong>Start Date:</strong> {{ university2?.startDate | date:'longDate' }}</p>
+      <p class="mb-4 text-lg"><strong>About:</strong> {{ university2?.about | slice:0:100 }}....<span (click)="openUniversity(university2)" class="font-semibold">View Full Page</span></p>
+      <a
+        href="{{ university2?.websiteLink }}"
+        target="_blank"
+        class="text-purple-700 font-semibold underline">Visit Website</a>
+    </div>
   </div>
+
+  <!-- Comparison Highlights -->
+  <div class="mt-10">
+    <h2 class="text-3xl font-bold mb-6 text-yellow-400">Comparison Highlights</h2>
+    <ul class="list-disc list-inside">
+      <li *ngIf="university1?.rank !== university2?.rank">
+        <strong>Ranking:</strong> {{ university1?.name }} is ranked {{ university1?.rank }}, while {{ university2?.name }} is ranked {{ university2?.rank }}.
+      </li>
+      <li *ngIf="university1?.averageFees !== university2?.averageFees">
+        <strong>Fees:</strong> {{ university1?.name }} has an average fee of Rs. {{ university1?.averageFees }}, whereas {{ university2?.name }} has an average fee of Rs. {{ university2?.averageFees }}.
+      </li>
+      <li *ngIf="university1?.applyDate !== university2?.applyDate">
+        <strong>Application Dates:</strong> Apply by {{ university1?.applyDate | date:'longDate' }} for {{ university1?.name }} and by {{ university2?.applyDate | date:'longDate' }} for {{ university2?.name }}.
+      </li>
+      <li *ngIf="university1?.accrediatetionBody !== university2?.accrediatetionBody">
+        <strong>Accreditation:</strong> {{ university1?.name }} is accredited by {{ university1?.accrediatetionBody }}, while {{ university2?.name }} is accredited by {{ university2?.accrediatetionBody }}.
+      </li>
+    </ul>
+  </div>
+</div>

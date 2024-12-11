@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-compare-universities',
@@ -9,15 +9,23 @@ import { ActivatedRoute } from '@angular/router';
 export class CompareUniversitiesComponent implements OnInit{
   university1: any;
   university2: any;
-  
-  constructor(private route: ActivatedRoute){
-  
+
+  constructor(private route: ActivatedRoute, private router: Router){
+
   }
-  
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.university1 = JSON.parse(params['university1']);
       this.university2 = JSON.parse(params['university2']);
     })
+  }
+
+  openUniversity(university: any) {
+    this.router.navigate(['/university-details'], {
+      queryParams: {
+        university: JSON.stringify(university)
+      }
+    });
   }
 }

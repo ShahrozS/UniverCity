@@ -22,4 +22,8 @@ faSignOut = faSignOut;
     // this.router.navigate(['login']);
 
   }
+
+  home() {
+    this.router.navigate(['home']);
+  }
 }
