@@ -8,6 +8,7 @@ import { AboutComponent } from './Pages/about/about.component';
 import { UniversityListComponent } from './Pages/university-list/university-list.component';
 import {HomeComponent} from './Pages/home/home.component';
 import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
+import {authGuard} from './Services/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -24,12 +25,17 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate:[authGuard]
   },
-    {path: 'about', component: AboutComponent},
-    {path: 'compare-universities', component: CompareUniversitiesComponent},
-    {path: 'university-list', component: UniversityListComponent},
-    {path: 'university-details', component: UniversityDetailsComponent}
+    {path: 'about', component: AboutComponent,
+      canActivate:[authGuard]},
+    {path: 'compare-universities', component: CompareUniversitiesComponent,
+      canActivate:[authGuard]},
+    {path: 'university-list', component: UniversityListComponent,
+      canActivate:[authGuard]},
+    {path: 'university-details', component: UniversityDetailsComponent,
+      canActivate:[authGuard]}
 ];
 
 @NgModule({
