@@ -1,4 +1,15 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+<div class="mt-1 ml-5">
+  <button
+    class="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
+    [disabled]="selectedUniversities.length !== 2"
+    (click)="compareUniversities()">
+    Compare Selected Universities
+  </button>
+</div>
+
+
+<div class="card-container ">
     <app-university-cards
       *ngFor="let university of filteredUniversities"
       [university]="university"
@@ -7,11 +18,3 @@
     
   </div>
 
-  <div class="mt-6">
-    <button
-      class="bg-blue-500 text-white px-4 py-2 rounded disabled:opacity-50"
-      [disabled]="selectedUniversities.length !== 2"
-      (click)="compareUniversities()">
-      Compare Selected Universities
-    </button>
-  </div>

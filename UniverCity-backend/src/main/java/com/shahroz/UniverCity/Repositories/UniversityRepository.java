@@ -11,7 +11,6 @@ public interface UniversityRepository   extends JpaRepository<University, Long> 
 
 
 
-
     @Query("SELECT u FROM University u WHERE " +
             "LOWER(u.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
             "LOWER(u.about) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
