@@ -1,3 +1,4 @@
+
 import { Program } from './../../Services/models/program';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UniversityCardComponent } from '../university-card/university-card.component';
@@ -9,6 +10,7 @@ import { UniversityFilterService } from '../../Services/services/university-filt
 import { HttpContext } from '@angular/common/http';
 import { University } from '../../Services/models/university';
 import { FilterInstitutions$Params } from '../../Services/fn/university/filter-institutions';
+import { SearchUniversities$Params } from '../../Services/fn/university/search-universities';
 
 @Component({
   selector: 'app-university-list',
@@ -93,12 +95,28 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
         minFees: rangedVal?.[0] ?? 20000,  // Default min fee if not provided
         maxFees: rangedVal?.[1] ?? 300000, // Default max fee if not provided
         program: filters.program ?? []
+        //pagination
         // Add other filter fields here as needed
       },
     };
 
     // Call the service to filter universities with the updated filterParams
     this.universityListService.filterInstitutions(filterParams).subscribe(
+      (response: University[]) => {
+        console.log('Filtered universities:', response);
+        this.filteredUniversities = response;
+      },
+      (error) => {
+        console.error('Error applying filters:', error);
+      }
+    );
+  }
+  
+  searchUniversities(keyword : string){
+    const ser : SearchUniversities$Params = {
+      keyword : keyword || ''
+    }
+    this.universityListService.searchUniversities(ser).subscribe(
       (response: University[]) => {
         console.log('Filtered universities:', response);
         this.filteredUniversities = response;
@@ -124,6 +142,8 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
       );
     }
   }
+
+
 
   compareUniversities() {
     if (this.selectedUniversities.length === 2) {

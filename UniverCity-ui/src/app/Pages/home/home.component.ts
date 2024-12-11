@@ -18,4 +18,10 @@ export class HomeComponent {
       this.universityListComponent.applyFilters(filters, rangedValues);
     }
   }
+
+  searchUni(val : string){
+    if(val.length != 0){
+      this.universityListComponent.searchUniversities(val);
+    }
+  }
 }
