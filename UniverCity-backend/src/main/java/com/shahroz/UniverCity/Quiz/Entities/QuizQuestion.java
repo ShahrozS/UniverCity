@@ -1,5 +1,7 @@
-package com.shahroz.UniverCity.Entities;
+package com.shahroz.UniverCity.Quiz.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shahroz.UniverCity.University.University;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -25,11 +27,9 @@ public class QuizQuestion {
     private int difficultyLevel;
 
 
+
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz;
-
-
-
-
+    @JoinColumn(name = "quizsubcategory_id")
+    private QuizSubCategory quizSubCategory;
 }
