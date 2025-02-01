@@ -10,6 +10,9 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @Service
 public class QuizService {
@@ -20,10 +23,10 @@ public class QuizService {
     private final UserQuizRepository quizRepository;
     private final QuizQuestionMapper quizQuestionMapper;
 
-    public QuizQuestion addQuestion(QuizQuestionRequest quizQuestionRequest){
+    public Long addQuestion(QuizQuestionRequest quizQuestionRequest){
 
         QuizQuestion quizQuestion = quizQuestionMapper.toQuizQuestion(quizQuestionRequest);
-        return question.save(quizQuestion);
+        return question.save(quizQuestion).getQuizquestion_id();
     }
 
     public QuizQuestionResponse getQuestionById(long id){
@@ -34,7 +37,23 @@ public class QuizService {
     }
 
 
+    public List<QuizQuestion> getQuestionsBySubCategory(long quizCategory,long quizSubCategory ){
+        return question.findQuizQuestionByQuizSubCategory(quizCategory,quizSubCategory);
+    }
 
+
+    public List<QuizQuestion> shuffleQuiz;
+
+    //categories extraction
+    public Optional<QuizCategory> getCategoryById (long id){
+        return quizCategory.findById(id);
+    }
+    public Optional<QuizSubCategory> getSubCategoryByMainCategory(QuizCategory quizCategory){
+            return quizSubCategoryRepository.findByQuizCategory(quizCategory);
+    }
+    public Optional<QuizSubCategory> getSubCategoryById(long id){
+        return quizSubCategoryRepository.findById(id);
+    }
 
 
 }
