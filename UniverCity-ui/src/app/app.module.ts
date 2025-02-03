@@ -24,6 +24,7 @@ import { UniversityListComponent } from './Pages/university-list/university-list
 import { UniversityCardsComponent } from './Pages/university-cards/university-cards.component';
 import { CompareUniversitiesComponent } from './Pages/compare-universities/compare-universities.component';
 import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
+import { MockTestComponent } from './mock-test/mock-test.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { UniversityDetailsComponent } from './Pages/university-details/universit
     UniversityCardsComponent,
     CompareUniversitiesComponent,
     UniversityDetailsComponent,
+    MockTestComponent,
 
   ],
   imports: [

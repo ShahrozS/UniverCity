@@ -1,8 +1,7 @@
 package com.shahroz.UniverCity.Service;
 
 
-import com.shahroz.UniverCity.Entities.Quiz;
-import com.shahroz.UniverCity.Entities.QuizQuestion;
+import com.shahroz.UniverCity.Quiz.Entities.QuizQuestion;
 
 import java.util.ArrayList;
 import java.util.List;
