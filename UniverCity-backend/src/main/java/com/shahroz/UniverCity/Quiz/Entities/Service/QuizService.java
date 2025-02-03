@@ -1,21 +1,29 @@
 package com.shahroz.UniverCity.Quiz.Entities.Service;
 
 
+import com.shahroz.UniverCity.DTOs.UserQuizDTO;
+import com.shahroz.UniverCity.Entities.User;
 import com.shahroz.UniverCity.Quiz.Entities.*;
-import com.shahroz.UniverCity.Repositories.QuizCategoryRepository;
-import com.shahroz.UniverCity.Repositories.QuizQuestionRepository;
-import com.shahroz.UniverCity.Repositories.QuizSubCategoryRepository;
-import com.shahroz.UniverCity.Repositories.UserQuizRepository;
+import com.shahroz.UniverCity.Repositories.*;
+import com.shahroz.UniverCity.Service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
+@Slf4j
+@Transactional
 public class QuizService {
+    private final UserService userService;
 
     private final QuizCategoryRepository quizCategory;
     private final QuizSubCategoryRepository quizSubCategoryRepository;
@@ -37,7 +45,7 @@ public class QuizService {
     }
 
 
-    public List<QuizQuestion> getQuestionsBySubCategory(long quizCategory,long quizSubCategory ){
+    public List<QuizQuestion> getQuestionsBySubCategory(long quizCategory,long quizSubCategory, Authentication connectedAuthentication ){
         return question.findQuizQuestionByQuizSubCategory(quizCategory,quizSubCategory);
     }
 
@@ -54,6 +62,29 @@ public class QuizService {
     public Optional<QuizSubCategory> getSubCategoryById(long id){
         return quizSubCategoryRepository.findById(id);
     }
+    public List<QuizCategory> getMainCategories(){
+        return quizCategory.findAll();
+    }
+
+
+    //create quiz
+    public void createUserQuiz(UserQuizDTO userQuizDTO, Authentication connectedAuthentication) {
+
+        UserQuiz userQuiz = new UserQuiz();
+
+        User user = userService.findUserByEmail(connectedAuthentication.getName()).get();
+
+        userQuiz.setUser(user);
+        QuizCategory quizCategory1 = getCategoryById(userQuizDTO.getCategoryId()).get();
+        userQuiz.setQuizCategory(quizCategory1);
+        userQuiz.setDate(LocalDate.now());
+        userQuiz.setScore(userQuiz.getScore());
+        userQuiz.setCompleted(userQuiz.getCompleted());
+
+        quizRepository.save(userQuiz);
+
+    }
+
 
 
 }

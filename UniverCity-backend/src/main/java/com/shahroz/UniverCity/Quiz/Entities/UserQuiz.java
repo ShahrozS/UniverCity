@@ -4,6 +4,7 @@ import com.shahroz.UniverCity.Entities.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +21,7 @@ public class UserQuiz {
     @Id
     @GeneratedValue
     private long userquiz_id;
-    private Date date;
+    private LocalDate date;
     private String score;
     private float completed;
 

@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,11 +34,17 @@ public class QuizController {
     }
 
     @GetMapping("/{category_id}/{subcategory_id}")
-    public ResponseEntity<List<QuizQuestion>> getQuizBySubCategory(@PathVariable("category_id")long category_id, @PathVariable("subcategory_id") long subcategory_id){
+    public ResponseEntity<List<QuizQuestion>> getQuizBySubCategory(@PathVariable("category_id")long category_id, @PathVariable("subcategory_id") long subcategory_id, Authentication connectedUser){
 
 
-        List<QuizQuestion> questions = quizService.getQuestionsBySubCategory(category_id,subcategory_id);
+        List<QuizQuestion> questions = quizService.getQuestionsBySubCategory(category_id,subcategory_id,connectedUser);
 return ResponseEntity.ok(questions);
+    }
+
+    @GetMapping("/categories")
+    public ResponseEntity<List<QuizCategory>> getQuizCategories(){
+
+        return ResponseEntity.ok(quizService.getMainCategories());
     }
 
 
