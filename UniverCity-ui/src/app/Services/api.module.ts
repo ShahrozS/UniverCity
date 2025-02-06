@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UniversityService } from './services/university.service';
+import { QuizService } from './services/quiz.service';
 import { AuthenticationService } from './services/authentication.service';
 import { UniversityFilterService } from './services/university-filter.service';
 
@@ -19,6 +20,7 @@ import { UniversityFilterService } from './services/university-filter.service';
   declarations: [],
   providers: [
     UniversityService,
+    QuizService,
     AuthenticationService,
     UniversityFilterService,
     ApiConfiguration

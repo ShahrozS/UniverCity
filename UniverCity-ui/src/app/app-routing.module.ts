@@ -9,6 +9,8 @@ import { UniversityListComponent } from './Pages/university-list/university-list
 import {HomeComponent} from './Pages/home/home.component';
 import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
 import {authGuard} from './Services/guard/auth.guard';
+import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.component';
+import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
 
 const routes: Routes = [
   {
@@ -35,7 +37,11 @@ const routes: Routes = [
     {path: 'university-list', component: UniversityListComponent,
       canActivate:[authGuard]},
     {path: 'university-details', component: UniversityDetailsComponent,
-      canActivate:[authGuard]}
+      canActivate:[authGuard]},
+    {path: 'quiz-category', component: QuizCategoryComponent,
+      canActivate:[authGuard]},
+      {path: 'mock-test', component: MockTestComponent,
+        canActivate:[authGuard]}
 ];
 
 @NgModule({

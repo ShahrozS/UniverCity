@@ -24,7 +24,10 @@ import { UniversityListComponent } from './Pages/university-list/university-list
 import { UniversityCardsComponent } from './Pages/university-cards/university-cards.component';
 import { CompareUniversitiesComponent } from './Pages/compare-universities/compare-universities.component';
 import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
-import { MockTestComponent } from './mock-test/mock-test.component';
+import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
+import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.component';
+import { CategoryListComponent } from './Pages/quiz/category-list/category-list.component';
+import { CategoryCardComponent } from './Pages/quiz/category-card/category-card.component';
 
 
 @NgModule({
@@ -43,6 +46,9 @@ import { MockTestComponent } from './mock-test/mock-test.component';
     CompareUniversitiesComponent,
     UniversityDetailsComponent,
     MockTestComponent,
+    QuizCategoryComponent,
+    CategoryListComponent,
+    CategoryCardComponent,
 
   ],
   imports: [
