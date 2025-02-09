@@ -1,0 +1,40 @@
+<section class="bg-white w-full min-h-screen overflow-hidden flex flex-col relative">
+
+  <app-navbar></app-navbar>
+
+  <section class="flex-grow flex flex-col justify-center items-center p-6">
+    <div class="header text-center mb-8">
+      <h1 class="text-5xl font-extrabold text-gray-900">Choose Your Options</h1>
+    </div>
+
+    <div class="options grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <app-option-card title="Select Difficulty" 
+                       [options]="['Easy', 'Medium', 'Hard']" 
+                       (optionSelected)="selectionService.setDifficulty($event)">
+      </app-option-card>
+    
+      <app-option-card title="Number of Questions" 
+                       [options]="['10', '20', '50']" 
+                       (optionSelected)="selectionService.setQuestionCount($event)">
+      </app-option-card>
+    
+      <app-option-card *ngIf="!selectionService.getMode() || selectionService.getMode() === 'Untimed'" 
+                       title="Mode" 
+                       [options]="['Timed', 'Untimed']"
+                       (optionSelected)="selectionService.setMode($event)">
+      </app-option-card>
+    
+      <app-option-card *ngIf="selectionService.getMode() === 'Timed'" 
+                       title="Select Time" 
+                       [options]="['10 min', '20 min', '30 min']"
+                       (optionSelected)="selectionService.setTime($event)">
+      </app-option-card>
+    </div>
+  </section>
+
+  <!-- Styled Button -->
+  <button (click)="Continue()" class="absolute bottom-20 right-20 p-4 px-6 text-2xl font-bold  text-white bg-black border-4 border-black rounded-full shadow-lg hover:bg-gray-800 transition-all">
+    Continue!
+  </button>
+
+</section>

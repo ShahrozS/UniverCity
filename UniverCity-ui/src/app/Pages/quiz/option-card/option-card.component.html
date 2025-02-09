@@ -1,0 +1,21 @@
+<div class="option-card relative">  <!-- Added relative here -->
+    
+    
+
+    <div (click)="Click()" *ngIf="title && title === 'Select Time'" class="">
+        <fa-icon class="text-black text-2xl hover:text-black absolute top-4 left-4 cursor-pointer" 
+                 [icon]="faArrowLeft">
+        </fa-icon>
+    </div>
+
+    <h2 class="option-title">{{ title }}</h2>
+    <div class="button-group">
+      <button 
+        *ngFor="let option of options" 
+        (click)="selectOption(option)" 
+        [class.selected]="isSelected(option)" 
+        class="option-btn">
+        {{ option }}
+      </button>
+    </div>
+</div>

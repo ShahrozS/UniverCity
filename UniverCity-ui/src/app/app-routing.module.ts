@@ -11,6 +11,8 @@ import { UniversityDetailsComponent } from './Pages/university-details/universit
 import {authGuard} from './Services/guard/auth.guard';
 import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.component';
 import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
+import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.component';
+import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
 
 const routes: Routes = [
   {
@@ -41,7 +43,11 @@ const routes: Routes = [
     {path: 'quiz-category', component: QuizCategoryComponent,
       canActivate:[authGuard]},
       {path: 'mock-test', component: MockTestComponent,
-        canActivate:[authGuard]}
+        canActivate:[authGuard]},
+        {path: 'quiz-options', component: QuizOptionsComponent,
+          canActivate:[authGuard]},
+          {path: 'quiz-result', component: QuizResultComponent,
+            canActivate:[authGuard]}
 ];
 
 @NgModule({

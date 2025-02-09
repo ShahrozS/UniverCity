@@ -1,0 +1,125 @@
+.quiz-container {
+    position: relative;
+    min-height: 100vh;
+  }
+
+  .timer-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #fbfffffd;
+    padding: 1rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+  }
+
+  .timer {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2d3748;
+    background: #e4f2ff;
+    padding: 0.5rem 2rem;
+    border-radius: 9999px;
+  }
+
+  .sections-container {
+    padding-top: 5rem;
+  }
+
+  .section-title {
+    padding: 2rem;
+    background: hsla(202, 82%, 73%, 0.993);
+    margin: 2rem 0;
+  }
+
+  .section-title h2 {
+    font-size: 2rem;
+    color: #2d3748;
+    margin: 0;
+  }
+
+  .question-container {
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+    scroll-snap-align: start;
+  }
+
+  .question-content {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+
+  .question-text {
+    font-size: 1.5rem;
+    color: #2d3748;
+    margin: 1.5rem 0;
+  }
+
+  .options-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .option-card {
+    background: #edf2f7;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .option-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .option-card.selected {
+    background: #fdff75;
+    color: black;
+  }
+
+  .option-card label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .option-card input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+
+  .option-text {
+    font-size: 1.1rem;
+  }
+
+  .submit-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 100;
+  }
+
+  .submit-btn {
+    background: #4299e1;
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 9999px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .submit-btn:hover {
+    background: #3182ce;
+    transform: translateY(-2px);
+  }

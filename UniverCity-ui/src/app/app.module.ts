@@ -28,6 +28,10 @@ import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
 import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.component';
 import { CategoryListComponent } from './Pages/quiz/category-list/category-list.component';
 import { CategoryCardComponent } from './Pages/quiz/category-card/category-card.component';
+import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.component';
+import { OptionCardComponent } from './Pages/quiz/option-card/option-card.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { QuizResultComponent } from './pages/quiz/quiz-result/quiz-result.component';
 
 
 @NgModule({
@@ -49,9 +53,13 @@ import { CategoryCardComponent } from './Pages/quiz/category-card/category-card.
     QuizCategoryComponent,
     CategoryListComponent,
     CategoryCardComponent,
+    QuizOptionsComponent,
+    OptionCardComponent,
+    QuizResultComponent,
 
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     FontAwesomeModule,
     AppRoutingModule,
