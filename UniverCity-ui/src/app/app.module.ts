@@ -31,7 +31,7 @@ import { CategoryCardComponent } from './Pages/quiz/category-card/category-card.
 import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.component';
 import { OptionCardComponent } from './Pages/quiz/option-card/option-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { QuizResultComponent } from './pages/quiz/quiz-result/quiz-result.component';
+import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
 
 
 @NgModule({

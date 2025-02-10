@@ -30,7 +30,8 @@ public class QuizService {
     private final QuizQuestionRepository question;
     private final UserQuizRepository quizRepository;
     private final QuizQuestionMapper quizQuestionMapper;
-
+    private final QuizSubCategoryMainCategoryRepository subXMain;
+    private final QuestionSubMainRepository questionSubMainRepository;
     public Long addQuestion(QuizQuestionRequest quizQuestionRequest){
 
         QuizQuestion quizQuestion = quizQuestionMapper.toQuizQuestion(quizQuestionRequest);
@@ -45,9 +46,7 @@ public class QuizService {
     }
 
 
-    public List<QuizQuestion> getQuestionsBySubCategory(long quizCategory,long quizSubCategory, Authentication connectedAuthentication ){
-        return question.findQuizQuestionByQuizSubCategory(quizCategory,quizSubCategory);
-    }
+
 
 
     public List<QuizQuestion> shuffleQuiz;
@@ -56,9 +55,11 @@ public class QuizService {
     public Optional<QuizCategory> getCategoryById (long id){
         return quizCategory.findById(id);
     }
-    public Optional<QuizSubCategory> getSubCategoryByMainCategory(QuizCategory quizCategory){
-            return quizSubCategoryRepository.findByQuizCategory(quizCategory);
-    }
+
+//    public Optional<QuizSubCategory> getSubCategoryByMainCategory(QuizCategory quizCategory){
+//        return quizSubCategoryRepository.findByQuizCategory(quizCategory);
+//    }
+
     public Optional<QuizSubCategory> getSubCategoryById(long id){
         return quizSubCategoryRepository.findById(id);
     }
@@ -84,6 +85,38 @@ public class QuizService {
         quizRepository.save(userQuiz);
 
     }
+
+
+
+
+    //get subcategories by main category
+    public List<QuizSubCategory> getSubCategoriesByMainCategory(long maincategory_id){
+        return subXMain.findQuizSubCategoryByQuizCategory(getCategoryById(maincategory_id).get());
+    }
+    //get questions by questionSubMain entity
+    public List<QuizQuestion> getQuestionsByCategories(long quizCategory,long quizSubCategory ){
+        QuizCategory quizCategory1 = getCategoryById(quizCategory).get();
+        QuizSubCategory quizSubCategory1 = getSubCategoryById(quizSubCategory).get();
+
+        QuizSubCategoryMainCategory quizSubCategoryMainCategory = subXMain.findQuizSubCategoryMainCategoriesByQuizCategoryAndQuizSubCategory(
+                quizCategory1
+        ,quizSubCategory1);
+
+        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory);
+    }
+    //get questions by main category
+//    public List<QuizQuestion> getQuestionsByMainCategory(long maincategory_id){
+//
+//        QuizCategory categoryById = getCategoryById(maincategory_id).get();
+//        List<QuizSubCategory> subCategories = subXMain.findQuizSubCategoryByQuizCategory(categoryById);
+//
+//        for(QuizSubCategory quizSubCategory:subCategories){
+//
+//
+//
+//        }
+//
+//        }
 
 
 

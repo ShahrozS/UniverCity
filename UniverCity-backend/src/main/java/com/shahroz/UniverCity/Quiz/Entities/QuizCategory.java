@@ -28,8 +28,11 @@ public class QuizCategory {
     @OneToMany(mappedBy = "quizCategory")
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "quizCategory")
-    private List<QuizSubCategory> quizSubCategories = new ArrayList<>();
+//    @OneToMany(mappedBy = "quizCategory")
+//    private List<QuizSubCategory> quizSubCategories = new ArrayList<>();
 
+
+    @OneToMany(mappedBy = "quizCategory")
+    private List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = new ArrayList<>();
 
 }

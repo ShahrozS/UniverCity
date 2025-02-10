@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -48,7 +49,7 @@ public class User implements UserDetails, Principal {
     private boolean enabled;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
+    private List<Role> roles = new ArrayList<>();;
 
     @CreatedDate
     @Column(nullable = false , updatable = false)
@@ -71,7 +72,7 @@ public class User implements UserDetails, Principal {
 
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Notification> notifications;
+    private List<Notification> notifications = new ArrayList<>();;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -82,7 +83,7 @@ public class User implements UserDetails, Principal {
     private Set<University> favoriteUniversities;
 
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
-    private List<UserLocation> userLocations;
+    private List<UserLocation> userLocations = new ArrayList<>();;
 
 
     @Override

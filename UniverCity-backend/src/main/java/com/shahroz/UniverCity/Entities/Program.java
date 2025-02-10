@@ -17,7 +17,6 @@ public class Program {
 
     @Id
     @GeneratedValue
-
     private long program_id;
 
     private String name;
