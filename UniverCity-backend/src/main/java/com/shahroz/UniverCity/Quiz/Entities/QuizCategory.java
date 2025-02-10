@@ -30,9 +30,6 @@ public class QuizCategory {
     @OneToMany(mappedBy = "quizCategory")
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "quizCategory")
-//    private List<QuizSubCategory> quizSubCategories = new ArrayList<>();
-
 
     @JsonIgnore
     @OneToMany(mappedBy = "quizCategory")

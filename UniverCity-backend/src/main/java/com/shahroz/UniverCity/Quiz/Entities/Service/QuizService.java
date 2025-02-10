@@ -56,10 +56,6 @@ public class QuizService {
         return quizCategory.findById(id);
     }
 
-//    public Optional<QuizSubCategory> getSubCategoryByMainCategory(QuizCategory quizCategory){
-//        return quizSubCategoryRepository.findByQuizCategory(quizCategory);
-//    }
-
     public Optional<QuizSubCategory> getSubCategoryById(long id){
         return quizSubCategoryRepository.findById(id);
     }
@@ -104,19 +100,6 @@ public class QuizService {
 
         return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory);
     }
-    //get questions by main category
-//    public List<QuizQuestion> getQuestionsByMainCategory(long maincategory_id){
-//
-//        QuizCategory categoryById = getCategoryById(maincategory_id).get();
-//        List<QuizSubCategory> subCategories = subXMain.findQuizSubCategoryByQuizCategory(categoryById);
-//
-//        for(QuizSubCategory quizSubCategory:subCategories){
-//
-//
-//
-//        }
-//
-//        }
 
 
 

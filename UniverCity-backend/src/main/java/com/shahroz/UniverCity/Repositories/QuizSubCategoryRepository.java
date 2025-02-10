@@ -10,5 +10,4 @@ import java.util.Optional;
 
 public interface QuizSubCategoryRepository extends JpaRepository<QuizSubCategory, Long> {
 
-//    Optional<QuizSubCategory> findByQuizCategory(QuizCategory quizCategory);
 }

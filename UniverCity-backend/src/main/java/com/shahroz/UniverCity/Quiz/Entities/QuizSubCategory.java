@@ -24,11 +24,6 @@ public class QuizSubCategory {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "quizcategory_id")
-//    private QuizCategory quizCategory;
-
-
 
     @JsonIgnore
     @OneToMany(mappedBy = "quizSubCategory", cascade = CascadeType.ALL, orphanRemoval = true )
