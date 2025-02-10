@@ -40,17 +40,5 @@ public class QuizQuestion {
 
 
 
-//
-//    @JsonIgnore
-//    @ManyToOne
-//    @JoinColumn(name = "quizsubcategory_id")
-//    private QuizSubCategory quizSubCategory;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "quizsubcategorymaincategory_id")
-//    private QuizSubCategoryMainCategory quizSubCategoryMainCategory;
-
-
-
 
 }

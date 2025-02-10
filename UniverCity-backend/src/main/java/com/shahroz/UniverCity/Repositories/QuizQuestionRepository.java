@@ -11,14 +11,5 @@ import java.util.List;
 
 public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Long> {
 
-//    List<QuizQuestion> findQuizQuestionByQuizSubCategory(QuizSubCategory quizSubCategory);
-//
-//    @Query("SELECT q FROM QuizQuestion q WHERE q.quizSubCategory.quizsubcategory_id = :subcategory_id AND q.quizSubCategory.quizCategory.quizcategory_id = :category_id")
-//    List<QuizQuestion> findQuizQuestionByQuizSubCategory(@Param("category_id") long category_id, @Param("subcategory_id") long subcategory_id);
-
-
-    // select * from quizquestions where q.
-
-
 
 }

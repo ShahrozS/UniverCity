@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.Quiz.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -25,13 +26,12 @@ public class QuizCategory {
 
     String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "quizCategory")
     private List<UserQuiz> userQuizzes = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "quizCategory")
-//    private List<QuizSubCategory> quizSubCategories = new ArrayList<>();
 
-
+    @JsonIgnore
     @OneToMany(mappedBy = "quizCategory")
     private List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = new ArrayList<>();
 

@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Quiz.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.Entities.Program;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,12 +24,8 @@ public class QuizSubCategory {
 
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "quizcategory_id")
-//    private QuizCategory quizCategory;
 
-
-
+    @JsonIgnore
     @OneToMany(mappedBy = "quizSubCategory", cascade = CascadeType.ALL, orphanRemoval = true )
     private List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories =  new ArrayList<>();
 
