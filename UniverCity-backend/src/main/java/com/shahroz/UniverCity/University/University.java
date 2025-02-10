@@ -8,10 +8,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @ToString
@@ -60,21 +57,21 @@ public class University extends BaseEntity {
 
 
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Program> programs;
+    private List<Program> programs = new ArrayList<>();;
 
     @OneToMany(mappedBy = "university" , cascade = CascadeType.ALL)
-    private List<UniversityReview> reviews;
+    private List<UniversityReview> reviews = new ArrayList<>();
 
     @ManyToMany(mappedBy = "favoriteUniversities")
     private Set<User> favoritedByUsers = new HashSet<>();
 
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Facility> facilities;
+    private List<Facility> facilities = new ArrayList<>();;
 
 
 
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL)
-    private List<UniversityLocation> universityLocations;
+    private List<UniversityLocation> universityLocations = new ArrayList<>();;
 
 
 

@@ -7,6 +7,7 @@ import com.shahroz.UniverCity.University.UniversityLocation;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,11 +27,11 @@ public class City {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<UniversityLocation> universityLocations;
+    List<UniversityLocation> universityLocations = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<UserLocation> userLocations;
+    List<UserLocation> userLocations = new ArrayList<>();
 
 
 }

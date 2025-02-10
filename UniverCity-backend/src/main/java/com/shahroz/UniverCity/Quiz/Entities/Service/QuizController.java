@@ -34,11 +34,17 @@ public class QuizController {
     }
 
     @GetMapping("/{category_id}/{subcategory_id}")
-    public ResponseEntity<List<QuizQuestion>> getQuizBySubCategory(@PathVariable("category_id")long category_id, @PathVariable("subcategory_id") long subcategory_id, Authentication connectedUser){
+    public ResponseEntity<List<QuizQuestion>> getQuizBySubCategory(@PathVariable("category_id")long category_id, @PathVariable("subcategory_id") long subcategory_id){
 
 
-        List<QuizQuestion> questions = quizService.getQuestionsBySubCategory(category_id,subcategory_id,connectedUser);
+        List<QuizQuestion> questions = quizService.getQuestionsByCategories(category_id,subcategory_id);
 return ResponseEntity.ok(questions);
+    }
+
+    @GetMapping("/{category_id}")
+    public ResponseEntity<List<QuizSubCategory>> getSubCategoryByCategory(@PathVariable("category_id")long category_id){
+
+        return ResponseEntity.ok(quizService.getSubCategoriesByMainCategory(category_id));
     }
 
     @GetMapping("/categories")

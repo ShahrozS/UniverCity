@@ -5,6 +5,9 @@ import com.shahroz.UniverCity.University.University;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @ToString
 @Builder
@@ -12,6 +15,7 @@ import lombok.*;
 @Setter
 @Getter
 @NoArgsConstructor
+@Table(name="quiz_question")
 public class QuizQuestion {
 
     @Id
@@ -27,9 +31,26 @@ public class QuizQuestion {
     private int difficultyLevel;
 
 
-
     @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "quizsubcategory_id")
-    private QuizSubCategory quizSubCategory;
+    @OneToMany(mappedBy = "quizQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<QuestionSubMain> questionSubMains = new ArrayList<>();
+
+
+
+
+
+
+//
+//    @JsonIgnore
+//    @ManyToOne
+//    @JoinColumn(name = "quizsubcategory_id")
+//    private QuizSubCategory quizSubCategory;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "quizsubcategorymaincategory_id")
+//    private QuizSubCategoryMainCategory quizSubCategoryMainCategory;
+
+
+
+
 }
