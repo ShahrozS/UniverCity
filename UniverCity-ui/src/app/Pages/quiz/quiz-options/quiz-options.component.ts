@@ -14,9 +14,17 @@ export class QuizOptionsComponent {
 
 
 
+
   Continue(){
     this.router.navigate(['mock-test']);
     console.log("Mode:", this.selectionService.getMode());
+    console.log("Category:", this.selectionService.getCategory());
+    console.log("Sub:", this.selectionService.getSubCategory());
+    console.log("Difficulty:", this.selectionService.getDifficulty());
+    console.log("Count:", this.selectionService.getQuestionCount());
+    console.log("Time:", this.selectionService.getTime());
+
+
 
 
   }

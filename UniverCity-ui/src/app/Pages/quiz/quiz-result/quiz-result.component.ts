@@ -8,9 +8,9 @@ import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/sr
   styleUrls: ['./quiz-result.component.scss']
 })
 export class QuizResultComponent implements OnInit {
-  quizTitle = 'General Knowledge Quiz';  // Change dynamically if needed
-  score = 85; // Example score, replace with actual result
-  totalQuestions = 20;
+  quizTitle ?= 'General Knowledge Quiz';  // Change dynamically if needed
+  score ?= 85; // Example score, replace with actual result
+  totalQuestions ?= 20;
   breakdown = [
     { section: 'Math', correct: 5, total: 7 },
     { section: 'Science', correct: 6, total: 7 },
@@ -20,7 +20,7 @@ export class QuizResultComponent implements OnInit {
   constructor(public selectionService: SelectionServiceTsService) {}
 
   ngOnInit(): void {
-    this.totalQuestions = parseInt(this.selectionService.getQuestionCount()) || 20;
+    this.totalQuestions = parseInt(this.selectionService.getQuestionCount()??'0') || 20;
 
     confetti({
       particleCount: 100,
@@ -30,7 +30,7 @@ export class QuizResultComponent implements OnInit {
   }
 
   getScorePercentage(): number {
-    return (this.score / this.totalQuestions) * 100;
+    return (this.score??1 /( this.totalQuestions ?? 1)) * 100;
   }
 
   retryQuiz(){
