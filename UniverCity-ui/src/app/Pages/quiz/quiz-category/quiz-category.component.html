@@ -10,12 +10,11 @@
         
         <!-- Categories Section -->
         <div class="categories mt-4 w-[60em] grid grid-cols-3 gap-x-0 gap-y-6 mx-auto pb-20 place-items-center">
-          <app-category-card class="w-fit"></app-category-card>
-          <app-category-card class="w-fit"></app-category-card>
-          <app-category-card class="w-fit"></app-category-card>
-          <app-category-card class="w-fit"></app-category-card>
-          <app-category-card class="w-fit"></app-category-card>
-          <app-category-card class="w-fit"></app-category-card>
+          <app-category-card
+          *ngFor="let category of quizCategories"
+          [category] = "category"
+          class="w-fit"></app-category-card>
+      
         </div>
         
     </div>

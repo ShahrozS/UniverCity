@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.Quiz.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ public class QuestionSubMain {
     private long QuestionSubMain_id;
 
 
+    @JsonIgnore
   @ManyToOne
   @JoinColumn(name = "quizquestion_id" )
     private QuizQuestion quizQuestion;

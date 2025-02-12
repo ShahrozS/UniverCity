@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Quiz.Entities.Service;
 
 
+import com.shahroz.UniverCity.DTOs.QuestionSetDTO;
 import com.shahroz.UniverCity.DTOs.UserQuizDTO;
 import com.shahroz.UniverCity.Entities.User;
 import com.shahroz.UniverCity.Quiz.Entities.*;
@@ -9,14 +10,19 @@ import com.shahroz.UniverCity.Service.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -90,7 +96,8 @@ public class QuizService {
         return subXMain.findQuizSubCategoryByQuizCategory(getCategoryById(maincategory_id).get());
     }
     //get questions by questionSubMain entity
-    public List<QuizQuestion> getQuestionsByCategories(long quizCategory,long quizSubCategory ){
+    public List<QuizQuestion> getQuestionsByCategories(long quizCategory,long quizSubCategory , int limit){
+        System.out.println("Category: " + quizCategory);
         QuizCategory quizCategory1 = getCategoryById(quizCategory).get();
         QuizSubCategory quizSubCategory1 = getSubCategoryById(quizSubCategory).get();
 
@@ -98,9 +105,28 @@ public class QuizService {
                 quizCategory1
         ,quizSubCategory1);
 
-        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory);
+        Pageable pageable =   PageRequest.of(0,limit);
+        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory,pageable).getContent();
     }
 
 
+
+    //getting question set
+
+    public List<QuizQuestion> getQuizQuestions(QuestionSetDTO questionSetDTO){
+
+
+        System.out.println( "-->" + questionSetDTO.getCategoryId()+ " " + questionSetDTO.getSubCategoryId() + " " + questionSetDTO.getCount() + " " + questionSetDTO.getDifficulty());
+
+        List<QuizQuestion> questions = getQuestionsByCategories(questionSetDTO.getCategoryId(),questionSetDTO.getSubCategoryId(),questionSetDTO.getCount());
+        questions = questions.stream().filter(quizQuestion -> quizQuestion.getDifficultyLevel() == questionSetDTO.getDifficulty()).collect(Collectors.toList());
+
+
+        Collections.shuffle(questions);
+
+        return questions;
+
+
+    }
 
 }

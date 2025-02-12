@@ -56,6 +56,7 @@ export class MockTestComponent {
 
   ngOnInit() {
     this.startTimer();
+    
   }
 
   startTimer() {

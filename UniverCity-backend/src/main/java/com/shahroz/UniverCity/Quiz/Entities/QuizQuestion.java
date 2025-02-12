@@ -31,7 +31,6 @@ public class QuizQuestion {
     private int difficultyLevel;
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "quizQuestion", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionSubMain> questionSubMains = new ArrayList<>();
 
