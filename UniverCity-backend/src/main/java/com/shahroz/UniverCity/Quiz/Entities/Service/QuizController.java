@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Quiz.Entities.Service;
 
 
+import com.shahroz.UniverCity.DTOs.QuestionSetDTO;
 import com.shahroz.UniverCity.Quiz.Entities.*;
 import com.shahroz.UniverCity.University.University;
 import com.shahroz.UniverCity.University.UniversityRequest;
@@ -8,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -33,15 +35,15 @@ public class QuizController {
         return ResponseEntity.ok(quizService.addQuestion(quizQuestionRequest));
     }
 
-    @GetMapping("/{category_id}/{subcategory_id}")
+    @GetMapping("getQuizBySub/{category_id}/{subcategory_id}")
     public ResponseEntity<List<QuizQuestion>> getQuizBySubCategory(@PathVariable("category_id")long category_id, @PathVariable("subcategory_id") long subcategory_id){
 
 
-        List<QuizQuestion> questions = quizService.getQuestionsByCategories(category_id,subcategory_id);
+        List<QuizQuestion> questions = quizService.getQuestionsByCategories(category_id,subcategory_id,5);
 return ResponseEntity.ok(questions);
     }
 
-    @GetMapping("/{category_id}")
+    @GetMapping("getSubCategory/{category_id}")
     public ResponseEntity<List<QuizSubCategory>> getSubCategoryByCategory(@PathVariable("category_id")long category_id){
 
         return ResponseEntity.ok(quizService.getSubCategoriesByMainCategory(category_id));
@@ -52,6 +54,13 @@ return ResponseEntity.ok(questions);
 
         return ResponseEntity.ok(quizService.getMainCategories());
     }
+    @PostMapping("/questionSet")
+    public ResponseEntity<List<QuizQuestion>> getQuizQuestions(@RequestBody QuestionSetDTO questionSetDTO){
+
+        return ResponseEntity.ok(quizService.getQuizQuestions(questionSetDTO));
+
+    }
+
 
 
 

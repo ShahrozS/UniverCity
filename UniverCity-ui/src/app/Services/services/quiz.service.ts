@@ -15,8 +15,13 @@ import { getQuizBySubCategory } from '../fn/quiz/get-quiz-by-sub-category';
 import { GetQuizBySubCategory$Params } from '../fn/quiz/get-quiz-by-sub-category';
 import { getQuizCategories } from '../fn/quiz/get-quiz-categories';
 import { GetQuizCategories$Params } from '../fn/quiz/get-quiz-categories';
+import { getQuizQuestions } from '../fn/quiz/get-quiz-questions';
+import { GetQuizQuestions$Params } from '../fn/quiz/get-quiz-questions';
+import { getSubCategoryByCategory } from '../fn/quiz/get-sub-category-by-category';
+import { GetSubCategoryByCategory$Params } from '../fn/quiz/get-sub-category-by-category';
 import { QuizCategory } from '../models/quiz-category';
 import { QuizQuestion } from '../models/quiz-question';
+import { QuizSubCategory } from '../models/quiz-sub-category';
 import { saveQuizQuestion } from '../fn/quiz/save-quiz-question';
 import { SaveQuizQuestion$Params } from '../fn/quiz/save-quiz-question';
 
@@ -51,8 +56,58 @@ export class QuizService extends BaseService {
     );
   }
 
+  /** Path part for operation `getQuizQuestions()` */
+  static readonly GetQuizQuestionsPath = '/quiz/questionSet';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getQuizQuestions()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  getQuizQuestions$Response(params: GetQuizQuestions$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizQuestion>>> {
+    return getQuizQuestions(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getQuizQuestions$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  getQuizQuestions(params: GetQuizQuestions$Params, context?: HttpContext): Observable<Array<QuizQuestion>> {
+    return this.getQuizQuestions$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<QuizQuestion>>): Array<QuizQuestion> => r.body)
+    );
+  }
+
+  /** Path part for operation `getSubCategoryByCategory()` */
+  static readonly GetSubCategoryByCategoryPath = '/quiz/getSubCategory/{category_id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getSubCategoryByCategory()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getSubCategoryByCategory$Response(params: GetSubCategoryByCategory$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizSubCategory>>> {
+    return getSubCategoryByCategory(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getSubCategoryByCategory$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getSubCategoryByCategory(params: GetSubCategoryByCategory$Params, context?: HttpContext): Observable<Array<QuizSubCategory>> {
+    return this.getSubCategoryByCategory$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<QuizSubCategory>>): Array<QuizSubCategory> => r.body)
+    );
+  }
+
   /** Path part for operation `getQuizBySubCategory()` */
-  static readonly GetQuizBySubCategoryPath = '/quiz/{category_id}/{subcategory_id}';
+  static readonly GetQuizBySubCategoryPath = '/quiz/getQuizBySub/{category_id}/{subcategory_id}';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.

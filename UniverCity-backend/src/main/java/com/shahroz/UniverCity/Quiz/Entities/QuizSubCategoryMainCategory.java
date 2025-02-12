@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.Quiz.Entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,6 +31,7 @@ public class QuizSubCategoryMainCategory {
     private QuizSubCategory quizSubCategory;
 
 
+    @JsonIgnore
     @OneToMany(mappedBy = "quizSubCategoryMainCategory", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuestionSubMain> questionSubMains = new ArrayList<>();
 

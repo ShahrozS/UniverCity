@@ -8,18 +8,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { QuestionSetDto } from '../../models/question-set-dto';
 import { QuizQuestion } from '../../models/quiz-question';
 
-export interface GetQuizBySubCategory$Params {
-  category_id: number;
-  subcategory_id: number;
+export interface GetQuizQuestions$Params {
+      body: QuestionSetDto
 }
 
-export function getQuizBySubCategory(http: HttpClient, rootUrl: string, params: GetQuizBySubCategory$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizQuestion>>> {
-  const rb = new RequestBuilder(rootUrl, getQuizBySubCategory.PATH, 'get');
+export function getQuizQuestions(http: HttpClient, rootUrl: string, params: GetQuizQuestions$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizQuestion>>> {
+  const rb = new RequestBuilder(rootUrl, getQuizQuestions.PATH, 'post');
   if (params) {
-    rb.path('category_id', params.category_id, {});
-    rb.path('subcategory_id', params.subcategory_id, {});
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -32,4 +31,4 @@ export function getQuizBySubCategory(http: HttpClient, rootUrl: string, params: 
   );
 }
 
-getQuizBySubCategory.PATH = '/quiz/getQuizBySub/{category_id}/{subcategory_id}';
+getQuizQuestions.PATH = '/quiz/questionSet';

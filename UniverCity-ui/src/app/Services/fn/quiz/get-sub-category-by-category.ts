@@ -8,18 +8,16 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { QuizQuestion } from '../../models/quiz-question';
+import { QuizSubCategory } from '../../models/quiz-sub-category';
 
-export interface GetQuizBySubCategory$Params {
+export interface GetSubCategoryByCategory$Params {
   category_id: number;
-  subcategory_id: number;
 }
 
-export function getQuizBySubCategory(http: HttpClient, rootUrl: string, params: GetQuizBySubCategory$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizQuestion>>> {
-  const rb = new RequestBuilder(rootUrl, getQuizBySubCategory.PATH, 'get');
+export function getSubCategoryByCategory(http: HttpClient, rootUrl: string, params: GetSubCategoryByCategory$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizSubCategory>>> {
+  const rb = new RequestBuilder(rootUrl, getSubCategoryByCategory.PATH, 'get');
   if (params) {
     rb.path('category_id', params.category_id, {});
-    rb.path('subcategory_id', params.subcategory_id, {});
   }
 
   return http.request(
@@ -27,9 +25,9 @@ export function getQuizBySubCategory(http: HttpClient, rootUrl: string, params: 
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<Array<QuizQuestion>>;
+      return r as StrictHttpResponse<Array<QuizSubCategory>>;
     })
   );
 }
 
-getQuizBySubCategory.PATH = '/quiz/getQuizBySub/{category_id}/{subcategory_id}';
+getSubCategoryByCategory.PATH = '/quiz/getSubCategory/{category_id}';
