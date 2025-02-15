@@ -61,6 +61,11 @@ return ResponseEntity.ok(questions);
 
     }
 
+    @PostMapping("/questionSetByMain")
+    public ResponseEntity<List<QuizQuestion>> getQuizQuestionsByMainCategory(@RequestBody QuestionSetDTO questionSetDTO){
+        return ResponseEntity.ok(quizService.getQuizQuestionsByCategory(questionSetDTO));
+    }
+
 
 
 

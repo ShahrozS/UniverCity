@@ -18,4 +18,15 @@ public interface QuestionSubMainRepository  extends JpaRepository<QuestionSubMai
     @Query("SELECT q.quizQuestion FROM QuestionSubMain q WHERE q.quizSubCategoryMainCategory = :quizSubCategoryMainCategory ")
     Page<QuizQuestion> findQuizQuestionByQuizSubCategoryMainCategory(@Param("quizSubCategoryMainCategory") QuizSubCategoryMainCategory quizSubCategoryMainCategory,
                                                                      Pageable pageable);
+
+
+
+
+    @Query("SELECT q.quizQuestion FROM QuestionSubMain q WHERE q.quizSubCategoryMainCategory IN :quizSubCategoryMainCategories")
+    Page<QuizQuestion> findQuizQuestionByQuizSubCategoryMainCategoryIn(
+            List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories, Pageable pageable
+    );
+
+
+
 }

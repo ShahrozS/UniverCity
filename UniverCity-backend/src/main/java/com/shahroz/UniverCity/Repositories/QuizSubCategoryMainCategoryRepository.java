@@ -15,9 +15,14 @@ public interface QuizSubCategoryMainCategoryRepository extends JpaRepository<Qui
     @Query("Select q.quizSubCategory from QuizSubCategoryMainCategory q where q.quizCategory = :quizCategory ")
     List<QuizSubCategory> findQuizSubCategoryByQuizCategory(@Param("quizCategory") QuizCategory quizCategory);
 
+
+
     List<QuizQuestion> findQuizQuestionsByQuizCategoryAndQuizSubCategory(QuizCategory quizCategory, QuizSubCategory quizSubCategory);
 
     QuizSubCategoryMainCategory findQuizSubCategoryMainCategoriesByQuizCategoryAndQuizSubCategory(QuizCategory quizCategory, QuizSubCategory quizSubCategory);
+
+    List<QuizSubCategoryMainCategory> findQuizSubCategoryMainCategoriesByQuizCategory(QuizCategory quizCategory);
+
 
 }
 

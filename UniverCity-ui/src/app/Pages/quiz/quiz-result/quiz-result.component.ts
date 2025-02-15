@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import confetti from 'canvas-confetti';
 import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/src/app/Pages/quiz/selection.service.ts.service';
+import { QuizService } from '../../../Services/services';
+import { QuizCategory } from '../../../Services/models';
 
 @Component({
   selector: 'app-quiz-result',
@@ -8,7 +10,7 @@ import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/sr
   styleUrls: ['./quiz-result.component.scss']
 })
 export class QuizResultComponent implements OnInit {
-  quizTitle ?= 'General Knowledge Quiz';  // Change dynamically if needed
+  quizTitle ?= '';  // Change dynamically if needed
   score ?= 85; // Example score, replace with actual result
   totalQuestions ?= 20;
   breakdown = [
@@ -16,22 +18,55 @@ export class QuizResultComponent implements OnInit {
     { section: 'Science', correct: 6, total: 7 },
     { section: 'History', correct: 4, total: 6 },
   ];
+  results: { subCategory: string, correct: number, total: number }[] = [];
 
-  constructor(public selectionService: SelectionServiceTsService) {}
+  category!: QuizCategory ;
+  constructor(public selectionService: SelectionServiceTsService, private quizService: QuizService) {}
 
   ngOnInit(): void {
-    this.totalQuestions = parseInt(this.selectionService.getQuestionCount()??'0') || 20;
-
+    this.totalQuestions = this.selectionService.getQuestionCount() || 20;
+    this.quizTitle = this.selectionService.getCategoryName();
     confetti({
       particleCount: 100,
       spread: 70,
       origin: { y: 0.6 }
     });
+    this.results = this.selectionService.getQuizResults(); 
   }
 
   getScorePercentage(): number {
     return (this.score??1 /( this.totalQuestions ?? 1)) * 100;
   }
+
+
+
+
+
+  // get category name 
+
+
+
+
+  // get Sub Categories name 
+
+  // loadSubCategories() {
+
+  //   const category = this.selectionService.getCategory() ?? 0;
+
+  //   this.quizService.getSubCategoryByCategory({ category_id: category }).subscribe(
+  //     (subCategories) => {
+  //   console.log("" + this.subCategories);
+
+  //       this.subCategories=subCategories;
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching quiz categories:', error);
+  //     }
+  //   );
+
+
+  // }
+
 
   retryQuiz(){
 
