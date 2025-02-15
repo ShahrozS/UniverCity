@@ -17,6 +17,8 @@ import { getQuizCategories } from '../fn/quiz/get-quiz-categories';
 import { GetQuizCategories$Params } from '../fn/quiz/get-quiz-categories';
 import { getQuizQuestions } from '../fn/quiz/get-quiz-questions';
 import { GetQuizQuestions$Params } from '../fn/quiz/get-quiz-questions';
+import { getQuizQuestionsByMainCategory } from '../fn/quiz/get-quiz-questions-by-main-category';
+import { GetQuizQuestionsByMainCategory$Params } from '../fn/quiz/get-quiz-questions-by-main-category';
 import { getSubCategoryByCategory } from '../fn/quiz/get-sub-category-by-category';
 import { GetSubCategoryByCategory$Params } from '../fn/quiz/get-sub-category-by-category';
 import { QuizCategory } from '../models/quiz-category';
@@ -77,6 +79,31 @@ export class QuizService extends BaseService {
    */
   getQuizQuestions(params: GetQuizQuestions$Params, context?: HttpContext): Observable<Array<QuizQuestion>> {
     return this.getQuizQuestions$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<QuizQuestion>>): Array<QuizQuestion> => r.body)
+    );
+  }
+
+  /** Path part for operation `getQuizQuestionsByMainCategory()` */
+  static readonly GetQuizQuestionsByMainCategoryPath = '/quiz/questionSetByMain';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getQuizQuestionsByMainCategory()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  getQuizQuestionsByMainCategory$Response(params: GetQuizQuestionsByMainCategory$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<QuizQuestion>>> {
+    return getQuizQuestionsByMainCategory(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getQuizQuestionsByMainCategory$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  getQuizQuestionsByMainCategory(params: GetQuizQuestionsByMainCategory$Params, context?: HttpContext): Observable<Array<QuizQuestion>> {
+    return this.getQuizQuestionsByMainCategory$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<QuizQuestion>>): Array<QuizQuestion> => r.body)
     );
   }

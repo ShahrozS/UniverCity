@@ -9,40 +9,43 @@
   <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="w-full  max-w-3xl">
     
     <div class="sections-container space-y-12">
-      <ng-container *ngFor="let section of sections">
+      <ng-container *ngFor="let subCategory of subCategories">
         
         <!-- Section Title -->
         <div class="section-title bg-gray text-4xl font-extrabold text-gray-900 text-center border-b-4 border-black pb-4 mb-8">
-          <h2>{{ section.title }}</h2>
+          <h2>{{ subCategory.name }}</h2>
         </div>
 
-        <ng-container *ngFor="let question of getQuestionsForSection(section.id)">
+        <ng-container *ngFor="let question of getQuestionsForSection(subCategory.quizsubcategory_id ?? 0)">
           
           <!-- Question Card -->
           <div class="question-container p-6 bg-white border-4 border-black rounded-2xl shadow-lg">
             <div class="question-content">
-              <h3 class="text-3xl font-bold text-gray-800 mb-4">Question {{ question.id }}</h3>
-              <p class="question-text text-xl font-semibold text-gray-700 mb-6">{{ question.text }}</p>
+              <h3 class="text-3xl font-bold text-gray-800 mb-4">Question {{ question.quizquestion_id }}</h3>
+              <p class="question-text text-xl font-semibold text-gray-700 mb-6">{{ question.question }}</p>
               
               <!-- Options -->
               <div class="options-container grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div *ngFor="let option of question.options; let i = index" 
-                     class="option-card bg-white border-4 border-black rounded-xl p-4 text-lg font-semibold flex items-center cursor-pointer transition-all hover:bg-gray-200"
-                     [class.selected]="isOptionSelected(question.id, i)">
-                  <label [for]="'q' + question.id + 'opt' + i" class="w-full flex items-center gap-4">
-                    <input type="radio" 
-                           [id]="'q' + question.id + 'opt' + i"
-                           [formControlName]="'question' + question.id"
-                           [value]="i"
-                           class="hidden"
-                           (change)="onOptionSelect(question.id, i)">
-                    <span class="w-6 h-6 flex justify-center items-center border-4 border-black rounded-full">
-                      <span class="w-3 h-3 bg-black rounded-full" *ngIf="isOptionSelected(question.id, i)"></span>
-                    </span>
-                    <span class="option-text">{{ option }}</span>
-                  </label>
-                </div>
+                <ng-container *ngFor="let optionIndex of [1,2,3,4]">
+                  <div 
+                       class="option-card bg-white border-4 border-black rounded-xl p-4 text-lg font-semibold flex items-center cursor-pointer transition-all hover:bg-gray-200"
+                       [class.selected]="isOptionSelected(question.quizquestion_id??1, optionIndex)">
+                    <label [for]="'q' + question.quizquestion_id + 'opt' + optionIndex" class="w-full flex items-center gap-4">
+                      <input type="radio" 
+                             [id]="'q' + question.quizquestion_id + 'opt' + optionIndex"
+                             [formControlName]="'question' + question.quizquestion_id"
+                             [value]="optionIndex"
+                             class="hidden"
+                             (change)="onOptionSelect(question.quizquestion_id ?? 1, optionIndex)">
+                      <span class="w-6 h-6 flex justify-center items-center border-4 border-black rounded-full">
+                        <span class="w-3 h-3 bg-black rounded-full" *ngIf="isOptionSelected(question.quizquestion_id ?? 1, optionIndex)"></span>
+                      </span>
+                      <span class="option-text">{{ getOptionText(question, optionIndex) }}</span>
+                    </label>
+                  </div>
+                </ng-container>
               </div>
+              
             </div>
           </div>
 
@@ -58,3 +61,6 @@
     </div>
   </form>
 </div>
+
+
+

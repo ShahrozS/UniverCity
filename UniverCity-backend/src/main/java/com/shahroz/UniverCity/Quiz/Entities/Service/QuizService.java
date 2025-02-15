@@ -108,6 +108,38 @@ public class QuizService {
         Pageable pageable =   PageRequest.of(0,limit);
         return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory,pageable).getContent();
     }
+    // get all questions by main category
+    public List<QuizQuestion> getQuestionsByMainCategory(long category, int limit) {
+        QuizCategory quizCategory1 = getCategoryById(category).orElseThrow(() -> new RuntimeException("Category not found"));
+
+        // Fetch all QuizSubCategoryMainCategory associated with the given QuizCategory
+        List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = subXMain.findQuizSubCategoryMainCategoriesByQuizCategory(quizCategory1);
+
+        // Ensure there are categories available
+        if (quizSubCategoryMainCategories.isEmpty()) {
+            return Collections.emptyList(); // Return empty list if no subcategories exist
+        }
+
+        Pageable pageable = PageRequest.of(0, limit);
+
+        // Fetch all questions linked to these subcategories
+        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategoryIn(quizSubCategoryMainCategories, pageable).getContent();
+    }
+
+
+
+    // quiz subxmain
+    // 1 1 1
+    // 2 1 2
+    // 3 2 1
+    // 4 2 3
+
+    // question sub main
+
+    // 1 1 1
+    // 2 1 2
+    // 3 2 1
+    //
 
 
 
@@ -128,5 +160,25 @@ public class QuizService {
 
 
     }
+
+
+    // get questions by main category only. (with options)
+    public List<QuizQuestion> getQuizQuestionsByCategory(QuestionSetDTO questionSetDTO){
+
+
+        System.out.println( "-->" + questionSetDTO.getCategoryId()+ " " + questionSetDTO.getSubCategoryId() + " " + questionSetDTO.getCount() + " " + questionSetDTO.getDifficulty());
+
+        List<QuizQuestion> questions = getQuestionsByMainCategory(questionSetDTO.getCategoryId(),questionSetDTO.getCount());
+        questions = questions.stream().filter(quizQuestion -> quizQuestion.getDifficultyLevel() == questionSetDTO.getDifficulty()).collect(Collectors.toList());
+
+
+        Collections.shuffle(questions);
+
+        return questions;
+
+    }
+
+
+
 
 }
