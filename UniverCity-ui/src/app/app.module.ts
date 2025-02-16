@@ -32,6 +32,7 @@ import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.com
 import { OptionCardComponent } from './Pages/quiz/option-card/option-card.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
+import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.component';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.compon
     QuizOptionsComponent,
     OptionCardComponent,
     QuizResultComponent,
+    PreviousQuizComponent,
 
   ],
   imports: [

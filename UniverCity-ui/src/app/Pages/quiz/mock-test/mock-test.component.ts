@@ -27,7 +27,7 @@ export class MockTestComponent {
   quizForm: FormGroup;
   timer: string = '00:00';
   startTime!: number; // 30 minutes in seconds
-
+  score!:number;
   subCategories: QuizSubCategory[] = [];
 
   questions: QuizQuestion[] = [];
@@ -148,13 +148,85 @@ getPreviousQuestionsCount(subCategoryIndex: number): number {
   }
   return count;
 }
+correctAnswers = 0;
 
 
+  userQuiz:{score:string,categoryId:number,completed:number}={
+    score: "0",
+    categoryId:0,
+    completed:0,
+  };
+
+calculateCorrectAnswers(){
+  let totalQuestions = this.service.getQuestionCount();
+
+  this.subCategories.forEach(subCategory => {
+    let questions = this.getQuestionsForSection(subCategory.quizsubcategory_id ?? 0);
+    questions.forEach(question => {
+      const selectedOption = this.quizForm.get('question' + question.quizquestion_id)?.value;
+      console.log( selectedOption + " != " + question.correctAnswer );
+      
+      if (String(selectedOption).trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase()) {
+        // Assuming correctOption exists
+       this.correctAnswers++;
+        console.log( selectedOption + " = " + question.correctAnswer );
+  
+      }
+    });
+    console.log( "Correct Answers-->" + this.correctAnswers);
+    
+  });
+
+
+
+
+  this.userQuiz.categoryId = this.service.getCategory() ?? 0;
+  this.userQuiz.score = this.correctAnswers + "/" + this.service.getQuestionCount();
+  this.userQuiz.completed = (this.correctAnswers/(this.service.getQuestionCount()??1))*100 ; 
+
+
+  console.log("ScorE: " + this.userQuiz.score);
+  this.service.setScore(this.correctAnswers);
+
+  console.log("UserQuiz: " + this.userQuiz);
+};
+
+saveUserQuiz(){
+  console.log("In save user quiz");
+  this.quizService.createUserQuiz({
+    body:
+    {
+      categoryId: this.service.getCategory(),
+completed:this.userQuiz.completed,
+score:this.userQuiz.score,
+    }
+  }).subscribe(
+    (userQuiz)=>{
+      console.log("Saved User Quiz Succesfully"+JSON.stringify(userQuiz));
+    },
+    (error)=>{
+      console.log("Error saving quiz: " + error);
+    }
+
+
+  );
+
+
+};
 
 
 
 onSubmit() {
   const results: { subCategory: string, correct: number, total: number }[] = [];
+
+
+  
+ 
+
+  // calculating score 
+this.calculateCorrectAnswers();
+this.saveUserQuiz();
+
 
   this.subCategories.forEach(subCategory => {
     const subCategoryId = subCategory.quizsubcategory_id ?? 0;
@@ -163,7 +235,8 @@ onSubmit() {
     let correctCount = 0;
     subCategoryQuestions.forEach(question => {
       const selectedOption = this.quizForm.get('question' + question.quizquestion_id)?.value;
-      if (selectedOption === question.correctAnswer) {
+      if (String(selectedOption).trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase()) {
+
         correctCount++;
       }
     });

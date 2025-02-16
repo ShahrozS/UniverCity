@@ -32,6 +32,7 @@ export class SelectionServiceTsService {
       this.category = parsedData.category || 0;
       this.subcategory = parsedData.subcategory || 0;
       this.categoryName = parsedData.categoryName || 0;
+      this.score = parsedData.score || 0;
     }
   }
 
@@ -122,7 +123,7 @@ export class SelectionServiceTsService {
     this.saveToStorage();
   }
   getScore():number|undefined{
-    return this.category;
+    return this.score;
   }
 
 

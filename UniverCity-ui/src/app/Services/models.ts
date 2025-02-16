@@ -30,3 +30,5 @@ export type { UniversityResponse } from './models/university-response';
 export type { UniversityReview } from './models/university-review';
 export type { User } from './models/user';
 export type { UserLocation } from './models/user-location';
+export type { UserQuiz } from './models/user-quiz';
+export type { UserQuizDto } from './models/user-quiz-dto';
