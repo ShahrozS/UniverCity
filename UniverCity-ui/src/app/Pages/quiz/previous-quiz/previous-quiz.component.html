@@ -1,0 +1,80 @@
+<!-- <app-navbar></app-navbar>
+<section class="quiz-history-container h-screen">
+  <div class="header">
+    <h2>Your Quiz History</h2>
+  </div>
+  <div class="quiz-list">
+    <div class="quiz-card" *ngFor="let quiz of userQuizzes">
+      <div class="quiz-header">
+        <h3>{{ quiz?.quizCategory?.name }}</h3>
+        <span class="quiz-date">{{ quiz.date }}</span>
+      </div>
+      <div class="quiz-details">
+        <p>Score: <strong>{{ quiz.score }}</strong></p>
+        <p>Completion: <strong>{{ quiz.completed }}%</strong></p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+
+
+
+<!-- user-quizzes.component.html -->
+<div class="container">
+    <div class="header">
+      <h1>Quiz Journey</h1>
+      <div class="stats">
+        <div class="stat-box">
+          <span class="stat-number">{{ totalQuizzes }}</span>
+          <span class="stat-label">Quizzes Taken</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-number">{{ averageScore }}</span>
+          <span class="stat-label">Avg. Score</span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="quiz-timeline">
+      <div *ngFor="let quiz of quizzes" class="quiz-card" @fadeIn>
+        <div class="card-left">
+          <div class="category-icon">
+            <mat-icon [ngSwitch]="quiz.quizCategory?.name">
+              <ng-container *ngSwitchCase="'Math'">calculate</ng-container>
+              <ng-container *ngSwitchCase="'Science'">science</ng-container>
+              <ng-container *ngSwitchCase="'History'">public</ng-container>
+              <ng-container *ngSwitchDefault>quiz</ng-container>
+            </mat-icon>
+            <div class="score-badge">{{ quiz.score }}</div>
+          </div>
+          <div class="progress-circle">
+            <svg>
+              <circle cx="40" cy="40" r="36"></circle>
+              <circle cx="40" cy="40" r="36" [style.stroke-dashoffset]="(1 - quiz.completed) * 226"></circle>
+            </svg>
+            <span>{{ quiz.completed * 100 | number:'1.0-0' }}%</span>
+          </div>
+        </div>
+  
+        <div class="card-right">
+          <h3>{{ quiz.quizCategory?.name || 'General' }} Quiz</h3>
+          <div class="quiz-details">
+            <div class="detail-item">
+              <mat-icon>calendar_today</mat-icon>
+              <span>{{ quiz.date | date:'mediumDate' }}</span>
+            </div>
+            <div class="detail-item">
+              <mat-icon>schedule</mat-icon>
+              <span>{{ quiz.timeTaken || '--:--' }}</span>
+            </div>
+          </div>
+          
+          <div class="tags">
+            <span class="tag" *ngIf="quiz.completed === 1">Completed</span>
+            <span class="tag highscore" *ngIf="isHighScore(quiz)">High Score!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
