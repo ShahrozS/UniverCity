@@ -13,6 +13,7 @@ import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.
 import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
 import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.component';
 import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
+import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.component';
 
 const routes: Routes = [
   {
@@ -47,7 +48,10 @@ const routes: Routes = [
         {path: 'quiz-options', component: QuizOptionsComponent,
           canActivate:[authGuard]},
           {path: 'quiz-result', component: QuizResultComponent,
-            canActivate:[authGuard]}
+            canActivate:[authGuard]},
+            {path: 'previous-quiz', component: PreviousQuizComponent,
+              canActivate:[authGuard]},
+              
 ];
 
 @NgModule({

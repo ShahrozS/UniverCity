@@ -11,6 +11,8 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { createUserQuiz } from '../fn/quiz/create-user-quiz';
+import { CreateUserQuiz$Params } from '../fn/quiz/create-user-quiz';
 import { getQuizBySubCategory } from '../fn/quiz/get-quiz-by-sub-category';
 import { GetQuizBySubCategory$Params } from '../fn/quiz/get-quiz-by-sub-category';
 import { getQuizCategories } from '../fn/quiz/get-quiz-categories';
@@ -21,11 +23,14 @@ import { getQuizQuestionsByMainCategory } from '../fn/quiz/get-quiz-questions-by
 import { GetQuizQuestionsByMainCategory$Params } from '../fn/quiz/get-quiz-questions-by-main-category';
 import { getSubCategoryByCategory } from '../fn/quiz/get-sub-category-by-category';
 import { GetSubCategoryByCategory$Params } from '../fn/quiz/get-sub-category-by-category';
+import { getUserQuiz } from '../fn/quiz/get-user-quiz';
+import { GetUserQuiz$Params } from '../fn/quiz/get-user-quiz';
 import { QuizCategory } from '../models/quiz-category';
 import { QuizQuestion } from '../models/quiz-question';
 import { QuizSubCategory } from '../models/quiz-sub-category';
 import { saveQuizQuestion } from '../fn/quiz/save-quiz-question';
 import { SaveQuizQuestion$Params } from '../fn/quiz/save-quiz-question';
+import { UserQuiz } from '../models/user-quiz';
 
 @Injectable({ providedIn: 'root' })
 export class QuizService extends BaseService {
@@ -105,6 +110,56 @@ export class QuizService extends BaseService {
   getQuizQuestionsByMainCategory(params: GetQuizQuestionsByMainCategory$Params, context?: HttpContext): Observable<Array<QuizQuestion>> {
     return this.getQuizQuestionsByMainCategory$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<QuizQuestion>>): Array<QuizQuestion> => r.body)
+    );
+  }
+
+  /** Path part for operation `createUserQuiz()` */
+  static readonly CreateUserQuizPath = '/quiz/createUserQuiz';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `createUserQuiz()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  createUserQuiz$Response(params: CreateUserQuiz$Params, context?: HttpContext): Observable<StrictHttpResponse<UserQuiz>> {
+    return createUserQuiz(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `createUserQuiz$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  createUserQuiz(params: CreateUserQuiz$Params, context?: HttpContext): Observable<UserQuiz> {
+    return this.createUserQuiz$Response(params, context).pipe(
+      map((r: StrictHttpResponse<UserQuiz>): UserQuiz => r.body)
+    );
+  }
+
+  /** Path part for operation `getUserQuiz()` */
+  static readonly GetUserQuizPath = '/quiz/getUserQuiz';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getUserQuiz()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserQuiz$Response(params?: GetUserQuiz$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UserQuiz>>> {
+    return getUserQuiz(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getUserQuiz$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserQuiz(params?: GetUserQuiz$Params, context?: HttpContext): Observable<Array<UserQuiz>> {
+    return this.getUserQuiz$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<UserQuiz>>): Array<UserQuiz> => r.body)
     );
   }
 

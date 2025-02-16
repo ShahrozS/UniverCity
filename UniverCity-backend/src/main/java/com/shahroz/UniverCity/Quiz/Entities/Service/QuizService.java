@@ -38,6 +38,8 @@ public class QuizService {
     private final QuizQuestionMapper quizQuestionMapper;
     private final QuizSubCategoryMainCategoryRepository subXMain;
     private final QuestionSubMainRepository questionSubMainRepository;
+    private final UserQuizRepository userQuizRepository;
+
     public Long addQuestion(QuizQuestionRequest quizQuestionRequest){
 
         QuizQuestion quizQuestion = quizQuestionMapper.toQuizQuestion(quizQuestionRequest);
@@ -55,7 +57,6 @@ public class QuizService {
 
 
 
-    public List<QuizQuestion> shuffleQuiz;
 
     //categories extraction
     public Optional<QuizCategory> getCategoryById (long id){
@@ -71,7 +72,7 @@ public class QuizService {
 
 
     //create quiz
-    public void createUserQuiz(UserQuizDTO userQuizDTO, Authentication connectedAuthentication) {
+    public UserQuiz createUserQuiz(UserQuizDTO userQuizDTO, Authentication connectedAuthentication) {
 
         UserQuiz userQuiz = new UserQuiz();
 
@@ -81,11 +82,16 @@ public class QuizService {
         QuizCategory quizCategory1 = getCategoryById(userQuizDTO.getCategoryId()).get();
         userQuiz.setQuizCategory(quizCategory1);
         userQuiz.setDate(LocalDate.now());
-        userQuiz.setScore(userQuiz.getScore());
-        userQuiz.setCompleted(userQuiz.getCompleted());
+        userQuiz.setScore(userQuizDTO.getScore());
+        userQuiz.setCompleted(userQuizDTO.getCompleted());
 
-        quizRepository.save(userQuiz);
+       return quizRepository.save(userQuiz);
 
+    }
+
+    public List<UserQuiz> getAllUserQuiz(Authentication authentication){
+    User user = userService.findUserByEmail(authentication.getName()).get();
+    return userQuizRepository.getUserQuizByUser(user);
     }
 
 

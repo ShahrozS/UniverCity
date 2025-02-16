@@ -12,8 +12,8 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class QuizResultComponent implements OnInit {
   quizTitle ?= '';  // Change dynamically if needed
-  score ?= 85; // Example score, replace with actual result
-  totalQuestions ?= 20;
+  score ?= 0; // Example score, replace with actual result
+  totalQuestions ?= 0;
   breakdown = [
     { section: 'Math', correct: 5, total: 7 },
     { section: 'Science', correct: 6, total: 7 },
@@ -37,6 +37,9 @@ export class QuizResultComponent implements OnInit {
       this.results = JSON.parse(params['results']);
     })
 
+    this.score = this.selectionService.getScore();
+    this.totalQuestions = this.selectionService.getQuestionCount();
+    console.log(this.selectionService.getScore() + " : " +   this.selectionService.getQuestionCount() )
   }
 
   getScorePercentage(): number {

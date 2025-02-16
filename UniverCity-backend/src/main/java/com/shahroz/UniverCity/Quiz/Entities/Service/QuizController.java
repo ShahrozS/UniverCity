@@ -2,6 +2,8 @@ package com.shahroz.UniverCity.Quiz.Entities.Service;
 
 
 import com.shahroz.UniverCity.DTOs.QuestionSetDTO;
+import com.shahroz.UniverCity.DTOs.UserQuizDTO;
+import com.shahroz.UniverCity.Entities.User;
 import com.shahroz.UniverCity.Quiz.Entities.*;
 import com.shahroz.UniverCity.University.University;
 import com.shahroz.UniverCity.University.UniversityRequest;
@@ -67,6 +69,13 @@ return ResponseEntity.ok(questions);
     }
 
 
+    @PostMapping("/createUserQuiz")
+    public ResponseEntity<UserQuiz> createUserQuiz(@RequestBody UserQuizDTO userQuizDTO, Authentication authentication){
+        return ResponseEntity.ok(quizService.createUserQuiz(userQuizDTO,authentication ));
+    }
 
-
+    @GetMapping("/getUserQuiz")
+    public ResponseEntity<List<UserQuiz>> getUserQuiz(Authentication authentication){
+        return ResponseEntity.ok(quizService.getAllUserQuiz(authentication));
+    }
 }
