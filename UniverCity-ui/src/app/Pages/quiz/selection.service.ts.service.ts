@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -125,13 +126,29 @@ export class SelectionServiceTsService {
   }
 
 
-  private quizResults: { subCategory: string, correct: number, total: number }[] = [];
+  // private quizResults: { subCategory: string, correct: number, total: number }[] = [];
+
+  // setQuizResults(results: { subCategory: string, correct: number, total: number }[]) {
+  //   this.quizResults = results;
+
+  // }
+
+  // getQuizResults() {
+
+  //   return this.quizResults;
+  // }
+
+
+  private quizResultsSubject = new BehaviorSubject<{ subCategory: string, correct: number, total: number }[]>([]);
+  quizResults$ = this.quizResultsSubject.asObservable();
+
 
   setQuizResults(results: { subCategory: string, correct: number, total: number }[]) {
-    this.quizResults = results;
+    this.quizResultsSubject.next(results);
   }
 
   getQuizResults() {
-    return this.quizResults;
+    return this.quizResultsSubject.getValue();
   }
+
 }
