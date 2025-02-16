@@ -3,6 +3,7 @@ import confetti from 'canvas-confetti';
 import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/src/app/Pages/quiz/selection.service.ts.service';
 import { QuizService } from '../../../Services/services';
 import { QuizCategory } from '../../../Services/models';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-quiz-result',
@@ -21,7 +22,7 @@ export class QuizResultComponent implements OnInit {
   results: { subCategory: string, correct: number, total: number }[] = [];
 
   category!: QuizCategory ;
-  constructor(public selectionService: SelectionServiceTsService, private quizService: QuizService) {}
+  constructor(private route: ActivatedRoute,public selectionService: SelectionServiceTsService, private quizService: QuizService) {}
 
   ngOnInit(): void {
     this.totalQuestions = this.selectionService.getQuestionCount() || 20;
@@ -31,7 +32,11 @@ export class QuizResultComponent implements OnInit {
       spread: 70,
       origin: { y: 0.6 }
     });
-    this.results = this.selectionService.getQuizResults(); 
+    this.route.queryParams.subscribe(params => {
+      console.log("--->"+JSON.parse(params['results']))
+      this.results = JSON.parse(params['results']);
+    })
+
   }
 
   getScorePercentage(): number {

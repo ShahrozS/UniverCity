@@ -9,19 +9,19 @@
   <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="w-full  max-w-3xl">
     
     <div class="sections-container space-y-12">
-      <ng-container *ngFor="let subCategory of subCategories">
+      <ng-container *ngFor="let subCategory of subCategories; let subIndex  = index " >
         
         <!-- Section Title -->
         <div class="section-title bg-gray text-4xl font-extrabold text-gray-900 text-center border-b-4 border-black pb-4 mb-8">
           <h2>{{ subCategory.name }}</h2>
         </div>
 
-        <ng-container *ngFor="let question of getQuestionsForSection(subCategory.quizsubcategory_id ?? 0)">
+        <ng-container *ngFor="let question of getQuestionsForSection(subCategory.quizsubcategory_id ?? 0); let qIndex = index ">
           
           <!-- Question Card -->
           <div class="question-container p-6 bg-white border-4 border-black rounded-2xl shadow-lg">
             <div class="question-content">
-              <h3 class="text-3xl font-bold text-gray-800 mb-4">Question {{ question.quizquestion_id }}</h3>
+              <h3 class="text-3xl font-bold text-gray-800 mb-4">Question {{ qIndex + 1 + getPreviousQuestionsCount(subIndex) }}</h3>
               <p class="question-text text-xl font-semibold text-gray-700 mb-6">{{ question.question }}</p>
               
               <!-- Options -->

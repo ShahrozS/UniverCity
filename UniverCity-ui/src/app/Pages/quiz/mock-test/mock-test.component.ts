@@ -141,6 +141,18 @@ getOptionText(question: QuizQuestion, optionIndex: number): string {
 }
 
 
+getPreviousQuestionsCount(subCategoryIndex: number): number {
+  let count = 0;
+  for (let i = 0; i < subCategoryIndex; i++) {
+    count += this.getQuestionsForSection(this.subCategories[i].quizsubcategory_id ?? 0).length;
+  }
+  return count;
+}
+
+
+
+
+
 onSubmit() {
   const results: { subCategory: string, correct: number, total: number }[] = [];
 
@@ -164,8 +176,13 @@ onSubmit() {
   });
 
   console.log("Quiz Results:", results);
-  this.service.setQuizResults(results); // Store results for results page
-  this.router.navigate(['/quiz-result']); // Redirect to results page
+  this.service.setQuizResults(results);
+  console.log("Getting back: " + JSON.stringify( this.service.getQuizResults())); // Store results for results page
+  this.router.navigate(['/quiz-result'],
+  {  queryParams: {
+      results: JSON.stringify(results)
+    }}
+  ); // Redirect to results page
 }
 
 }
