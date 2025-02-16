@@ -33,6 +33,8 @@ import { OptionCardComponent } from './Pages/quiz/option-card/option-card.compon
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
 import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.component';
+import { MatIconModule } from '@angular/material/icon';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; // Add this
 
 
 @NgModule({
@@ -72,6 +74,7 @@ import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.
     BrowserAnimationsModule,
     Button,
     UniversityByProgramListComponent,
+    MatIconModule 
 ],
   providers: [
     HttpClient,
@@ -79,7 +82,8 @@ import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true, // Ensures this interceptor is part of the chain
-    }
+    },
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
