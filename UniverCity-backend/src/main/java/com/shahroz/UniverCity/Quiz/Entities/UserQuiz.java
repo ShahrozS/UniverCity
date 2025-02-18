@@ -24,6 +24,7 @@ public class UserQuiz {
     private LocalDate date;
     private String score;
     private float completed;
+    private String time;
 
 
     @ManyToOne

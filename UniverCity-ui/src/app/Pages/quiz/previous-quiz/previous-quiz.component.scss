@@ -71,20 +71,35 @@
 /* user-quizzes.component.scss */
 @use '@angular/material' as mat;
 
+
+.main-box{
+  background: linear-gradient(135deg, #eafbff 0%, #d7edff 100%);
+  width: 100% ;
+  margin-top: 0;
+  padding-top: 0;
+  max-width: 100%;
+}
+
 .container {
+  
   max-width: 1200px;
   margin: 2rem auto;
+  margin-top: 0;
+
   padding: 0 1rem;
 }
 
 .header {
   text-align: center;
   margin-bottom: 3rem;
-  
+  padding-top: 10px; /* Adjust as needed */
+  margin-top: 0;
   h1 {
-    font-size: 2.5rem;
+    font-size: 3.5rem;
     color: #2c3e50;
-    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+
+    margin-bottom: 2.5rem;
     font-weight: 600;
   }
 }
@@ -129,16 +144,18 @@
     top: 0;
     height: 100%;
     width: 4px;
-    background: #f0f0f0;
+    background: #23082e;
+
     border-radius: 2px;
   }
 }
 
 .quiz-card {
-  background: white;
+  background: #1f012c;
   border-radius: 15px;
   padding: 1.5rem;
   display: flex;
+
   align-items: center;
   position: relative;
   transition: transform 0.3s ease;
@@ -152,6 +169,14 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
+
+    h1{
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top:10px;
+    }
     
     .category-icon {
       position: relative;
@@ -216,7 +241,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         font-weight: 600;
-        color: #2c3e50;
+        color: white;
       }
     }
   }
@@ -224,10 +249,11 @@
   .card-right {
     flex: 1;
     padding-left: 2rem;
-    
+    color: white;    
     h3 {
       margin: 0 0 1rem 0;
-      color: #2c3e50;
+      color: white;
+      font-size: 2em;
     }
     
     .quiz-details {
@@ -239,7 +265,7 @@
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: #7f8c8d;
+        color: rgba(255, 255, 255, 0.747);
         
         mat-icon {
           color: #6B48FF;
@@ -276,4 +302,8 @@
 
 .fadeIn {
   animation: fadeIn 0.5s ease forwards;
+}
+
+.progress-text{
+  color:white;
 }

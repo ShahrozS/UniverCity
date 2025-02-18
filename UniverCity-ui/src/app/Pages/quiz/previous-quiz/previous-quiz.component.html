@@ -23,6 +23,9 @@
 <!-- user-quizzes.component.html -->
 
 <app-navbar></app-navbar>
+
+<section class="main-box">
+
 <div class="container">
     <div class="header">
       <h1>Quiz Journey</h1>
@@ -39,23 +42,34 @@
     </div>
   
     <div class="quiz-timeline">
-      <div *ngFor="let quiz of quizzes" class="quiz-card" @fadeIn>
+      <div *ngFor="let quiz of quizzes; let qindex = index;" class="quiz-card" @fadeIn>
         <div class="card-left">
           <div class="category-icon">
             <mat-icon [ngSwitch]="quiz.quizCategory?.name">
-              <ng-container *ngSwitchCase="'Math'">calculate</ng-container>
-              <ng-container *ngSwitchCase="'Science'">science</ng-container>
-              <ng-container *ngSwitchCase="'History'">public</ng-container>
-              <ng-container *ngSwitchDefault>quiz</ng-container>
+              <h1 class="font-semibold text-6xl">{{qindex}}</h1>
             </mat-icon>
             <div class="score-badge">{{ quiz.score }}</div>
           </div>
           <div class="progress-circle">
-            <svg>
-              <circle cx="40" cy="40" r="36"></circle>
-              <circle cx="40" cy="40" r="36" [style.stroke-dashoffset]="(1 - quiz.completed) * 226"></circle>
+            <svg width="80" height="80" viewBox="0 0 80 80">
+              <!-- Background Circle -->
+              <circle cx="40" cy="40" r="36" stroke="#ddd" stroke-width="4" fill="none"></circle>
+            
+              <!-- Progress Circle -->
+              <circle 
+                cx="40" 
+                cy="40" 
+                r="36" 
+                stroke="blue" 
+                stroke-width="4" 
+                fill="none"
+                stroke-linecap="round"
+                stroke-dasharray="226"
+                [style.stroke-dashoffset]="(1 - quiz.completed / 100) * 226"
+                transform="rotate(-90 40 40)"
+              ></circle>
             </svg>
-            <span>{{ quiz.completed * 100 | number:'1.0-0' }}%</span>
+            <span class="progress-text">{{ quiz.completed  | number:'1.0-0' }}%</span>
           </div>
         </div>
   
@@ -80,3 +94,4 @@
       </div>
     </div>
   </div>
+</section>
