@@ -17,7 +17,6 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
   ]
 })
 export class PreviousQuizComponent {
-  userQuizzes: UserQuiz[] = [];
 
   constructor(private quizService: QuizService) {}
 
@@ -52,15 +51,34 @@ averageScore = '0';
 ngOnInit() {
   // Mock data - replace with actual API call
   
-  this.totalQuizzes = this.quizzes.length;
-  this.calculateAverageScore();
+  this.getUserQuiz();
 }
 
 private calculateAverageScore() {
 
-  
-  // Implement actual calculation based on your score format
-  this.averageScore = '8.5';
+  if (this.quizzes.length === 0) {
+    this.averageScore = "0";
+    return;
+  }
+
+  let totalScore = 0;
+  let totalQuestions = 0;
+
+  this.quizzes.forEach(quiz => {
+    console.log("quiz-->"+ quiz);
+    if (quiz.score) {
+      const parts = quiz.score.split('/').map(Number);
+      console.log("parts: " + parts);
+      // Ensure split happens safely
+      if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+        totalScore += parts[0];
+        totalQuestions += parts[1];
+      }
+    }
+  });
+
+  let x  = totalQuestions ? (totalScore / totalQuestions)*10 : 0;
+  this.averageScore = ""+x.toFixed(1);
 }
 
 isHighScore(quiz: any): boolean {
@@ -74,7 +92,10 @@ isHighScore(quiz: any): boolean {
 this.quizService.getUserQuiz().subscribe(
   (userQuiz)=>{
     console.log(userQuiz);
-    this.userQuizzes = userQuiz;
+    this.totalQuizzes = userQuiz.length;
+    this.quizzes = userQuiz;
+    this.calculateAverageScore();
+  
   },
   (error)=>{
     console.log(error);

@@ -84,6 +84,7 @@ public class QuizService {
         userQuiz.setDate(LocalDate.now());
         userQuiz.setScore(userQuizDTO.getScore());
         userQuiz.setCompleted(userQuizDTO.getCompleted());
+        userQuiz.setTime(userQuizDTO.getTime());
 
        return quizRepository.save(userQuiz);
 
@@ -121,9 +122,8 @@ public class QuizService {
         // Fetch all QuizSubCategoryMainCategory associated with the given QuizCategory
         List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = subXMain.findQuizSubCategoryMainCategoriesByQuizCategory(quizCategory1);
 
-        // Ensure there are categories available
         if (quizSubCategoryMainCategories.isEmpty()) {
-            return Collections.emptyList(); // Return empty list if no subcategories exist
+            return Collections.emptyList();
         }
 
         Pageable pageable = PageRequest.of(0, limit);

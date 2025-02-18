@@ -9,6 +9,7 @@ export interface UserQuiz {
   date?: string;
   quizCategory?: QuizCategory;
   score?: string;
+  time?: string;
   user?: User;
   userquiz_id?: number;
 }

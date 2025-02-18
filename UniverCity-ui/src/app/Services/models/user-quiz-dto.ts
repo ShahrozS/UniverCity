@@ -6,4 +6,5 @@ export interface UserQuizDto {
   categoryId?: number;
   completed?: number;
   score?: string;
+  time?: string;
 }
