@@ -48,7 +48,8 @@ const routes: Routes = [
         {path: 'quiz-options', component: QuizOptionsComponent,
           canActivate:[authGuard]},
           {path: 'quiz-result', component: QuizResultComponent,
-            canActivate:[authGuard]},
+            canActivate:[authGuard] // Forces component reload on route change
+          },
             {path: 'previous-quiz', component: PreviousQuizComponent,
               canActivate:[authGuard]},
               

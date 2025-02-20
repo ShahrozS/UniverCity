@@ -3,18 +3,23 @@ import confetti from 'canvas-confetti';
 import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/src/app/Pages/quiz/selection.service.ts.service';
 import { QuizService } from '../../../Services/services';
 import { QuizCategory } from '../../../Services/models';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-quiz-result',
   templateUrl: './quiz-result.component.html',
-  styleUrls: ['./quiz-result.component.scss']
+  styleUrls: ['./quiz-result.component.scss'],
+  
 })
 export class QuizResultComponent implements OnInit {
   quizTitle ?= '';  // Change dynamically if needed
   score ?= 0; // Example score, replace with actual result
   totalQuestions ?= 0;
+  difficulty ?=0;
+  time?="";
+  mode?="";
+
   faArrowDown = faArrowDown;
   breakdown = [
     { section: 'Math', correct: 5, total: 7 },
@@ -24,10 +29,25 @@ export class QuizResultComponent implements OnInit {
   results: { subCategory: string, correct: number, total: number }[] = [];
 
   category!: QuizCategory ;
-  constructor(private route: ActivatedRoute,public selectionService: SelectionServiceTsService, private quizService: QuizService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+    ,public selectionService: SelectionServiceTsService,
+     private quizService: QuizService) {}
 
   ngOnInit(): void {
+    this.selectionService.loadFromStorage(); 
+    console.log(this.selectionService.getTime());
+    console.log(this.selectionService.getMode());
+    console.log(this.selectionService.getQuestionCount());
+    console.log(this.selectionService.getDifficulty());
+    console.log("--------------------------")
+    this.time = this.selectionService.getTime();
+    this.difficulty = this.selectionService.getDifficulty();
+    this.mode = this.selectionService.getMode();
+
     this.totalQuestions = this.selectionService.getQuestionCount() || 20;
+ 
     this.quizTitle = this.selectionService.getCategoryName();
     confetti({
       particleCount: 100,
@@ -44,7 +64,12 @@ export class QuizResultComponent implements OnInit {
     console.log(this.selectionService.getScore() + " : " +   this.selectionService.getQuestionCount() )
   }
 
+  temp = 0;
+
   getScorePercentage(): number {
+    
+ 
+    
     return (this.score??1 /( this.totalQuestions ?? 1)) * 100;
   }
 
@@ -84,7 +109,6 @@ export class QuizResultComponent implements OnInit {
   goHome(){
 
   }
-
 
   //handeling the scrollng 
 
