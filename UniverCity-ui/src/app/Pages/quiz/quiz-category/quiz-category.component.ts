@@ -14,10 +14,14 @@ export class QuizCategoryComponent implements OnInit {
 
   quizCategories: QuizCategory[] = [];
 
-  constructor(private quizService: QuizService) {}
+  constructor(private quizService: QuizService, private selectionService: SelectionServiceTsService) {}
 
   ngOnInit() {
     this.loadCategories();
+    this.selectionService.setMode("");
+    this.selectionService.setTime("");
+    this.selectionService.setDifficulty("");
+    this.selectionService.setQuestionCount("");
   }
 
   loadCategories() {
