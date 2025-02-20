@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import confetti from 'canvas-confetti';
 import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/src/app/Pages/quiz/selection.service.ts.service';
 import { QuizService } from '../../../Services/services';
 import { QuizCategory } from '../../../Services/models';
 import { ActivatedRoute } from '@angular/router';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-quiz-result',
@@ -14,6 +15,7 @@ export class QuizResultComponent implements OnInit {
   quizTitle ?= '';  // Change dynamically if needed
   score ?= 0; // Example score, replace with actual result
   totalQuestions ?= 0;
+  faArrowDown = faArrowDown;
   breakdown = [
     { section: 'Math', correct: 5, total: 7 },
     { section: 'Science', correct: 6, total: 7 },
@@ -81,5 +83,23 @@ export class QuizResultComponent implements OnInit {
   }
   goHome(){
 
+  }
+
+
+  //handeling the scrollng 
+
+  showScrollButton = true;
+
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    // Detect scroll position
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const pageHeight = document.documentElement.scrollHeight;
+    
+    // Show button if user is not at the bottom
+    this.showScrollButton = scrollPosition < pageHeight - 50;
+  }
+  scrollToBottom() {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }
 }

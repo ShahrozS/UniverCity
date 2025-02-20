@@ -1,9 +1,16 @@
 <div class="quiz-container bg-white min-h-screen flex flex-col items-center p-6">
     
   <!-- Sticky Timer -->
-  <div class="timer-container sticky top-0 w-full bg-gray-900 text-black text-center p-4 text-2xl font-bold shadow-lg">
-    Time Left: {{ timer }}
+  <div class="timer-container flex justify-between items-center sticky top-0 w-full bg-gray-900 text-black text-center p-4 text-2xl font-bold shadow-lg">
+   
+    <!-- Left-aligned button -->
+    <button (click)="goBack()" class="bg-blue-400 rounded-2xl text-lg text-white py-2 px-4">Go Back</button>
+  
+    <!-- Center-aligned text with flex-grow -->
+    <p *ngIf="mode === 'Timed'" class="text-center flex-grow  text-black">Time Left: {{ timer }}</p>
+  
   </div>
+  
 
   <!-- Quiz Form -->
   <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" class="w-full  max-w-3xl">
