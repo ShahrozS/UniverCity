@@ -29,7 +29,7 @@ export class MockTestComponent {
   startTime!: number; // 30 minutes in seconds
   score!:number;
   subCategories: QuizSubCategory[] = [];
-
+  mode!:string;
   questions: QuizQuestion[] = [];
 
 
@@ -50,11 +50,14 @@ export class MockTestComponent {
     const rawTime = this.service.getTime(); // e.g., "10 min"
     const extractedTime = rawTime ? parseInt(rawTime.match(/\d+/)?.[0] || "0", 10) : 0;
     this.startTime = extractedTime * 60; // Convert minutes to seconds
-    
     this.quizForm = this.fb.group({});
-    this.startTimer();
+    if(this.service.getMode() === "Timed"){
+      this.startTimer();
+    }
     this.loadSubCategories();
     this.getQuestions();
+    this.mode = this.service.getMode() ?? "";
+  
   }
   
   updateFormControls() {
@@ -258,4 +261,10 @@ this.saveUserQuiz();
   ); // Redirect to results page
 }
 
+
+
+
+goBack(){
+  this.router.navigate(['/quiz-options']);
+}
 }

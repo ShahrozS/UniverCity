@@ -4,4 +4,15 @@
     height: 100%;
     pointer-events: none;
   }
+  .setting-bubble {
+    @apply flex items-center justify-center px-6 py-3 
+           text-lg font-semibold rounded-full border shadow-md 
+           hover:scale-105 transition-transform duration-300 ease-in-out;
+  }
   
+  .title{
+    margin-bottom: 10px;
+    font-size: 2rem;
+    font-weight: 54px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
