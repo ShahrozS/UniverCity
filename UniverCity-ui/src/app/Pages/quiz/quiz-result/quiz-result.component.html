@@ -65,26 +65,26 @@
       <!-- Difficulty -->
       <div class="setting-bubble" 
            [ngClass]="{
-             'bg-green-100 text-green-800 border-green-300': selectionService.getDifficulty() === 1,
-             'bg-yellow-100 text-yellow-800 border-yellow-300': selectionService.getDifficulty() === 2,
-             'bg-red-100 text-red-800 border-red-300': selectionService.getDifficulty() === 3
+             'bg-green-100 text-green-800 border-green-300': difficulty === 1,
+             'bg-yellow-100 text-yellow-800 border-yellow-300': difficulty === 2,
+             'bg-red-100 text-red-800 border-red-300': difficulty === 3
            }">
-        🎯 {{ selectionService.getDifficulty() === 1 ? 'Easy' : selectionService.getDifficulty() === 2 ? 'Medium' : selectionService.getDifficulty() === 3 ? 'Hard' : 'Unknown' }}
+        🎯 {{ selectionService.getDifficulty() === 1 ? 'Easy' : difficulty === 2 ? 'Medium' : selectionService.getDifficulty() === 3 ? 'Hard' : 'Unknown' }}
       </div>
     
       <!-- Number of Questions -->
       <div class="setting-bubble bg-blue-100 text-blue-800 border-blue-300">
-        ❓ {{ selectionService.getQuestionCount() }} Questions
+        ❓ {{totalQuestions }} Questions
       </div>
     
       <!-- Mode -->
       <div class="setting-bubble bg-purple-100 text-purple-800 border-purple-300">
-        🕹️ {{ selectionService.getMode() }}
+        🕹️ {{ mode }}
       </div>
     
       <!-- Timer (Only if Timed Mode is Selected) -->
       <div *ngIf="selectionService.getMode() === 'Timed'" class="setting-bubble bg-gray-100 text-gray-800 border-gray-300">
-        ⏳ {{ selectionService.getTime() }}
+        ⏳ {{ time }}
       </div>
     
     </div>

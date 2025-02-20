@@ -29,8 +29,6 @@ export class QuizOptionsComponent {
       this.selectionService.setTime(this.selectedTime);
       this.selectionService.setDifficulty(this.selectedDifficulty);
       this.selectionService.setQuestionCount(this.selectedQuestionCount);
-      this.selectionService.setCategory(this.selectedCategory);
-      this.selectionService.setSubCategory(this.selectedSubCategory);
 
       // Stop loading and navigate
       this.loading = false;
@@ -43,6 +41,6 @@ export class QuizOptionsComponent {
       console.log("Difficulty:", this.selectedDifficulty);
       console.log("Question Count:", this.selectedQuestionCount);
       console.log("Time:", this.selectedTime);
-    }, 2000); // Simulated delay
+    }, 200); // Simulated delay
   }
 }

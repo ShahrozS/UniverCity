@@ -46,6 +46,12 @@ export class MockTestComponent {
   }
   ngOnInit() {
 
+        
+    console.log(this.service.getTime());
+    console.log(this.service.getMode());
+    console.log(this.service.getQuestionCount());
+    console.log(this.service.getDifficulty());
+    console.log("--------------------------")
     //time extraction 
     const rawTime = this.service.getTime(); // e.g., "10 min"
     const extractedTime = rawTime ? parseInt(rawTime.match(/\d+/)?.[0] || "0", 10) : 0;

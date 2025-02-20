@@ -16,8 +16,8 @@ export class CategoryCardComponent {
 
   clickOnCategory(){
     
-    this.service.setCategory(this.category.quizcategory_id);
-    this.service.setCategoryName(this.category.name);
+    this.service.setCategory(this.category.quizcategory_id ?? 0);
+    this.service.setCategoryName(this.category.name ?? "");
     this.router.navigate(["quiz-options"]);
   }
 
