@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.University.University;
 import com.shahroz.UniverCity.University.UniversityReview;
 import jakarta.persistence.*;
@@ -21,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@ToString
+@ToString(exclude = "favoriteUniversities")
 @Builder
 @AllArgsConstructor
 @Setter
@@ -74,6 +75,8 @@ public class User implements UserDetails, Principal {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Notification> notifications = new ArrayList<>();;
 
+
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_favorites", // Name of the join table

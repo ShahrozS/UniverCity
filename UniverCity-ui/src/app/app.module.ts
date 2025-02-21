@@ -26,7 +26,6 @@ import { CompareUniversitiesComponent } from './Pages/compare-universities/compa
 import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
 import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
 import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.component';
-import { CategoryListComponent } from './Pages/quiz/category-list/category-list.component';
 import { CategoryCardComponent } from './Pages/quiz/category-card/category-card.component';
 import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.component';
 import { OptionCardComponent } from './Pages/quiz/option-card/option-card.component';
@@ -34,7 +33,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
 import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.component';
 import { MatIconModule } from '@angular/material/icon';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async'; // Add this
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { FavouriteUnivercitiesComponent } from './Pages/favourite-univercities/favourite-univercities.component'; // Add this
 
 
 @NgModule({
@@ -54,12 +54,12 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     UniversityDetailsComponent,
     MockTestComponent,
     QuizCategoryComponent,
-    CategoryListComponent,
     CategoryCardComponent,
     QuizOptionsComponent,
     OptionCardComponent,
     QuizResultComponent,
     PreviousQuizComponent,
+    FavouriteUnivercitiesComponent,
 
   ],
   imports: [
