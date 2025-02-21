@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.University;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.Entities.Facility;
 import com.shahroz.UniverCity.Entities.Program;
 import com.shahroz.UniverCity.Entities.User;
@@ -11,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.*;
 
 @Entity
-@ToString
+@ToString(exclude = "favoritedByUsers")
 @AllArgsConstructor
 @Setter
 @Getter
@@ -62,6 +63,7 @@ public class University extends BaseEntity {
     @OneToMany(mappedBy = "university" , cascade = CascadeType.ALL)
     private List<UniversityReview> reviews = new ArrayList<>();
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "favoriteUniversities")
     private Set<User> favoritedByUsers = new HashSet<>();
 

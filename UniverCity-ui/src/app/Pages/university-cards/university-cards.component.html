@@ -8,7 +8,15 @@
 
 <div class="header flex flex-row justify-between">
   <h3 class="card-title" style="width: 80%;">{{ university?.name }}</h3>
-  <fa-icon class="mr-5 mt-2 text-black text-2xl hover:text-gray-300" [icon]="faHeart"></fa-icon>
+  
+
+  <fa-icon 
+  class="heart z-10 mr-5 mt-2 cursor-pointer text-white text-2xl hover:text-gray-300 p-2 relative"
+  (click)="favUni($event)"
+  [icon]="faHeart">
+</fa-icon>
+
+
 </div>
 
 
