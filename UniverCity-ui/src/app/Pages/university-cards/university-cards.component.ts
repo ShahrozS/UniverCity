@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import { FavouriteUniversityControllerService } from '../../Services/services';
 import { ChangeDetectorRef } from '@angular/core';
+import { FavouritesService } from '../../Services/services';
 
 @Component({
   selector: 'app-university-cards',
@@ -21,7 +21,7 @@ export class UniversityCardsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private favouriteUniversityService: FavouriteUniversityControllerService,
+    private favouriteUniversityService: FavouritesService,
     private cdr: ChangeDetectorRef // 🔥 Ensures UI updates immediately
   ) {}
 

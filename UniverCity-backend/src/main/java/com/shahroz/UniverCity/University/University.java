@@ -27,6 +27,7 @@ public class University extends BaseEntity {
     private String about;
     private int rank;
     private Date applyDate;
+    private Date entryTestDate;
     private Date startDate;
     private String websiteLink;
     private String accrediatetionBody;

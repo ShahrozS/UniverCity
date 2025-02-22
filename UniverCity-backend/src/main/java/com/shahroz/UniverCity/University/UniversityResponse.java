@@ -19,6 +19,7 @@ public class UniversityResponse {
     private int rank;
     private Date applyDate;
     private Date startDate;
+    private Date entryTestDate;
     private String websiteLink;
     private String accrediatetionBody;
     private double averageFees;

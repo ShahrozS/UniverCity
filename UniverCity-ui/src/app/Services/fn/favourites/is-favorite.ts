@@ -9,24 +9,24 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface RemoveFavorite$Params {
+export interface IsFavorite$Params {
   universityId: number;
 }
 
-export function removeFavorite(http: HttpClient, rootUrl: string, params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
-  const rb = new RequestBuilder(rootUrl, removeFavorite.PATH, 'delete');
+export function isFavorite(http: HttpClient, rootUrl: string, params: IsFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<boolean>> {
+  const rb = new RequestBuilder(rootUrl, isFavorite.PATH, 'get');
   if (params) {
     rb.path('universityId', params.universityId, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: 'application/json', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
+      return (r as HttpResponse<any>).clone({ body: String((r as HttpResponse<any>).body) === 'true' }) as StrictHttpResponse<boolean>;
     })
   );
 }
 
-removeFavorite.PATH = '/favorites/{universityId}';
+isFavorite.PATH = '/favorites/exists/{universityId}';

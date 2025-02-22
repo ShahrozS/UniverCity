@@ -10,7 +10,7 @@ import {AuthenticationService} from '../../Services/services/authentication.serv
 })
 export class RegisterComponent {
 
-  registerRequest: RegistrationRequest = {email:'' , firstName: '', lastName:'',password:''}
+  registerRequest: RegistrationRequest = {email:'' , firstName: '', lastName:'',password:'',phoneNumber:'+92'}
   errorMsg: Array<string> = [];
   constructor(
     private router: Router,

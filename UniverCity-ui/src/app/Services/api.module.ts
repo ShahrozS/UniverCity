@@ -8,7 +8,7 @@ import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UniversityService } from './services/university.service';
 import { QuizService } from './services/quiz.service';
-import { FavouriteUniversityControllerService } from './services/favourite-university-controller.service';
+import { FavouritesService } from './services/favourites.service';
 import { AuthenticationService } from './services/authentication.service';
 import { UniversityFilterService } from './services/university-filter.service';
 
@@ -22,7 +22,7 @@ import { UniversityFilterService } from './services/university-filter.service';
   providers: [
     UniversityService,
     QuizService,
-    FavouriteUniversityControllerService,
+    FavouritesService,
     AuthenticationService,
     UniversityFilterService,
     ApiConfiguration

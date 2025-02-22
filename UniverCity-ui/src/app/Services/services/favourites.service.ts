@@ -11,18 +11,18 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
-import { addFavorite } from '../fn/favourite-university-controller/add-favorite';
-import { AddFavorite$Params } from '../fn/favourite-university-controller/add-favorite';
-import { getFavorites } from '../fn/favourite-university-controller/get-favorites';
-import { GetFavorites$Params } from '../fn/favourite-university-controller/get-favorites';
-import { isFavorite } from '../fn/favourite-university-controller/is-favorite';
-import { IsFavorite$Params } from '../fn/favourite-university-controller/is-favorite';
-import { removeFavorite } from '../fn/favourite-university-controller/remove-favorite';
-import { RemoveFavorite$Params } from '../fn/favourite-university-controller/remove-favorite';
+import { addFavorite } from '../fn/favourites/add-favorite';
+import { AddFavorite$Params } from '../fn/favourites/add-favorite';
+import { getFavorites } from '../fn/favourites/get-favorites';
+import { GetFavorites$Params } from '../fn/favourites/get-favorites';
+import { isFavorite } from '../fn/favourites/is-favorite';
+import { IsFavorite$Params } from '../fn/favourites/is-favorite';
+import { removeFavorite } from '../fn/favourites/remove-favorite';
+import { RemoveFavorite$Params } from '../fn/favourites/remove-favorite';
 import { University } from '../models/university';
 
 @Injectable({ providedIn: 'root' })
-export class FavouriteUniversityControllerService extends BaseService {
+export class FavouritesService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
   }

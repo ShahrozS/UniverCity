@@ -9,12 +9,12 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface RemoveFavorite$Params {
+export interface AddFavorite$Params {
   universityId: number;
 }
 
-export function removeFavorite(http: HttpClient, rootUrl: string, params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
-  const rb = new RequestBuilder(rootUrl, removeFavorite.PATH, 'delete');
+export function addFavorite(http: HttpClient, rootUrl: string, params: AddFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  const rb = new RequestBuilder(rootUrl, addFavorite.PATH, 'post');
   if (params) {
     rb.path('universityId', params.universityId, {});
   }
@@ -29,4 +29,4 @@ export function removeFavorite(http: HttpClient, rootUrl: string, params: Remove
   );
 }
 
-removeFavorite.PATH = '/favorites/{universityId}';
+addFavorite.PATH = '/favorites/{universityId}';

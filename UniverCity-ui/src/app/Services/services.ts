@@ -4,6 +4,6 @@
 
 export { UniversityService } from './services/university.service';
 export { QuizService } from './services/quiz.service';
-export { FavouriteUniversityControllerService } from './services/favourite-university-controller.service';
+export { FavouritesService } from './services/favourites.service';
 export { AuthenticationService } from './services/authentication.service';
 export { UniversityFilterService } from './services/university-filter.service';

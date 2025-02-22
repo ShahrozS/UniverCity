@@ -8,25 +8,24 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { University } from '../../models/university';
 
-export interface RemoveFavorite$Params {
-  universityId: number;
+export interface GetFavorites$Params {
 }
 
-export function removeFavorite(http: HttpClient, rootUrl: string, params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
-  const rb = new RequestBuilder(rootUrl, removeFavorite.PATH, 'delete');
+export function getFavorites(http: HttpClient, rootUrl: string, params?: GetFavorites$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<University>>> {
+  const rb = new RequestBuilder(rootUrl, getFavorites.PATH, 'get');
   if (params) {
-    rb.path('universityId', params.universityId, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: 'application/json', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
+      return r as StrictHttpResponse<Array<University>>;
     })
   );
 }
 
-removeFavorite.PATH = '/favorites/{universityId}';
+getFavorites.PATH = '/favorites';

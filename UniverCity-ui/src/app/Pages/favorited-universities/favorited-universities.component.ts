@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { University } from '../../Services/models';
-import { AuthenticationService, FavouriteUniversityControllerService, UniversityService } from '../../Services/services';
+import { AuthenticationService, FavouritesService, UniversityService } from '../../Services/services';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,7 +26,7 @@ export class FavoritedUniversitiesComponent implements OnInit {
   constructor(
     private universityService: UniversityService,
     private authService: AuthenticationService,
-    private favService: FavouriteUniversityControllerService,
+    private favService: FavouritesService,
     private router: Router,
     private cdRef: ChangeDetectorRef
   ) {}
@@ -52,17 +52,20 @@ export class FavoritedUniversitiesComponent implements OnInit {
   removeFavorite(universityId: number): void {
     this.favService.removeFavorite({ universityId }).subscribe(
       () => {
+        // ✅ Update the list to remove the clicked university
         this.favoritedUniversities = this.favoritedUniversities.filter(
           university => university.id !== universityId
         );
-        console.log("Here??");
-        this.cdRef.detectChanges(); // 🔹 Forces UI to update
+  
+        // ✅ Force UI refresh
+        this.cdRef.detectChanges();
       },
       (error) => {
         console.error('Error removing university from favorites', error);
       }
     );
   }
+  
   
 
   getTimeLeft(applyDate: string): string {
