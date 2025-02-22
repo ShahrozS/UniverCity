@@ -1,0 +1,100 @@
+<!-- favorited-universities.component.html -->
+
+
+<app-navbar></app-navbar>
+
+<section class="main-bg">
+<div class="favorites-container ">
+    <div class="header">
+      <h1 class="text-4xl ">My Favorite Universities</h1>
+      <p class="subtitle">Keep track of universities you're interested in</p>
+    </div>
+  
+    <div *ngIf="loading" class="loading-container">
+      <div class="spinner"></div>
+      <p>Loading your favorite universities...</p>
+    </div>
+  
+    <div *ngIf="error" class="error-message">
+      <mat-icon>error_outline</mat-icon>
+      <p>We couldn't load your favorites. Please try again later.</p>
+    </div>
+  
+    <div *ngIf="!loading && !error && favoritedUniversities.length === 0" class="empty-state" @fadeIn>
+      <div class="empty-illustration">
+        <mat-icon>school</mat-icon>
+      </div>
+      <h2>No favorites yet</h2>
+      <p>Browse universities and add them to your favorites to see them here.</p>
+      <button mat-raised-button color="primary" routerLink="/universities">
+        Explore Universities
+      </button>
+    </div>
+  
+    <div *ngIf="!loading && !error && favoritedUniversities.length > 0" class="university-grid" @fadeIn>
+      <div class="university-card" *ngFor="let university of favoritedUniversities; let i = index" 
+           [style.animationDelay]="i * 0.05 + 's'">
+        <div class="card-header ">
+          <div class="rank-badge   " [ngClass]="{'top-rank': 0 <= 10}">
+            #{{university.rank}}
+          </div>
+          <button class="favorite-button" (click)="removeFavorite(university?.id ?? 0) " matTooltip="Remove from favorites">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+        
+        <div class="card-content">
+          <h2 class="university-name">{{university.name}}</h2>
+          
+          <div class="university-stats">
+            <div class="stat">
+              <mat-icon class="mr-1">book</mat-icon>
+              <span>{{8}} Programs</span>
+            </div>
+            <!-- TODO: Program count -->
+            <div class="stat">
+              <mat-icon class="mr-2">payments</mat-icon>
+              <span>${{university.averageFees | number:'1.0-0'}} / year</span>
+            </div>
+          </div>
+  
+          <div class="accreditation">
+            Accredited by {{university.accrediatetionBody || 'N/A'}}
+          </div>
+          
+          <div class="university-location" *ngIf="university.universityLocations && university.universityLocations.length > 0">
+            <mat-icon>location_on</mat-icon>
+            <span>{{university.universityLocations[0].city}}</span>
+          </div>
+          
+          <div class="important-dates">
+            <div class="date-item">
+              <span class="date-label">Application Deadline</span>
+              <span class="date-value">{{formatStringToDate(university.applyDate ?? "")}}</span>
+              <span *ngIf="university?.applyDate as applyDate" class="countdown"
+              [ngClass]="{'urgent': getTimeLeftMessage(applyDate) === 'Last day!' || 
+                                (getTimeLeftMessage(applyDate) !== 'Closed' && 
+                                 +getTimeLeftMessage(applyDate).split(' ')[0] <= 30)}">
+            {{ getTimeLeftMessage(applyDate) }}
+        </span>
+        
+            </div>
+            <div class="date-item">
+              <span class="date-label">Start Date</span>
+              <span class="date-value">{{formatStringToDate(university?.startDate ?? "")}}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card-actions">
+          <a mat-stroked-button [href]="university.websiteLink" target="_blank">
+            <mat-icon>language</mat-icon> Website
+          </a>
+          <button mat-flat-button color="primary" [routerLink]="['/universities', university.id]">
+            View Details
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

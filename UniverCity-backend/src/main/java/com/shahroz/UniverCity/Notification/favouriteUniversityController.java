@@ -21,6 +21,7 @@ public class favouriteUniversityController {
 
     @GetMapping("/exists/{universityId}")
     public ResponseEntity<Boolean> isFavorite(@PathVariable long universityId, Authentication authentication) {
+        System.out.println(universityId + " <-----");
         boolean exists = favouriteUniversityService.isExist(universityId, authentication);
         return ResponseEntity.ok(exists);
     }

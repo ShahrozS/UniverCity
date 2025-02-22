@@ -166,3 +166,15 @@
 }
 
 
+
+.heart-inactive {
+  color: red;
+  cursor: not-allowed;
+}
+
+.disabled-heart {
+  cursor: not-allowed; // ❌ Prevent clicking
+  opacity: 0.6; // ✨ Slightly dim the button
+  pointer-events: none; // 🔥 Fully disables interaction
+}
+

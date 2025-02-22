@@ -34,7 +34,7 @@ import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.compon
 import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.component';
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { FavouriteUnivercitiesComponent } from './Pages/favourite-univercities/favourite-univercities.component'; // Add this
+import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/favorited-universities.component';
 
 
 @NgModule({
@@ -59,7 +59,7 @@ import { FavouriteUnivercitiesComponent } from './Pages/favourite-univercities/f
     OptionCardComponent,
     QuizResultComponent,
     PreviousQuizComponent,
-    FavouriteUnivercitiesComponent,
+    FavoritedUniversitiesComponent,
 
   ],
   imports: [
