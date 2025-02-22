@@ -77,7 +77,16 @@
                                  +getTimeLeftMessage(applyDate).split(' ')[0] <= 30)}">
             {{ getTimeLeftMessage(applyDate) }}
         </span>
-        
+            </div>
+            <div class="date-item">
+              <span class="date-label">Entry Test</span>
+              <span class="date-value">{{formatStringToDate(university.entryTestDate ?? "")}}</span>
+              <span *ngIf="university?.entryTestDate as entryTestDate" class="countdown"
+              [ngClass]="{'urgent': getTimeLeftMessage(entryTestDate) === 'Tomorrow!' || 
+                                (getTimeLeftMessage(entryTestDate) !== 'Passed' && 
+                                 +getTimeLeftMessage(entryTestDate).split(' ')[0] <= 30)}">
+            {{ getTimeLeftMessage(entryTestDate) }}
+        </span>
             </div>
             <div class="date-item">
               <span class="date-label">Start Date</span>
