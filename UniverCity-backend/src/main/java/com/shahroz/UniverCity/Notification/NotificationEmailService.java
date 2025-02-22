@@ -1,9 +1,11 @@
-package com.shahroz.UniverCity.security.email;
+package com.shahroz.UniverCity.Notification;
 
+import com.shahroz.UniverCity.security.email.EmailTemplateName;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -18,27 +20,29 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE_MIXED;
 
 @Service
-@Slf4j
 @RequiredArgsConstructor
-public class EmailService {
+public class NotificationEmailService {
+
     private final JavaMailSender mailSender;
     private final SpringTemplateEngine templateEngine;
+
+//    public void sendEmail(String to, String subject, String body) {
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(to);
+//        message.setSubject(subject);
+//        message.setText(body);
+//        mailSender.send(message);
+//    }
+
 
     @Async
     public void sendEmail(
             String to,
             String username,
-            EmailTemplateName emailTemplate,
-            String confirmationUrl,
-            String activationCode,
-            String subject
+            String subject,
+            String body
     ) throws MessagingException {
-        String templateName;
-        if (emailTemplate == null) {
-            templateName = "confirm-email";
-        } else {
-            templateName = emailTemplate.name();
-        }
+
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(
                 mimeMessage,
@@ -47,8 +51,7 @@ public class EmailService {
         );
         Map<String, Object> properties = new HashMap<>();
         properties.put("username", username);
-        properties.put("confirmationUrl", confirmationUrl);
-        properties.put("activation_code", activationCode);
+        properties.put("body",body);
 
         Context context = new Context();
         context.setVariables(properties);
@@ -56,11 +59,13 @@ public class EmailService {
         helper.setFrom("UniverCity.FYP@gmail.com");
         helper.setTo(to);
         helper.setSubject(subject);
+        helper.setText(body,true);
 
-        String template = templateEngine.process(templateName, context);
 
-        helper.setText(template, true);
-
+        System.out.println("Sending Message.." + body);
         mailSender.send(mimeMessage);
     }
+
+
 }
+
