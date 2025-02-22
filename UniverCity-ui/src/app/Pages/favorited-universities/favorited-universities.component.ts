@@ -52,17 +52,20 @@ export class FavoritedUniversitiesComponent implements OnInit {
   removeFavorite(universityId: number): void {
     this.favService.removeFavorite({ universityId }).subscribe(
       () => {
+        // ✅ Update the list to remove the clicked university
         this.favoritedUniversities = this.favoritedUniversities.filter(
           university => university.id !== universityId
         );
-        console.log("Here??");
-        this.cdRef.detectChanges(); // 🔹 Forces UI to update
+  
+        // ✅ Force UI refresh
+        this.cdRef.detectChanges();
       },
       (error) => {
         console.error('Error removing university from favorites', error);
       }
     );
   }
+  
   
 
   getTimeLeft(applyDate: string): string {
