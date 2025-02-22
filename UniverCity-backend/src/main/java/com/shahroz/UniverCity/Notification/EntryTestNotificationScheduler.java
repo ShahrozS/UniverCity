@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.Notification;
 
 import com.shahroz.UniverCity.Entities.User;
+import com.shahroz.UniverCity.Notification.Favourite.FavouriteUniveristyService;
 import com.shahroz.UniverCity.Repositories.UniversityRepository;
 import com.shahroz.UniverCity.Service.UserService;
 import com.shahroz.UniverCity.University.University;
@@ -9,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

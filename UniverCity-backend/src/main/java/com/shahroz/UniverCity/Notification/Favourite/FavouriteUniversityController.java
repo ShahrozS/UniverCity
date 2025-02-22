@@ -1,4 +1,4 @@
-package com.shahroz.UniverCity.Notification;
+package com.shahroz.UniverCity.Notification.Favourite;
 
 import com.shahroz.UniverCity.University.University;
 import io.swagger.v3.oas.annotations.tags.Tag;
