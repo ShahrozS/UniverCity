@@ -17,7 +17,7 @@ import java.util.List;
 @Service
 @Slf4j
 @Transactional
-public class favouriteUniveristyService {
+public class FavouriteUniveristyService {
 
     private final UserRepository userRepository;
     private final UniversityRepository universityRepository;

@@ -7,6 +7,7 @@ export interface UniversityRequest {
   accrediatetionBody: string;
   applyDate?: string;
   averageFees?: number;
+  entryTestDate?: string;
   id?: number;
   name: string;
   rank: number;

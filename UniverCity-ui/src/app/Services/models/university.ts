@@ -7,7 +7,6 @@ import { Program } from '../models/program';
 import { UniversityContact } from '../models/university-contact';
 import { UniversityLocation } from '../models/university-location';
 import { UniversityReview } from '../models/university-review';
-import { User } from '../models/user';
 export interface University {
   about?: string;
   accrediatetionBody?: string;
@@ -15,8 +14,8 @@ export interface University {
   averageFees?: number;
   createdBy?: string;
   createdDate?: string;
+  entryTestDate?: string;
   facilities?: Array<Facility>;
-  favoritedByUsers?: Array<User>;
   id?: number;
   lastModifiedBy?: string;
   lastModifiedDate?: string;

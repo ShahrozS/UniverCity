@@ -6,7 +6,6 @@ import { AcademicScore } from '../models/academic-score';
 import { GrantedAuthority } from '../models/granted-authority';
 import { Notification } from '../models/notification';
 import { Role } from '../models/role';
-import { University } from '../models/university';
 import { UniversityReview } from '../models/university-review';
 import { UserLocation } from '../models/user-location';
 export interface User {
@@ -19,13 +18,13 @@ export interface User {
   credentialsNonExpired?: boolean;
   email?: string;
   enabled?: boolean;
-  favoriteUniversities?: Array<University>;
   firstName?: string;
   lastModifiedData?: string;
   lastName?: string;
   name?: string;
   notifications?: Array<Notification>;
   password?: string;
+  phoneNumber?: string;
   roles?: Array<Role>;
   universityreview?: UniversityReview;
   userLocations?: Array<UserLocation>;

@@ -21,6 +21,7 @@ public record UniversityRequest (
      @NotNull(message = "102")
      @NotEmpty(message = "102")
      int rank,
+     Date entryTestDate,
      Date applyDate,
      Date startDate,
      @NotNull(message = "103")

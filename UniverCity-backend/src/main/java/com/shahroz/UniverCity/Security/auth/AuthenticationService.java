@@ -47,6 +47,7 @@ public class AuthenticationService {
                 .orElseThrow(() -> new IllegalStateException("ROLE USER was not initiated"));
         var user = User.builder()
                 .firstName(request.getFirstName())
+                .phoneNumber(request.getPhoneNumber())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))

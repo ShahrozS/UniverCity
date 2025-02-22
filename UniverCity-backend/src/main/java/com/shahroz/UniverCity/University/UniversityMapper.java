@@ -12,6 +12,7 @@ public class UniversityMapper {
                 .id(request.id())
                 .about(request.about())
                 .applyDate(request.applyDate())
+                .entryTestDate(request.entryTestDate())
                 .name(request.name())
                 .accrediatetionBody(request.accrediatetionBody())
                 .averageFees(request.averageFees())
@@ -34,6 +35,7 @@ public class UniversityMapper {
             .rank(university.getRank())
             .websiteLink(university.getWebsiteLink())
             .startDate(university.getStartDate())
+            .entryTestDate(university.getEntryTestDate())
             .build();
 
     }

@@ -12,11 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("favorites")
-@Tag(name = "Quiz")
+@Tag(name = "Favourites")
+public class FavouriteUniversityController {
 
-public class favouriteUniversityController {
-
-    private final favouriteUniveristyService favouriteUniversityService;
+    private final FavouriteUniveristyService favouriteUniversityService;
 
 
     @GetMapping("/exists/{universityId}")

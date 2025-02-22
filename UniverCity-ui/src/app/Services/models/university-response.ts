@@ -7,6 +7,7 @@ export interface UniversityResponse {
   accrediatetionBody?: string;
   applyDate?: string;
   averageFees?: number;
+  entryTestDate?: string;
   name?: string;
   rank?: number;
   startDate?: string;

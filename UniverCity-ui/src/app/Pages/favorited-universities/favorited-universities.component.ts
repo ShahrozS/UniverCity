@@ -2,7 +2,7 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { University } from '../../Services/models';
-import { AuthenticationService, FavouriteUniversityControllerService, UniversityService } from '../../Services/services';
+import { AuthenticationService, FavouritesService, UniversityService } from '../../Services/services';
 import { Router } from '@angular/router';
 
 @Component({
@@ -26,7 +26,7 @@ export class FavoritedUniversitiesComponent implements OnInit {
   constructor(
     private universityService: UniversityService,
     private authService: AuthenticationService,
-    private favService: FavouriteUniversityControllerService,
+    private favService: FavouritesService,
     private router: Router,
     private cdRef: ChangeDetectorRef
   ) {}
