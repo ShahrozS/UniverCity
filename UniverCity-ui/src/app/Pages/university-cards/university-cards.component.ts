@@ -28,7 +28,12 @@ export class UniversityCardsComponent implements OnInit {
   isFavorite = false;
 
   ngOnInit() {
-    this.checkIfFavourite();
+    console.log(this.university.university_id);
+    console.log("Catching: " + this.checkIfFavourite());
+    if(this.checkIfFavourite()){
+      this.isFavorite = true;
+    }
+    console.log(this.university.university_id + " : " + this.isFavorite);
 
   }
 
@@ -46,13 +51,16 @@ export class UniversityCardsComponent implements OnInit {
   }
 
   /** 🔥 Check if the university is already a favorite */
-  checkIfFavourite() {
+  checkIfFavourite():boolean {
     this.favouriteUniversityService.isFavorite({ universityId: this.university.university_id }).subscribe(
       (isFav) => {
-        this.isFavourite = isFav; 
+        console.log("returning :" + isFav);
+       return isFav;
       },
       (error) => console.log("Error checking favorite status:", error)
     );
+    return false;
+
   }
 
   /** 🔥 Handles adding the university to favorites */
