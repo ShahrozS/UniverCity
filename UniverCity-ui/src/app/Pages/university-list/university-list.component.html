@@ -25,7 +25,7 @@
 <!-- Display university cards when data is available -->
 <div class="card-container" *ngIf="!loading && filteredUniversities.length > 0">
   <app-university-cards
-    *ngFor="let university of filteredUniversities"
+    *ngFor="let university of filteredUniversities;trackBy: trackByUniversity;"
     [university]="university"
     (selectionChanged)="onCardSelectionChange($event)">
   </app-university-cards>

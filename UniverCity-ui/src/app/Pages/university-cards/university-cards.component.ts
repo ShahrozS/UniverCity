@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { ChangeDetectorRef } from '@angular/core';
@@ -9,111 +9,96 @@ import { FavouritesService } from '../../Services/services';
   templateUrl: './university-cards.component.html',
   styleUrl: './university-cards.component.scss'
 })
-export class UniversityCardsComponent implements OnInit {
+export class UniversityCardsComponent implements OnInit, OnChanges {
   
   @Input() university: any;
   @Output() selectionChanged = new EventEmitter<any>();
 
   isSelected = false;
   isFavourite = false;
-  isProcessing = false; // Prevents multiple clicks
+  isProcessing = false;
   faHeart = faHeart;
+  isFavorite = false;
 
   constructor(
     private router: Router,
     private favouriteUniversityService: FavouritesService,
-    private cdr: ChangeDetectorRef // 🔥 Ensures UI updates immediately
+    private cdr: ChangeDetectorRef
   ) {}
 
-  isFavorite = false;
-
   ngOnInit() {
-    console.log(this.university.university_id);
-    console.log("Catching: " + this.checkIfFavourite());
-    if(this.checkIfFavourite()){
-      this.isFavorite = true;
-    }
-    console.log(this.university.university_id + " : " + this.isFavorite);
+    // console.log(this.university.id);
+    // console.log("Catching: " + this.checkIfFavourite());
+    // if(this.checkIfFavourite()){
+    //   this.isFavorite = true;
+    // }
+    // console.log(this.university.id + " : " + this.isFavorite);
+
 
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['university']) {
+      this.university = changes['university'].currentValue;
+  
+      if (this.university) {
+        console.log("✅ University Received:", this.university);
+      } else {
+        console.warn("⚠️ University is UNDEFINED after filtering!");
+      }
+    }
+  }
+  
+  
 
   toggleSelection() {
     this.isSelected = !this.isSelected;
     this.selectionChanged.emit({ university: this.university, isSelected: this.isSelected });
+    console.log(this.university);
   }
 
   viewDetails() {
     this.router.navigate(['/university-details'], {
-      queryParams: {
-        university: JSON.stringify(this.university)
-      }
+      queryParams: { university: JSON.stringify(this.university) }
     });
   }
 
-  /** 🔥 Check if the university is already a favorite */
-  checkIfFavourite():boolean {
-    this.favouriteUniversityService.isFavorite({ universityId: this.university.university_id }).subscribe(
+  /** 🔥 Fix: Properly handle async `checkIfFavourite()` */
+  checkIfFavourite() {
+    this.favouriteUniversityService.isFavorite({ universityId: this.university.id }).subscribe(
       (isFav) => {
-        console.log("returning :" + isFav);
-       return isFav;
+        console.log("Favourite status:", isFav);
+        this.isFavorite = isFav;  // 🔥 Fix: Update variable inside subscription
+        this.cdr.detectChanges(); // 🔥 Ensure UI updates
       },
       (error) => console.log("Error checking favorite status:", error)
     );
-    return false;
-
   }
 
-  /** 🔥 Handles adding the university to favorites */
   favUni(event: Event) {
-    event.stopPropagation(); // Prevent event bubbling
+    event.stopPropagation();
 
-    if(this.isFavorite == false){
-      
-      this.favouriteUniversityService.addFavorite({universityId:this.university.university_id}).subscribe(
-        (val)=>{
-          console.log(val);
+    const universityId = this.university.id;
+    console.log(this.university);
+    console.log(universityId);
+    if (!this.isFavorite) {
+      this.favouriteUniversityService.addFavorite({ universityId: this.university.id }).subscribe(
+        () => {
+          console.log("Added to favorites!");
           this.isFavorite = true;
-          console.log(this.isFavorite);
+          this.cdr.detectChanges(); // 🔥 Ensure UI updates immediately
         },
-        (error)=>{
-          this.isFavorite = false;
-          console.log("Cant favourite",error)
+        (error) => {
+          console.error("Error favoriting:", error);
         }
-      )
-
+      );
     }
-
-
-
-    // if (this.isFavourite || this.isProcessing) return; // 🔥 Prevents multiple clicks
-
-    // console.log("Adding to favorites...");
-
-    // // 🔥 Step 1: Optimistically update UI & disable button
-    // this.isFavourite = true; 
-    // this.isProcessing = true;
-    // this.cdr.detectChanges(); // 🔥 Immediately updates UI
-
-    // // 🔥 Step 2: Make API request to save favorite
-    // this.favouriteUniversityService.addFavorite({ universityId: this.university.university_id }).subscribe(
-    //   () => {
-    //     console.log("Successfully added to favorites!");
-    //     this.cdr.detectChanges(); // 🔥 Force UI refresh
-    //   },
-    //   (error) => {
-    //     console.log("Error adding to favorites:", error);
-    //     this.isFavourite = false; // 🔥 Revert on failure
-    //     this.isProcessing = false; // Allow retrying
-    //     this.cdr.detectChanges(); // 🔥 Ensure UI updates
-    //   }
-    // );
   }
-
 
   toggleFavorite() {
     if (!this.isFavorite) {
-      this.favouriteUniversityService.addFavorite(this.university.university_id);
-      this.isFavorite = true; // Immediately update UI state
+      this.favouriteUniversityService.addFavorite({ universityId: this.university.id });
+      this.isFavorite = true;
     }
   }
 }

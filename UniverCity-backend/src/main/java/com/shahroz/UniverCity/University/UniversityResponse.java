@@ -11,7 +11,7 @@ import java.util.Date;
 @Builder
 public class UniversityResponse {
 
-    private long university_id;
+    private long id;
 
 
     private String name;
