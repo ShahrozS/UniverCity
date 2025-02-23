@@ -1,3 +1,13 @@
 .filter{
     box-shadow: rgba(50, 50, 93, 1) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
 }
+
+.main-heading{
+    h1 {
+        font-size: 1.95rem !important; /* Equivalent to text-6xl */
+        font-weight: 600 !important; /* Equivalent to font-extrabold */
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif !important; /* Use your preferred font */
+        text-align: left !important;
+        margin-left: 0 !important;
+      }
+}

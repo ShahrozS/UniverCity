@@ -100,24 +100,24 @@
 
 .card {
   width: 100%; /* Fixed width */
-  height: 250px; /* Fixed height */
+  height: 200px; /* Fixed height */
   padding: 10px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(255, 255, 255, 0.233);
-  background: linear-gradient(135deg, #ffffff, #f0f4f8);
+  background: linear-gradient(135deg, hsl(180, 73%, 93%), #e3edf7);
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .card:hover {
-  transform: scale(1.05);
+  transform: scale(1.01);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .card-title {
   font-size: 1.5rem;
-  font-weight: 700;
-
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #05305e;
+  font-weight: 800;
+  font-family:Arial, sans-serif;;
 }
 
 .card-rank {

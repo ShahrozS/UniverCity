@@ -1,13 +1,13 @@
 
 <div 
-  class="card w-full max-w-full min-w-full"
+  class="card w-full max-w-full min-w-full  py-16"
   [class.selected]="isSelected" 
   (click)="toggleSelection()"
 >
 
 
-<div class="header flex flex-row justify-between">
-  <h3 class="card-title" style="width: 80%;">{{ university?.name }}</h3>
+<div class="header flex items-center flex-row justify-between ">
+  <h3 class="card-title mt-5 " style="width: 80%;">{{ university?.name }}</h3>
   
   <fa-icon 
   class="heart z-10 mr-5 mt-2 cursor-pointer text-2xl p-2 relative"
@@ -28,14 +28,14 @@
 
 <!-- leftsection -->
 
-<div class="left justify-between flex flex-col " style="width: 50%;">
+<div class="left  flex flex-col " style="width: 50%;">
   
-  <div class="accredation mt-7">
-    <p class="">Accredited by {{university?.accrediatetionBody}} / Public University</p>
+  <div class="accredation  font-light">
+    <p class="">Accredited by {{university?.accrediatetionBody}}<span class="text-orange-500 font-medium text-lg">/</span>Public University</p>
     <p class="bg-lime-300 w-[8rem] text-center rounded-full text-sm p-1 px-2 mt-2">Ranked at <b>#{{university?.rank}}</b> </p>
   </div>
  
-  <div class="align-self-end">
+  <div class="align-self-end mt-4">
     <a 
     target="_blank"
     href="{{university?.websiteLink}}" 
@@ -51,7 +51,7 @@
 
 <!-- rijht section -->
 
-<div class="right h-full  flex mt-8 justify-end mr-5 " style="width: 50%;">
+<div class="right h-full  flex mt-2 justify-end mr-5 " style="width: 50%;">
 
   <div class="avgFees  flex items-end flex-col ">
     <p class="font-bold">~ {{university?.averageFees}} PKR /semester</p>
