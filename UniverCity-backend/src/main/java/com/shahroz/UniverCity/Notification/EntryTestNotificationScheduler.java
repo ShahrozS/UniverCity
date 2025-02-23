@@ -40,13 +40,13 @@ public class EntryTestNotificationScheduler {
         Date currentDate = new Date();
         System.out.println("Working out");
         for (University university : universities) {
-            System.out.println("Working start " + university.getEntryTestDate());
+//            System.out.println("Working start " + university.getEntryTestDate());
 
             if (university.getEntryTestDate() != null) {
                 long daysLeft = ChronoUnit.DAYS.between(
                         currentDate.toInstant(), university.getEntryTestDate().toInstant()
                 );
-                System.out.println("Working" + daysLeft);
+//                System.out.println("Working" + daysLeft);
                 if (daysLeft == 7 || daysLeft == 1) { // Notify 7 days and 1 day before
                     for (User user : university.getFavoritedByUsers()) {
                         System.out.println(user.fullName() + " --> " + university.getName());
