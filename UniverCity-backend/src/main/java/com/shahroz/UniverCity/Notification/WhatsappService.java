@@ -3,58 +3,52 @@ package com.shahroz.UniverCity.Notification;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 import java.util.*;
 
 @Service
 public class WhatsappService {
-    private final String PHONE_NUMBER_ID = "580810988445072";
-    private final String ACCESS_TOKEN = "EAAZAAk7cy09wBO..."; // Use your actual token
+    private static final String PHONE_NUMBER_ID = "580810988445072";
+    private static final String ACCESS_TOKEN = "EAAZAAk7cy09wBO5JoS1mQwsKPHICkF7mZBRIHYovxDTCfsvucR4Ajem7jsLDutDqlmYlsQmj2BAUKCtTuROlwC1hO9VYcea67gIfZADWmm2JhxSBUb9hMdXrSqgAhERr418FfLSZCn0ZARgoZAJNdHqZBMt9RMrNGypUgYsyB0J0ayoySAT6XrfagubYsDpTszqwfTcxAkXzroLX41QR6680oTccWMZD"; // Replace with actual token
+    private static final String API_URL = "https://graph.facebook.com/v21.0/" + PHONE_NUMBER_ID + "/messages";
 
     public String sendWhatsAppTemplateMessage(String recipientNumber, String universityName, String testDate, String websiteLink) {
-        String url = "https://graph.facebook.com/v21.0/" + PHONE_NUMBER_ID + "/messages";
-
         RestTemplate restTemplate = new RestTemplate();
 
-        // Main payload
+        // Ensure non-null values
+        universityName = (universityName != null) ? universityName : "";
+        testDate = (testDate != null) ? testDate : "";
+        websiteLink = (websiteLink != null) ? websiteLink : "";
+
+        // Create message payload
         Map<String, Object> payload = new HashMap<>();
         payload.put("messaging_product", "whatsapp");
         payload.put("to", recipientNumber);
         payload.put("type", "template");
 
-        // Template details
+        // Template configuration
         Map<String, Object> template = new HashMap<>();
-        template.put("name", "entry_test_reminder"); // WhatsApp-approved template name
+        template.put("name", "entry_test_reminder"); // Approved WhatsApp template name
 
         Map<String, String> language = new HashMap<>();
-        language.put("code", "en_US"); // Adjust if needed
+        language.put("code", "en_US"); // Ensure language is correct
         template.put("language", language);
 
-        // Components (parameters for placeholders)
-        List<Map<String, Object>> components = new ArrayList<>();
-        Map<String, Object> body = new HashMap<>();
-        body.put("type", "body");
+        // Parameters with names
+        List<Map<String, Object>> parameters = List.of(
+                Map.of("type", "text", "parameter_name", "university_name", "text", universityName),
+                Map.of("type", "text", "parameter_name", "date", "text", testDate),
+                Map.of("type", "text", "parameter_name", "website_link", "text", websiteLink)
+        );
 
-        if(websiteLink == null){
-            websiteLink = "";
-        }
-        if(testDate == null){
-            testDate = "";
-        }
-        if(universityName == null){
-            universityName = "";
-        }
-        List<Map<String, String>> parameters = new ArrayList<>();
-        parameters.add(Map.of("type", "text", "text", universityName));
-        parameters.add(Map.of("type", "text", "text", testDate));
-        parameters.add(Map.of("type", "text", "text", websiteLink));
+        // Components with body parameters
+        Map<String, Object> bodyComponent = new HashMap<>();
+        bodyComponent.put("type", "body");
+        bodyComponent.put("parameters", parameters);
 
-        body.put("parameters", parameters);
-        components.add(body);
-        template.put("components", components);
-
+        template.put("components", List.of(bodyComponent));
         payload.put("template", template);
 
+        // Set HTTP headers
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(ACCESS_TOKEN);
@@ -62,7 +56,7 @@ public class WhatsappService {
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(payload, headers);
 
         try {
-            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);
+            ResponseEntity<String> response = restTemplate.exchange(API_URL, HttpMethod.POST, request, String.class);
             System.out.println("WhatsApp API Response: " + response.getBody());
             return response.getBody();
         } catch (Exception e) {
