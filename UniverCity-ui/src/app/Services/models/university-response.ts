@@ -8,9 +8,9 @@ export interface UniversityResponse {
   applyDate?: string;
   averageFees?: number;
   entryTestDate?: string;
+  id?: number;
   name?: string;
   rank?: number;
   startDate?: string;
-  university_id?: number;
-  websiteLink?: string; 
+  websiteLink?: string;
 }

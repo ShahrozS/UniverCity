@@ -46,7 +46,7 @@ public class EntryTestNotificationScheduler {
                 long daysLeft = ChronoUnit.DAYS.between(
                         currentDate.toInstant(), university.getEntryTestDate().toInstant()
                 );
-//                System.out.println("Working" + daysLeft);
+                System.out.println( university.getName()+ ":" + daysLeft);
                 if (daysLeft == 7 || daysLeft == 1) { // Notify 7 days and 1 day before
                     for (User user : university.getFavoritedByUsers()) {
                         System.out.println(user.fullName() + " --> " + university.getName());

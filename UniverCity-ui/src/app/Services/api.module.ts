@@ -6,10 +6,12 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { WhatsappControllerService } from './services/whatsapp-controller.service';
 import { UniversityService } from './services/university.service';
 import { QuizService } from './services/quiz.service';
 import { FavouritesService } from './services/favourites.service';
 import { AuthenticationService } from './services/authentication.service';
+import { UserService } from './services/user.service';
 import { UniversityFilterService } from './services/university-filter.service';
 
 /**
@@ -20,10 +22,12 @@ import { UniversityFilterService } from './services/university-filter.service';
   exports: [],
   declarations: [],
   providers: [
+    WhatsappControllerService,
     UniversityService,
     QuizService,
     FavouritesService,
     AuthenticationService,
+    UserService,
     UniversityFilterService,
     ApiConfiguration
   ],

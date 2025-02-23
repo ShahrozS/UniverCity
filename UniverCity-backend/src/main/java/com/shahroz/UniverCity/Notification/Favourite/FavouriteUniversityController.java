@@ -26,15 +26,14 @@ public class FavouriteUniversityController {
     }
 
     @PostMapping("/{universityId}")
-    public ResponseEntity<String> addFavorite(@PathVariable long universityId, Authentication authentication) {
+    public void addFavorite(@PathVariable long universityId, Authentication authentication) {
         favouriteUniversityService.addFavouriteUniversity(universityId, authentication);
-        return ResponseEntity.ok("University added to favorites.");
+
     }
 
     @DeleteMapping("/{universityId}")
-    public ResponseEntity<String> removeFavorite(@PathVariable long universityId, Authentication authentication) {
+    public void removeFavorite(@PathVariable long universityId, Authentication authentication) {
         favouriteUniversityService.deleteFavouriteUniversity(universityId, authentication);
-        return ResponseEntity.ok("University removed from favorites.");
     }
 
     @GetMapping

@@ -26,7 +26,7 @@ public class UniversityMapper {
     public UniversityResponse toUniversityResponse( University university) {
 
     return UniversityResponse.builder()
-            .university_id(university.getId())
+            .id(university.getId())
             .about(university.getAbout())
             .name(university.getName())
             .accrediatetionBody(university.getAccrediatetionBody())

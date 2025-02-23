@@ -1,6 +1,6 @@
 
 import { Program } from './../../Services/models/program';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UniversityCardComponent } from '../university-card/university-card.component';
 import { CommonModule } from '@angular/common';
 import { UniversityService } from '../../Services/services/university.service';
@@ -30,7 +30,8 @@ export class UniversityListComponent {
     private universityListService: UniversityService,
     private router: Router,
     private route: ActivatedRoute,
-    private universityFilterService: UniversityFilterService
+    private universityFilterService: UniversityFilterService,
+    private cdr :ChangeDetectorRef
   ) {
     this.uniProgram = 'temp';
     this.fetchUniversitiesByProgram(this.uniProgram);
@@ -90,38 +91,30 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
   applyFilters(filters: any, rangedVal: number[]): void  {
     console.log('Filters applied:', filters);
-    this.loading = true; // Start loading
-
-    // Destructure the filter values for easier access
-    const { location, accreditationBody,programNames } = filters?.filters || {};
-
-
-    // Define the filter parameters including the range for fees
+    this.loading = true;
+  
     const filterParams: FilterInstitutions$Params = {
       filter: {
         cities: filters.location ?? [],
         accreditationBodies: filters.accreditationBody ?? [],
-        minFees: rangedVal?.[0] ?? 20000,  // Default min fee if not provided
-        maxFees: rangedVal?.[1] ?? 300000, // Default max fee if not provided
+        minFees: rangedVal?.[0] ?? 20000,
+        maxFees: rangedVal?.[1] ?? 300000,
         program: filters.program ?? []
-        //pagination
-        // Add other filter fields here as needed
       },
     };
-
-    // Call the service to filter universities with the updated filterParams
+  
     this.universityListService.filterInstitutions(filterParams).subscribe(
-
       (response: University[]) => {
-        console.log('Filtered universities:', response);
-        this.filteredUniversities = response;
-        this.loading = false; // Stop loading even if an error occurs
-
+        console.log('✅ Filtered universities:', response);
+  
+        this.filteredUniversities = [...response]; // 🔥 Force array reference change
+        this.loading = false;
+  
+        this.cdr.detectChanges(); // 🔥 Force UI update
       },
       (error) => {
-        console.error('Error applying filters:', error);
-        this.loading = false; // Stop loading even if an error occurs
-
+        console.error('❌ Error applying filters:', error);
+        this.loading = false;
       }
     );
   }
@@ -175,4 +168,8 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
       });
     }
   }
+  trackByUniversity(index: number, university: University) {
+    return university?.id || index; // Use a unique ID if available
+  }
+  
 }
