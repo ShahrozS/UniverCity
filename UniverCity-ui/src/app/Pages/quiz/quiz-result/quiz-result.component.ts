@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import confetti from 'canvas-confetti';
-import { SelectionServiceTsService } from '/FYP/Code/UniverCity/UniverCity-ui/src/app/Pages/quiz/selection.service.ts.service';
 import { QuizService } from '../../../Services/services';
 import { QuizCategory } from '../../../Services/models';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { SelectionServiceTsService } from '../selection.service.ts.service';
 
 @Component({
   selector: 'app-quiz-result',
@@ -34,7 +34,7 @@ export class QuizResultComponent implements OnInit {
     private route: ActivatedRoute
     ,public selectionService: SelectionServiceTsService,
      private quizService: QuizService) {}
-
+    
   ngOnInit(): void {
     this.selectionService.loadFromStorage(); 
     console.log(this.selectionService.getTime());

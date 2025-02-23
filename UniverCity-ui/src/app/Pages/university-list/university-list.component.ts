@@ -33,6 +33,8 @@ export class UniversityListComponent {
   ) {
     this.uniProgram = 'temp';
     this.fetchUniversitiesByProgram(this.uniProgram);
+    console.log("Here");
+
   }
 
 
@@ -51,7 +53,6 @@ export class UniversityListComponent {
     };
 
     this.universityListService.findAllUniversity().subscribe(
-
       (response: PageResponseUniversityResponse) => {
         console.log("hello");
         this.universities = response.content ?? []; // Use nullish coalescing to handle undefined

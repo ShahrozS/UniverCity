@@ -12,5 +12,5 @@ export interface UniversityResponse {
   rank?: number;
   startDate?: string;
   university_id?: number;
-  websiteLink?: string;
+  websiteLink?: string; 
 }
