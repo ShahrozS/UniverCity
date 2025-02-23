@@ -52,6 +52,7 @@ ngOnInit() {
   // Mock data - replace with actual API call
   
   this.getUserQuiz();
+  console.log(JSON.stringify(this.quizzes));
 }
 
 private calculateAverageScore() {

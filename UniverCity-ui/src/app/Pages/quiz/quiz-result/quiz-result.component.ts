@@ -104,10 +104,10 @@ export class QuizResultComponent implements OnInit {
 
 
   retryQuiz(){
-
+    this.router.navigate(["/previous-quiz"]);
   }
   goHome(){
-
+    this.router.navigate(["/home"]);
   }
 
   //handeling the scrollng 

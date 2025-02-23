@@ -140,6 +140,7 @@ export class MockTestComponent {
 
   onOptionSelect(questionId: number, optionIndex: number) {
     this.quizForm.patchValue({ ['question' + questionId]: optionIndex });
+    console.log(    )
   }
 
 
@@ -160,10 +161,11 @@ getPreviousQuestionsCount(subCategoryIndex: number): number {
 correctAnswers = 0;
 
 
-  userQuiz:{score:string,categoryId:number,completed:number}={
+  userQuiz:{score:string,categoryId:number,completed:number,time:string}={
     score: "0",
     categoryId:0,
     completed:0,
+    time:"",
   };
 
 calculateCorrectAnswers(){
@@ -173,12 +175,11 @@ calculateCorrectAnswers(){
     let questions = this.getQuestionsForSection(subCategory.quizsubcategory_id ?? 0);
     questions.forEach(question => {
       const selectedOption = this.quizForm.get('question' + question.quizquestion_id)?.value;
-      console.log( selectedOption + " != " + question.correctAnswer );
-      
-      if (String(selectedOption).trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase()) {
+      const selectedOptionText = this.getOptionText(question, selectedOption); // Get actual option text
+
+      if (selectedOptionText.trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase()) {
         // Assuming correctOption exists
        this.correctAnswers++;
-        console.log( selectedOption + " = " + question.correctAnswer );
   
       }
     });
@@ -192,6 +193,7 @@ calculateCorrectAnswers(){
   this.userQuiz.categoryId = this.service.getCategory() ?? 0;
   this.userQuiz.score = this.correctAnswers + "/" + this.service.getQuestionCount();
   this.userQuiz.completed = (this.correctAnswers/(this.service.getQuestionCount()??1))*100 ; 
+  this.userQuiz.time = this.service.getTime();
 
 
   console.log("ScorE: " + this.userQuiz.score);
@@ -208,6 +210,7 @@ saveUserQuiz(){
       categoryId: this.service.getCategory(),
 completed:this.userQuiz.completed,
 score:this.userQuiz.score,
+time:this.userQuiz.time
     }
   }).subscribe(
     (userQuiz)=>{
@@ -244,8 +247,10 @@ this.saveUserQuiz();
     let correctCount = 0;
     subCategoryQuestions.forEach(question => {
       const selectedOption = this.quizForm.get('question' + question.quizquestion_id)?.value;
-      if (String(selectedOption).trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase()) {
+      const selectedOptionText = this.getOptionText(question, selectedOption); // Get actual option text
+      console.log(selectedOptionText.trim().toLowerCase()+ "===" +String(question.correctAnswer).trim().toLowerCase())
 
+      if (selectedOptionText.trim().toLowerCase() === String(question.correctAnswer).trim().toLowerCase()) {
         correctCount++;
       }
     });

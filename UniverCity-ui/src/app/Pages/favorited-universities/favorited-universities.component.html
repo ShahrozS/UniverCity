@@ -54,7 +54,7 @@
             <!-- TODO: Program count -->
             <div class="stat">
               <mat-icon class="mr-2">payments</mat-icon>
-              <span>${{university.averageFees | number:'1.0-0'}} / year</span>
+              <span>Rs. {{university.averageFees | number:'1.0-0'}} / semester</span>
             </div>
           </div>
   
@@ -96,12 +96,10 @@
         </div>
         
         <div class="card-actions">
-          <a mat-stroked-button [href]="university.websiteLink" target="_blank">
-            <mat-icon>language</mat-icon> Website
+          <a mat-stroked-button [href]="university.websiteLink" target="_blank" class="flex justify-center items-center">
+            <mat-icon>language</mat-icon> <span class="ml-2">Website</span>
           </a>
-          <button mat-flat-button color="primary" [routerLink]="['/universities', university.id]">
-            View Details
-          </button>
+          
         </div>
       </div>
     </div>

@@ -21,6 +21,7 @@ export class UniversityListComponent {
   universities: University[] = [];
   selectedUniversities: University[] = [];
   uniProgram: string;
+  loading: boolean = true; // Track loading state
 
   filteredUniversities: University[] = []; // Start with empty array to hold filtered results
   @Input() filter: any; // The filter input
@@ -40,6 +41,8 @@ export class UniversityListComponent {
 
 
   fetchUniversitiesByProgram(name: string): void {
+    this.loading = true; // Start loading
+
     // Fetch universities by program (for now, mock the response)
     const filterParams: FilterInstitutions$Params = {
       filter : {
@@ -57,10 +60,14 @@ export class UniversityListComponent {
         console.log("hello");
         this.universities = response.content ?? []; // Use nullish coalescing to handle undefined
         console.log(this.universities[1]?.name); // Safely access properties
-        this.filteredUniversities = this.universities; // Apply filtering after setting the array
+        this.filteredUniversities = this.universities;
+        this.loading = false; // Stop loading after universities are fetched
+        // Apply filtering after setting the array
       },
       (error) => {
         console.error('Error fetching universities by program:', error);
+        this.loading = false; // Stop loading even if an error occurs
+
       }
     );
 
@@ -83,6 +90,7 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
   applyFilters(filters: any, rangedVal: number[]): void  {
     console.log('Filters applied:', filters);
+    this.loading = true; // Start loading
 
     // Destructure the filter values for easier access
     const { location, accreditationBody,programNames } = filters?.filters || {};
@@ -103,17 +111,24 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
     // Call the service to filter universities with the updated filterParams
     this.universityListService.filterInstitutions(filterParams).subscribe(
+
       (response: University[]) => {
         console.log('Filtered universities:', response);
         this.filteredUniversities = response;
+        this.loading = false; // Stop loading even if an error occurs
+
       },
       (error) => {
         console.error('Error applying filters:', error);
+        this.loading = false; // Stop loading even if an error occurs
+
       }
     );
   }
   
   searchUniversities(keyword : string){
+    this.loading = true; // Start loading
+
     const ser : SearchUniversities$Params = {
       keyword : keyword || ''
     }
@@ -121,9 +136,13 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
       (response: University[]) => {
         console.log('Filtered universities:', response);
         this.filteredUniversities = response;
+        this.loading = false; // Stop loading even if an error occurs
+
       },
       (error) => {
         console.error('Error applying filters:', error);
+        this.loading = false; // Stop loading even if an error occurs
+
       }
     );
   }

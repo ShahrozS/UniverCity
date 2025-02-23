@@ -18,10 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -116,22 +113,34 @@ public class QuizService {
         return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory,pageable).getContent();
     }
     // get all questions by main category
-    public List<QuizQuestion> getQuestionsByMainCategory(long category, int limit) {
-        QuizCategory quizCategory1 = getCategoryById(category).orElseThrow(() -> new RuntimeException("Category not found"));
+    public List<QuizQuestion> getQuestionsByMainCategory(long category, int totalLimit) {
+        QuizCategory quizCategory1 = getCategoryById(category)
+                .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        // Fetch all QuizSubCategoryMainCategory associated with the given QuizCategory
-        List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = subXMain.findQuizSubCategoryMainCategoriesByQuizCategory(quizCategory1);
+        List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = subXMain
+                .findQuizSubCategoryMainCategoriesByQuizCategory(quizCategory1);
 
         if (quizSubCategoryMainCategories.isEmpty()) {
             return Collections.emptyList();
         }
 
-        Pageable pageable = PageRequest.of(0, limit);
+        List<QuizQuestion> allQuestions = new ArrayList<>();
+        int subCategoryCount = quizSubCategoryMainCategories.size();
+        int questionsPerSubCategory = totalLimit / subCategoryCount;
+        int remainingQuestions = totalLimit % subCategoryCount; // Handle cases where totalLimit isn't perfectly divisible
 
-        // Fetch all questions linked to these subcategories
-        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategoryIn(quizSubCategoryMainCategories, pageable).getContent();
+        for (QuizSubCategoryMainCategory subCategory : quizSubCategoryMainCategories) {
+            int limitForThisSubCategory = questionsPerSubCategory + (remainingQuestions-- > 0 ? 1 : 0); // Distribute remaining questions
+            Pageable pageable = PageRequest.of(0, limitForThisSubCategory);
+            List<QuizQuestion> questions = questionSubMainRepository
+                    .findQuizQuestionByQuizSubCategoryMainCategory(subCategory, pageable)
+                    .getContent();
+
+            allQuestions.addAll(questions);
+        }
+
+        return allQuestions;
     }
-
 
 
     // quiz subxmain
