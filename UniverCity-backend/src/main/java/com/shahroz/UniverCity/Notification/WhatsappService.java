@@ -8,7 +8,7 @@ import java.util.*;
 @Service
 public class WhatsappService {
     private static final String PHONE_NUMBER_ID = "580810988445072";
-    private static final String ACCESS_TOKEN = "EAAZAAk7cy09wBO5JoS1mQwsKPHICkF7mZBRIHYovxDTCfsvucR4Ajem7jsLDutDqlmYlsQmj2BAUKCtTuROlwC1hO9VYcea67gIfZADWmm2JhxSBUb9hMdXrSqgAhERr418FfLSZCn0ZARgoZAJNdHqZBMt9RMrNGypUgYsyB0J0ayoySAT6XrfagubYsDpTszqwfTcxAkXzroLX41QR6680oTccWMZD"; // Replace with actual token
+    private static final String ACCESS_TOKEN = "EAAZAAk7cy09wBOZBlSLi2EWsZCOdok5Oa9Ug8GaeujgVsjqeDbjoCal0ZBgS3hHBYExUlBUhHDgRzUl8HwsxUmhBGRJStCZAJf9wNiJm6v2aahop6RHpS8rPf7QiFyWv7hi5eJ2TJs5gw9Cqt6K5c0NQPBHQALT5AzW9ZBapAzZCHW3EPumfJugrS9VCzJYvu0OGObmzAlR9doKWZABAClFIE1uwbzgZD"; // Replace with actual token
     private static final String API_URL = "https://graph.facebook.com/v21.0/" + PHONE_NUMBER_ID + "/messages";
 
     public String sendWhatsAppTemplateMessage(String recipientNumber, String universityName, String testDate, String websiteLink) {
