@@ -37,7 +37,7 @@ public class NotificationService {
 
         String whatsappMessage = "ALERT🚨. \n"+university.getName()+"'s entry test is just around the corner!\n 📆Date: " + formattedDate + ".\n For more details visit: " + university.getWebsiteLink();
 
-        emailService.sendEmail(user.getEmail(),user.fullName(), "Upcoming Entry Test Reminder",message);
+//        emailService.sendEmail(user.getEmail(),user.fullName(), "Upcoming Entry Test Reminder",message);
         whatsAppService.sendWhatsAppTemplateMessage(user.getPhoneNumber(),university.getName(),formattedDate,university.getWebsiteLink());
 
     }
