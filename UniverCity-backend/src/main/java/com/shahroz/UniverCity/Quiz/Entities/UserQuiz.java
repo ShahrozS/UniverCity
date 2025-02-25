@@ -3,6 +3,7 @@ package com.shahroz.UniverCity.Quiz.Entities;
 import com.shahroz.UniverCity.Entities.User;
 import jakarta.persistence.*;
 import lombok.*;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,11 +28,13 @@ public class UserQuiz {
     private String time;
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="quizcategory_id")
     private QuizCategory quizCategory;
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "user_id",

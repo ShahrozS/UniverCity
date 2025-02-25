@@ -15,8 +15,9 @@ public interface QuestionSubMainRepository  extends JpaRepository<QuestionSubMai
 
 
 
-    @Query("SELECT q.quizQuestion FROM QuestionSubMain q WHERE q.quizSubCategoryMainCategory = :quizSubCategoryMainCategory ")
+    @Query("SELECT q.quizQuestion FROM QuestionSubMain q WHERE q.quizSubCategoryMainCategory = :quizSubCategoryMainCategory and q.quizQuestion.difficultyLevel = :difficulty")
     Page<QuizQuestion> findQuizQuestionByQuizSubCategoryMainCategory(@Param("quizSubCategoryMainCategory") QuizSubCategoryMainCategory quizSubCategoryMainCategory,
+                                                                     @Param("difficulty")int difficulty,
                                                                      Pageable pageable);
 
 

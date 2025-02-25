@@ -110,12 +110,13 @@ public class QuizService {
         ,quizSubCategory1);
 
         Pageable pageable =   PageRequest.of(0,limit);
-        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory,pageable).getContent();
+        return questionSubMainRepository.findQuizQuestionByQuizSubCategoryMainCategory(quizSubCategoryMainCategory,1,pageable).getContent();
     }
     // get all questions by main category
-    public List<QuizQuestion> getQuestionsByMainCategory(long category, int totalLimit) {
+    public List<QuizQuestion> getQuestionsByMainCategory(long category,int difficulty, int totalLimit) {
         QuizCategory quizCategory1 = getCategoryById(category)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
+
 
         List<QuizSubCategoryMainCategory> quizSubCategoryMainCategories = subXMain
                 .findQuizSubCategoryMainCategoriesByQuizCategory(quizCategory1);
@@ -130,11 +131,20 @@ public class QuizService {
         int remainingQuestions = totalLimit % subCategoryCount; // Handle cases where totalLimit isn't perfectly divisible
 
         for (QuizSubCategoryMainCategory subCategory : quizSubCategoryMainCategories) {
+
             int limitForThisSubCategory = questionsPerSubCategory + (remainingQuestions-- > 0 ? 1 : 0); // Distribute remaining questions
+            System.out.println(quizCategory1.getName() + "---" + subCategory.getQuizSubCategory().getName() + " - " + questionsPerSubCategory + " - " + limitForThisSubCategory);
+
             Pageable pageable = PageRequest.of(0, limitForThisSubCategory);
+            System.out.println(quizCategory1.getName() + subCategory.getQuizSubCategory().getName());
             List<QuizQuestion> questions = questionSubMainRepository
-                    .findQuizQuestionByQuizSubCategoryMainCategory(subCategory, pageable)
+                    .findQuizQuestionByQuizSubCategoryMainCategory(subCategory,difficulty, pageable)
                     .getContent();
+
+            System.out.println("in func");
+            for(QuizQuestion quizQuestion: questions ){
+                System.out.println(quizQuestion.getDifficultyLevel() + quizQuestion.getQuestion());
+            }
 
             allQuestions.addAll(questions);
         }
@@ -183,9 +193,17 @@ public class QuizService {
 
         System.out.println( "-->" + questionSetDTO.getCategoryId()+ " " + questionSetDTO.getSubCategoryId() + " " + questionSetDTO.getCount() + " " + questionSetDTO.getDifficulty());
 
-        List<QuizQuestion> questions = getQuestionsByMainCategory(questionSetDTO.getCategoryId(),questionSetDTO.getCount());
+        List<QuizQuestion> questions = getQuestionsByMainCategory(questionSetDTO.getCategoryId(),questionSetDTO.getDifficulty(),questionSetDTO.getCount());
+
+        for(QuizQuestion quizQuestion: questions ){
+            System.out.println(quizQuestion.getDifficultyLevel() + quizQuestion.getQuestion());
+        }
+
         questions = questions.stream().filter(quizQuestion -> quizQuestion.getDifficultyLevel() == questionSetDTO.getDifficulty()).collect(Collectors.toList());
 
+        for(QuizQuestion quizQuestion: questions ){
+            System.out.println(quizQuestion.getDifficultyLevel() + quizQuestion.getQuestion());
+        }
 
         Collections.shuffle(questions);
 
