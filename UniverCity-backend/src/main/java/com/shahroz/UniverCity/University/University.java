@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.Entities.Facility;
 import com.shahroz.UniverCity.Entities.Program;
 import com.shahroz.UniverCity.Entities.User;
+import com.shahroz.UniverCity.Review.UniversityReview;
 import com.shahroz.UniverCity.Utility.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

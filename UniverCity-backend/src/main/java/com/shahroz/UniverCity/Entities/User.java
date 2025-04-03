@@ -3,7 +3,7 @@ package com.shahroz.UniverCity.Entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.University.University;
-import com.shahroz.UniverCity.University.UniversityReview;
+import com.shahroz.UniverCity.Review.UniversityReview;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;

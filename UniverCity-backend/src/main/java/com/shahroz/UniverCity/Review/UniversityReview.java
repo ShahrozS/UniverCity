@@ -1,6 +1,8 @@
-package com.shahroz.UniverCity.University;
+package com.shahroz.UniverCity.Review;
 
 import com.shahroz.UniverCity.Entities.User;
+import com.shahroz.UniverCity.University.University;
+import com.shahroz.UniverCity.Utility.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +13,7 @@ import lombok.*;
 @Setter
 @Getter
 @NoArgsConstructor
-public class UniversityReview {
+public class UniversityReview extends BaseEntity {
 
     @Id
     @GeneratedValue
