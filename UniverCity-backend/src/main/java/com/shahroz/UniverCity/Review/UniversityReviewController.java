@@ -34,6 +34,7 @@ public class UniversityReviewController {
     public ResponseEntity<String> deleteReview(@PathVariable Long reviewId) {
         reviewService.deleteReview(reviewId);
         return ResponseEntity.ok("UniversityReview deleted successfully");
+        //commit
     }
 
     // Get all reviews for a university
