@@ -62,6 +62,7 @@ public class University extends BaseEntity {
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Program> programs = new ArrayList<>();;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "university" , cascade = CascadeType.ALL)
     private List<UniversityReview> reviews = new ArrayList<>();
 

@@ -5,29 +5,46 @@ import com.shahroz.UniverCity.University.University;
 import com.shahroz.UniverCity.Utility.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @ToString
-@Builder
 @AllArgsConstructor
 @Setter
 @Getter
+@Builder
 @NoArgsConstructor
-public class UniversityReview extends BaseEntity {
+@EntityListeners(AuditingEntityListener.class)
+
+public class UniversityReview  {
+
 
     @Id
-    @GeneratedValue
-    private long universityreview_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long universityReview_id;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime lastModifiedDate;
 
     private String review;
     private int rating;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="university-id")
+    @JoinColumn(name="university_id")
     private University university;
 
 
-    @OneToOne(mappedBy = "universityreview")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
 
 

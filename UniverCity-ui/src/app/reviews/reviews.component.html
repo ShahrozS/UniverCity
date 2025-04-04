@@ -1,0 +1,156 @@
+<!-- Reviews Section -->
+<div class="mt-8 mb-6">
+    <h2 class="text-xl font-bold text-gray-800 mb-3">Student Reviews</h2>
+    
+    <!-- Rating Summary -->
+    <div class="bg-white border border-gray-200 rounded p-4 mb-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-baseline">
+          <span class="text-3xl font-bold text-gray-800">{{ averageRating | number:'1.1-1' }}</span>
+          <span class="text-gray-600 ml-2">/ 5</span>
+        </div>
+        <div class="flex">
+          <ng-container *ngFor="let star of [1,2,3,4,5]">
+            <svg 
+              class="w-5 h-5" 
+              [ngClass]="star <= averageRating ? 'text-yellow-400' : 'text-gray-300'"
+              xmlns="http://www.w3.org/2000/svg" 
+              viewBox="0 0 20 20" 
+              fill="currentColor">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          </ng-container>
+        </div>
+        <span class="text-gray-600">{{ totalReviews }} {{ totalReviews === 1 ? 'Review' : 'Reviews' }}</span>
+      </div>
+    </div>
+  
+    <!-- Submit Review Form -->
+    <div *ngIf="!userHasReviewed" class="bg-white border border-gray-200 rounded p-4 mb-4">
+      <h3 class="font-bold text-gray-800 mb-2">Write Your Review</h3>
+      <div class="mb-2">
+        <p class="text-sm text-yellow-600 italic mb-2">
+          Note: You have only one review chance. Please write a genuine review for your own university.
+        </p>
+        <div class="flex items-center mb-2">
+          <span class="mr-2">Your Rating:</span>
+          <div class="flex space-x-1">
+            <ng-container *ngFor="let star of [1,2,3,4,5]">
+              <button 
+                (click)="setUserRating(star)" 
+                class="focus:outline-none">
+                <svg 
+                  class="w-6 h-6" 
+                  [ngClass]="star <= userRating ? 'text-yellow-400' : 'text-gray-300'"
+                  xmlns="http://www.w3.org/2000/svg" 
+                  viewBox="0 0 20 20" 
+                  fill="currentColor">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              </button>
+            </ng-container>
+          </div>
+        </div>
+        <textarea 
+          [(ngModel)]="reviewText" 
+          rows="3" 
+          class="w-full px-3 py-2 text-gray-700 border rounded focus:outline-none focus:border-blue-500" 
+          placeholder="Share your experience...">
+        </textarea>
+      </div>
+      <button 
+        (click)="submitReview()" 
+        [disabled]="!reviewText || userRating === 0" 
+        class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed">
+        Submit Review
+      </button>
+    </div>
+  
+    <!-- Individual Reviews -->
+    <div *ngIf="reviews.length > 0; else noReviews" class="space-y-4 mb-10">
+      <div *ngFor="let review of reviews | paginate: { itemsPerPage: 5, currentPage: currentPage }" 
+        class="bg-white border border-gray-200 rounded p-4">
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <p class="font-medium text-gray-800">{{ review.user?.firstName }} {{ review.user?.lastName}}</p>
+            <div class="flex items-center">
+              <div class="flex">
+                <ng-container *ngFor="let star of [1,2,3,4,5]">
+                  <svg 
+                    class="w-4 h-4" 
+                    [ngClass]="{ 
+                      'text-yellow-400': star <= review.rating!, 
+                      'text-gray-300': star > review.rating! 
+                    }"
+                                        xmlns="http://www.w3.org/2000/svg" 
+                    viewBox="0 0 20 20" 
+                    fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
+                </ng-container>
+              </div>
+              <span class="text-gray-500 text-sm ml-2">{{ review.createdDate| date:'MMM d, y' }}</span>
+            </div>
+          </div>
+          
+          <!-- Edit/Delete buttons for user's own review -->
+          <div *ngIf="review.user?.email " class="flex space-x-2">
+            <button 
+              *ngIf="!editing" 
+              (click)="startEditingReview(review)"
+              class="text-blue-600 hover:text-blue-800 text-sm">
+              Edit
+            </button>
+            <button 
+              (click)="deleteReview(review.universityReview_id!)"
+              class="text-red-600 hover:text-red-800 text-sm">
+              Delete
+            </button>
+          </div>
+        </div>
+        
+        <!-- Review content (normal or editing mode) -->
+        <div *ngIf="!editing; else editingReview">
+          <p class="text-gray-700">{{ review.review }}</p>
+        </div>
+        
+        <ng-template #editingReview>
+          <div>
+            <textarea 
+              [(ngModel)]="editText" 
+              rows="3" 
+              class="w-full px-3 py-2 text-gray-700 border rounded focus:outline-none focus:border-blue-500">
+            </textarea>
+            <div class="flex space-x-2 mt-2">
+              <button 
+                (click)="saveEditedReview(review)"
+                class="bg-blue-600 text-white px-3 py-1 text-sm rounded hover:bg-blue-700">
+                Save
+              </button>
+              <button 
+                (click)="cancelEditingReview(review)"
+                class="bg-gray-300 text-gray-700 px-3 py-1 text-sm rounded hover:bg-gray-400">
+                Cancel
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      
+      <!-- Pagination Controls -->
+      <div *ngIf="reviews.length > 5" class="flex justify-center mt-4">
+        <pagination-controls 
+          (pageChange)="currentPage = $event"
+          previousLabel="Previous"
+          nextLabel="Next"
+          class="pagination">
+        </pagination-controls>
+      </div>
+    </div>
+    
+    <ng-template #noReviews>
+      <div class="bg-white border border-gray-200 rounded p-4 text-center">
+        <p class="text-gray-600">No reviews yet. Be the first to leave a review!</p>
+      </div>
+    </ng-template>
+  </div>

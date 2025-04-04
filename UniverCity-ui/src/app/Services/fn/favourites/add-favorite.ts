@@ -13,18 +13,18 @@ export interface AddFavorite$Params {
   universityId: number;
 }
 
-export function addFavorite(http: HttpClient, rootUrl: string, params: AddFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+export function addFavorite(http: HttpClient, rootUrl: string, params: AddFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
   const rb = new RequestBuilder(rootUrl, addFavorite.PATH, 'post');
   if (params) {
     rb.path('universityId', params.universityId, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: 'application/json', context })
+    rb.build({ responseType: 'text', accept: '*/*', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
+      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
     })
   );
 }

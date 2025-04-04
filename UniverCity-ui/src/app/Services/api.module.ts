@@ -6,6 +6,7 @@ import { NgModule, ModuleWithProviders, SkipSelf, Optional } from '@angular/core
 import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
+import { UniversityReviewControllerService } from './services/university-review-controller.service';
 import { WhatsappControllerService } from './services/whatsapp-controller.service';
 import { UniversityService } from './services/university.service';
 import { QuizService } from './services/quiz.service';
@@ -22,6 +23,7 @@ import { UniversityFilterService } from './services/university-filter.service';
   exports: [],
   declarations: [],
   providers: [
+    UniversityReviewControllerService,
     WhatsappControllerService,
     UniversityService,
     QuizService,

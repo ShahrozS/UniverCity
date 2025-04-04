@@ -8,25 +8,24 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { User } from '../../models/user';
 
-export interface RemoveFavorite$Params {
-  universityId: number;
+export interface GetCurrentUser$Params {
 }
 
-export function removeFavorite(http: HttpClient, rootUrl: string, params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, removeFavorite.PATH, 'delete');
+export function getCurrentUser(http: HttpClient, rootUrl: string, params?: GetCurrentUser$Params, context?: HttpContext): Observable<StrictHttpResponse<User>> {
+  const rb = new RequestBuilder(rootUrl, getCurrentUser.PATH, 'get');
   if (params) {
-    rb.path('universityId', params.universityId, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<User>;
     })
   );
 }
 
-removeFavorite.PATH = '/favorites/{universityId}';
+getCurrentUser.PATH = '/auth/current-user';

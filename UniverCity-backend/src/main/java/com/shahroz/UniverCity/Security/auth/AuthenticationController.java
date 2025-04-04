@@ -1,13 +1,17 @@
 package com.shahroz.UniverCity.security.auth;
 
 
+import com.shahroz.UniverCity.Entities.User;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("auth")
@@ -39,6 +43,11 @@ public class AuthenticationController {
             @RequestParam String token
     ) throws MessagingException {
         service.activateAccount(token);
+    }
+
+    @GetMapping("/current-user")
+    public ResponseEntity<User> getCurrentUser(Authentication authentication){
+        return ResponseEntity.ok(service.getCurrentUser(authentication));
     }
 
 

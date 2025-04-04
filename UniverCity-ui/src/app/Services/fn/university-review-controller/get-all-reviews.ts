@@ -8,25 +8,26 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UniversityReview } from '../../models/university-review';
 
-export interface RemoveFavorite$Params {
+export interface GetAllReviews$Params {
   universityId: number;
 }
 
-export function removeFavorite(http: HttpClient, rootUrl: string, params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, removeFavorite.PATH, 'delete');
+export function getAllReviews(http: HttpClient, rootUrl: string, params: GetAllReviews$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<UniversityReview>>> {
+  const rb = new RequestBuilder(rootUrl, getAllReviews.PATH, 'get');
   if (params) {
     rb.path('universityId', params.universityId, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return r as StrictHttpResponse<Array<UniversityReview>>;
     })
   );
 }
 
-removeFavorite.PATH = '/favorites/{universityId}';
+getAllReviews.PATH = '/api/reviews/allReviews/{universityId}';
