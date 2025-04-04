@@ -69,8 +69,9 @@ public class User implements UserDetails, Principal {
     private AcademicScore academicScore;
 
 
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "universityreview_id", referencedColumnName = "universityreview_id")
+    @JoinColumn(name = "universityReview_id", referencedColumnName = "universityReview_id")
     private UniversityReview universityreview;
 
 

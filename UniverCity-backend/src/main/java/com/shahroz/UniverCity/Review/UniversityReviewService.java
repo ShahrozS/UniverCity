@@ -19,29 +19,32 @@ public class UniversityReviewService {
     private final UserRepository userRepository;
 
     // Add a new review
-    public UniversityReview addReview(Long universityId, Long userId, UniversityReview reviewRequest) {
+    public UniversityReview addReview(Long universityId, Long userId, UniversityReviewRequest reviewRequest) {
         University university = universityRepository.findById(universityId)
                 .orElseThrow(() -> new RuntimeException("University not found"));
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        UniversityReview review = new UniversityReview();
-        review.setUniversity(university);
-        review.setUser(user);
-        review.setRating(reviewRequest.getRating());
-        review.setReview(reviewRequest.getReview());
+        var review = UniversityReview.builder()
+                .review(reviewRequest.getReview())
+                .rating(reviewRequest.getRating())
+                .createdDate(reviewRequest.getCreatedDate())
+                .lastModifiedDate(reviewRequest.getLastModifiedDate())
+                .university(university)
+                .user(user)
+                .build();
 
         return reviewRepository.save(review);
     }
 
     // Edit an existing review
-    public UniversityReview editReview(Long reviewId, UniversityReview updatedReview) {
+    public UniversityReview editReview(Long reviewId, UniversityReviewRequest updatedReview) {
         UniversityReview existingReview = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("UniversityReview not found"));
 
         existingReview.setRating(updatedReview.getRating());
         existingReview.setReview(updatedReview.getReview());
-
+        existingReview.setLastModifiedDate(updatedReview.getLastModifiedDate());
         return reviewRepository.save(existingReview);
     }
 

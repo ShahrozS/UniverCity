@@ -36,7 +36,7 @@ export class FavouritesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  addFavorite$Response(params: AddFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  addFavorite$Response(params: AddFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
     return addFavorite(this.http, this.rootUrl, params, context);
   }
 
@@ -46,9 +46,9 @@ export class FavouritesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  addFavorite(params: AddFavorite$Params, context?: HttpContext): Observable<string> {
+  addFavorite(params: AddFavorite$Params, context?: HttpContext): Observable<void> {
     return this.addFavorite$Response(params, context).pipe(
-      map((r: StrictHttpResponse<string>): string => r.body)
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 
@@ -61,7 +61,7 @@ export class FavouritesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  removeFavorite$Response(params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
+  removeFavorite$Response(params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
     return removeFavorite(this.http, this.rootUrl, params, context);
   }
 
@@ -71,9 +71,9 @@ export class FavouritesService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  removeFavorite(params: RemoveFavorite$Params, context?: HttpContext): Observable<string> {
+  removeFavorite(params: RemoveFavorite$Params, context?: HttpContext): Observable<void> {
     return this.removeFavorite$Response(params, context).pipe(
-      map((r: StrictHttpResponse<string>): string => r.body)
+      map((r: StrictHttpResponse<void>): void => r.body)
     );
   }
 

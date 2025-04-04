@@ -17,7 +17,7 @@ public class UniversityReviewController {
     public ResponseEntity<UniversityReview> addReview(
             @PathVariable Long universityId,
             @PathVariable Long userId,
-            @RequestBody UniversityReview review) {
+            @RequestBody UniversityReviewRequest review) {
         return ResponseEntity.ok(reviewService.addReview(universityId, userId, review));
     }
 
@@ -25,7 +25,7 @@ public class UniversityReviewController {
     @PutMapping("editReview/{reviewId}")
     public ResponseEntity<UniversityReview> editReview(
             @PathVariable Long reviewId,
-            @RequestBody UniversityReview updatedReview) {
+            @RequestBody UniversityReviewRequest updatedReview) {
         return ResponseEntity.ok(reviewService.editReview(reviewId, updatedReview));
     }
 

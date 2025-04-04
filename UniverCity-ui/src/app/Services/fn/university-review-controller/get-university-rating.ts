@@ -9,24 +9,24 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface RemoveFavorite$Params {
+export interface GetUniversityRating$Params {
   universityId: number;
 }
 
-export function removeFavorite(http: HttpClient, rootUrl: string, params: RemoveFavorite$Params, context?: HttpContext): Observable<StrictHttpResponse<void>> {
-  const rb = new RequestBuilder(rootUrl, removeFavorite.PATH, 'delete');
+export function getUniversityRating(http: HttpClient, rootUrl: string, params: GetUniversityRating$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  const rb = new RequestBuilder(rootUrl, getUniversityRating.PATH, 'get');
   if (params) {
     rb.path('universityId', params.universityId, {});
   }
 
   return http.request(
-    rb.build({ responseType: 'text', accept: '*/*', context })
+    rb.build({ responseType: 'json', accept: 'application/json', context })
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      return (r as HttpResponse<any>).clone({ body: parseFloat(String((r as HttpResponse<any>).body)) }) as StrictHttpResponse<number>;
     })
   );
 }
 
-removeFavorite.PATH = '/favorites/{universityId}';
+getUniversityRating.PATH = '/api/reviews/getRating/{universityId}';

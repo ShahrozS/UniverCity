@@ -35,6 +35,8 @@ import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.
 import { MatIconModule } from '@angular/material/icon';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/favorited-universities.component';
+import { ReviewsComponent } from './reviews/reviews.component';
+import { NgxPaginationModule } from 'ngx-pagination';  
 
 
 @NgModule({
@@ -60,6 +62,7 @@ import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/f
     QuizResultComponent,
     PreviousQuizComponent,
     FavoritedUniversitiesComponent,
+    ReviewsComponent,
 
   ],
   imports: [
@@ -74,7 +77,8 @@ import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/f
     BrowserAnimationsModule,
     Button,
     UniversityByProgramListComponent,
-    MatIconModule 
+    MatIconModule,
+    NgxPaginationModule,
 ],
   providers: [
     HttpClient,

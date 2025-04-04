@@ -5,9 +5,11 @@
 import { University } from '../models/university';
 import { User } from '../models/user';
 export interface UniversityReview {
+  createdDate?: string;
+  lastModifiedDate?: string;
   rating?: number;
   review?: string;
   university?: University;
-  universityreview_id?: number;
+  universityReview_id?: number;
   user?: User;
 }

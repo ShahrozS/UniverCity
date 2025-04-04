@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UniversityReviewRepository   extends JpaRepository<UniversityReview, Long> {
 
-    List<UniversityReview> findUniversityReviewByUniversityId(long universityId);
+    public List<UniversityReview> findUniversityReviewByUniversityId(long universityId);
 
 
 }
