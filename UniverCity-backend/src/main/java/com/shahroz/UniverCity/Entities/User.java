@@ -70,7 +70,7 @@ public class User implements UserDetails, Principal {
 
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "universityReview_id", referencedColumnName = "universityReview_id")
     private UniversityReview universityreview;
 

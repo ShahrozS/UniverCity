@@ -173,6 +173,7 @@ export class ReviewsComponent implements OnInit {
       this.reviewService.deleteReview({reviewId}).subscribe(
         response => {
           this.userHasReviewed = false;
+          console.log("Deleted? " + response);
           this.loadReviews();
         },
         error => {
