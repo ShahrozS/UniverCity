@@ -131,34 +131,33 @@ export class ReviewsComponent implements OnInit {
 
   }
   
-  startEditingReview(review: any): void {
+  startEditingReview(review: UniversityReview): void {
     this.editing = true;
-    this.editText = review.text;
+    this.editText = review.review!;
   }
   
-  cancelEditingReview(review: any): void {
+  cancelEditingReview(review: UniversityReview): void {
     this.editing = false;
   }
   
-  saveEditedReview(review: any): void {
+  saveEditedReview(review: UniversityReview, editText: string): void {
 
+    console.log(review)
    const editedReview = {
-    createdDate: new Date().toISOString(),
-    lastModifiedDate: new Date().toISOString(),
-    rating: this.userRating,
-    review: this.reviewText,
-    university: {},
-    user: {},
+    createdDate: review.createdDate,
+    lastModifiedDate:new Date().toISOString(),
+    rating: review.rating,
+    review: editText,
     }
 
     const updatedReview = {
-      reviewId: review.id,
+      reviewId: review.universityReview_id! ,
       body: editedReview
     };
     
     this.reviewService.editReview(updatedReview).subscribe(
       response => {
-        review.text = review.editText;
+        review.review = response.review;
         this.editing = false;
         this.loadReviews();
       },
@@ -173,6 +172,7 @@ export class ReviewsComponent implements OnInit {
       this.reviewService.deleteReview({reviewId}).subscribe(
         response => {
           this.userHasReviewed = false;
+          console.log("Deleted? " + response);
           this.loadReviews();
         },
         error => {
