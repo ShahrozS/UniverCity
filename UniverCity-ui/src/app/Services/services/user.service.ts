@@ -11,8 +11,16 @@ import { BaseService } from '../base-service';
 import { ApiConfiguration } from '../api-configuration';
 import { StrictHttpResponse } from '../strict-http-response';
 
+import { getAcademicScores } from '../fn/user/get-academic-scores';
+import { GetAcademicScores$Params } from '../fn/user/get-academic-scores';
 import { getAllUsers } from '../fn/user/get-all-users';
 import { GetAllUsers$Params } from '../fn/user/get-all-users';
+import { getFavouriteUniversities } from '../fn/user/get-favourite-universities';
+import { GetFavouriteUniversities$Params } from '../fn/user/get-favourite-universities';
+import { getUserDetails } from '../fn/user/get-user-details';
+import { GetUserDetails$Params } from '../fn/user/get-user-details';
+import { updateUserDetails } from '../fn/user/update-user-details';
+import { UpdateUserDetails$Params } from '../fn/user/update-user-details';
 import { User } from '../models/user';
 
 @Injectable({ providedIn: 'root' })
@@ -21,8 +29,45 @@ export class UserService extends BaseService {
     super(config, http);
   }
 
+  /** Path part for operation `updateUserDetails()` */
+  static readonly UpdateUserDetailsPath = '/user-profile/edit';
+
+  /**
+   * Update user profile details.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `updateUserDetails()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  updateUserDetails$Response(params: UpdateUserDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return updateUserDetails(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Update user profile details.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `updateUserDetails$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  updateUserDetails(params: UpdateUserDetails$Params, context?: HttpContext): Observable<{
+}> {
+    return this.updateUserDetails$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
   /** Path part for operation `getAllUsers()` */
-  static readonly GetAllUsersPath = '/user';
+  static readonly GetAllUsersPath = '/user-profile';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
@@ -43,6 +88,117 @@ export class UserService extends BaseService {
   getAllUsers(params?: GetAllUsers$Params, context?: HttpContext): Observable<Array<User>> {
     return this.getAllUsers$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<User>>): Array<User> => r.body)
+    );
+  }
+
+  /** Path part for operation `getFavouriteUniversities()` */
+  static readonly GetFavouriteUniversitiesPath = '/user-profile/favourites';
+
+  /**
+   * Get user's favourite universities.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getFavouriteUniversities()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getFavouriteUniversities$Response(params?: GetFavouriteUniversities$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return getFavouriteUniversities(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Get user's favourite universities.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getFavouriteUniversities$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getFavouriteUniversities(params?: GetFavouriteUniversities$Params, context?: HttpContext): Observable<{
+}> {
+    return this.getFavouriteUniversities$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `getUserDetails()` */
+  static readonly GetUserDetailsPath = '/user-profile/details';
+
+  /**
+   * Get user profile details.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getUserDetails()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserDetails$Response(params?: GetUserDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return getUserDetails(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Get user profile details.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getUserDetails$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getUserDetails(params?: GetUserDetails$Params, context?: HttpContext): Observable<{
+}> {
+    return this.getUserDetails$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
+    );
+  }
+
+  /** Path part for operation `getAcademicScores()` */
+  static readonly GetAcademicScoresPath = '/user-profile/academic-scores';
+
+  /**
+   * Get user's last five academic scores.
+   *
+   *
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getAcademicScores()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAcademicScores$Response(params?: GetAcademicScores$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+    return getAcademicScores(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Get user's last five academic scores.
+   *
+   *
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getAcademicScores$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getAcademicScores(params?: GetAcademicScores$Params, context?: HttpContext): Observable<{
+}> {
+    return this.getAcademicScores$Response(params, context).pipe(
+      map((r: StrictHttpResponse<{
+}>): {
+} => r.body)
     );
   }
 

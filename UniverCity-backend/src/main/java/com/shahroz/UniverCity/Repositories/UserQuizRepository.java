@@ -9,4 +9,7 @@ import java.util.List;
 public interface UserQuizRepository  extends JpaRepository<UserQuiz, Long> {
 
     List<UserQuiz> getUserQuizByUser(User user);
+
+    List<UserQuiz> getLastFiveUserQuizByUser(User user);
+
 }

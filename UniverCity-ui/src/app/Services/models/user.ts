@@ -6,7 +6,6 @@ import { AcademicScore } from '../models/academic-score';
 import { GrantedAuthority } from '../models/granted-authority';
 import { Notification } from '../models/notification';
 import { Role } from '../models/role';
-import { UniversityReview } from '../models/university-review';
 import { UserLocation } from '../models/user-location';
 export interface User {
   academicScore?: AcademicScore;
@@ -26,7 +25,6 @@ export interface User {
   password?: string;
   phoneNumber?: string;
   roles?: Array<Role>;
-  universityreview?: UniversityReview;
   userLocations?: Array<UserLocation>;
   user_id?: number;
   username?: string;

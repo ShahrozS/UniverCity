@@ -8,15 +8,17 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
+import { UserDetailDto } from '../../models/user-detail-dto';
 
-export interface DeleteReview$Params {
-  reviewId: number;
+export interface UpdateUserDetails$Params {
+      body: UserDetailDto
 }
 
-export function deleteReview(http: HttpClient, rootUrl: string, params: DeleteReview$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
-  const rb = new RequestBuilder(rootUrl, deleteReview.PATH, 'delete');
+export function updateUserDetails(http: HttpClient, rootUrl: string, params: UpdateUserDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+  const rb = new RequestBuilder(rootUrl, updateUserDetails.PATH, 'put');
   if (params) {
-    rb.path('reviewId', params.reviewId, {});
+    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -24,9 +26,10 @@ export function deleteReview(http: HttpClient, rootUrl: string, params: DeleteRe
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
+      return r as StrictHttpResponse<{
+      }>;
     })
   );
 }
 
-deleteReview.PATH = '/api/reviews/deleteReview/{reviewId}';
+updateUserDetails.PATH = '/user-profile/edit';

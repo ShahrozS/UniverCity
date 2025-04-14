@@ -9,14 +9,13 @@ import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
 
-export interface DeleteReview$Params {
-  reviewId: number;
+export interface GetUserDetails$Params {
 }
 
-export function deleteReview(http: HttpClient, rootUrl: string, params: DeleteReview$Params, context?: HttpContext): Observable<StrictHttpResponse<string>> {
-  const rb = new RequestBuilder(rootUrl, deleteReview.PATH, 'delete');
+export function getUserDetails(http: HttpClient, rootUrl: string, params?: GetUserDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<{
+}>> {
+  const rb = new RequestBuilder(rootUrl, getUserDetails.PATH, 'get');
   if (params) {
-    rb.path('reviewId', params.reviewId, {});
   }
 
   return http.request(
@@ -24,9 +23,10 @@ export function deleteReview(http: HttpClient, rootUrl: string, params: DeleteRe
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<string>;
+      return r as StrictHttpResponse<{
+      }>;
     })
   );
 }
 
-deleteReview.PATH = '/api/reviews/deleteReview/{reviewId}';
+getUserDetails.PATH = '/user-profile/details';

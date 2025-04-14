@@ -27,13 +27,17 @@
         </nav>
       </div>
 
-      <div class="flex items-center space-x-4">
+      <div class="flex items-center space-x-8">
 
 
-        <div class="flex items-center space-x-4 ml-4">
+        <div class="flex items-center space-x-8 ml-4">
           <button (click)="logout()">
             <fa-icon class ="text-gray-100 text-2xl hover:text-gray-300" [icon]="faSignOut"></fa-icon>
         </button>
+        <button >
+          <fa-icon  [routerLink]="'/user-profile'" class ="text-gray-100 text-2xl hover:text-gray-300" [icon]="faUser"></fa-icon>
+        </button>
+      
         </div>
       </div>
     </div>

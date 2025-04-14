@@ -28,4 +28,4 @@ export function getAllUsers(http: HttpClient, rootUrl: string, params?: GetAllUs
   );
 }
 
-getAllUsers.PATH = '/user';
+getAllUsers.PATH = '/user-profile';

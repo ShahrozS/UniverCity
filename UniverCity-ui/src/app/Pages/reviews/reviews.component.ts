@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { UniversityReview, User } from '../Services/models';
-import { AuthenticationService, UniversityReviewControllerService } from '../Services/services';
+import { UniversityReview, User } from '../../Services/models';
+import { AuthenticationService, UniversityReviewControllerService } from '../../Services/services';
 
 @Component({
   selector: 'app-reviews',

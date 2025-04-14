@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { faSignOut } from '@fortawesome/free-solid-svg-icons';
+import { faSignOut,faUser } from '@fortawesome/free-solid-svg-icons';
 import {Router} from '@angular/router';
 import {AuthenticationService} from '../../Services/services/authentication.service';
 
@@ -10,6 +10,8 @@ import {AuthenticationService} from '../../Services/services/authentication.serv
 })
 export class NavbarComponent {
 faSignOut = faSignOut;
+faUser = faUser;
+
   constructor(
     private router: Router,
     // another service

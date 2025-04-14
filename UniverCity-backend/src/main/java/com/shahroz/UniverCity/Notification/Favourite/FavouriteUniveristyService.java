@@ -22,7 +22,7 @@ public class FavouriteUniveristyService {
     private final UserRepository userRepository;
     private final UniversityRepository universityRepository;
 
-    boolean isExist(long university_id, Authentication authentication){
+    public boolean isExist(long university_id, Authentication authentication){
 
         User user = userRepository.findByEmail(authentication.getName()).get();
         University university = universityRepository.findById(university_id).get();
@@ -30,7 +30,7 @@ public class FavouriteUniveristyService {
         return user.getFavoriteUniversities().contains(university);
     }
 
-    void addFavouriteUniversity(long university_id, Authentication authentication){
+    public void addFavouriteUniversity(long university_id, Authentication authentication){
         User user = userRepository.findByEmail(authentication.getName()).get();
         University university = universityRepository.findById(university_id).get();
 
@@ -38,7 +38,7 @@ public class FavouriteUniveristyService {
         userRepository.save(user);
     }
 
-    void deleteFavouriteUniversity(long university_id, Authentication authentication){
+    public void deleteFavouriteUniversity(long university_id, Authentication authentication){
         User user = userRepository.findByEmail(authentication.getName()).get();
         University university = universityRepository.findById(university_id).get();
 
@@ -46,7 +46,7 @@ public class FavouriteUniveristyService {
         userRepository.save(user);
     }
 
-    List<University> getFavouriteUniversities(Authentication authentication){
+    public List<University> getFavouriteUniversities(Authentication authentication){
         User user = userRepository.findByEmail(authentication.getName()).get();
 
         return user.getFavoriteUniversities().stream().toList();
