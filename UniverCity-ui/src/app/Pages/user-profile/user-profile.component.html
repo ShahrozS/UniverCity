@@ -1,0 +1,183 @@
+<!-- user-profile.component.html -->
+<app-navbar></app-navbar>
+
+<!-- Main container with glassmorphism effect -->
+<div class="profile-container" *ngIf="!loading && !error">
+  <div class="profile-card">
+    <!-- Profile header with modern layout -->
+    <div class="profile-header">
+      <div class="profile-avatar-wrapper">
+        <div class="profile-avatar">
+          <div class="avatar-hexagon">
+            <span class="initials">{{ user?.firstName?.[0] }}{{ user?.lastName?.[0] }}</span>
+          </div>
+          <div class="status-indicator online"></div>
+        </div>
+        <button class="change-avatar-btn" *ngIf="editMode">
+          <i class="fas fa-camera"></i>
+        </button>
+      </div>
+      
+      <div class="profile-info">
+        <div class="user-primary-details">
+          <h1 class="user-name">{{ user?.firstName }} {{ user?.lastName }}</h1>
+        </div>
+        <div class="user-secondary-details">
+          <div class="info-pill">
+            <i class="fas fa-envelope"></i>
+            <span>{{ user?.email }}</span>
+          </div>
+          <div class="info-pill">
+            <i class="fas fa-phone-alt"></i>
+            <span>{{ user?.phoneNumber }}</span>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="edit-btn" (click)="toggleEditMode()" *ngIf="!editMode">
+            <i class="fas fa-pencil-alt"></i>
+            <span>Edit Profile</span>
+          </button>
+          <div *ngIf="editMode" class="edit-actions">
+            <button class="save-btn" (click)="saveProfile()">
+              <i class="fas fa-check"></i>
+              <span>Save</span>
+            </button>
+            <button class="cancel-btn" (click)="toggleEditMode()">
+              <i class="fas fa-times"></i>
+              <span>Cancel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Profile content area -->
+    <div class="profile-details">
+      <div class="profile-tabs">
+        <!-- Modern tab navigation -->
+        <ul class="tab-nav">
+          <li class="tab-item active">
+            <i class="fas fa-user"></i>
+            <span>Personal Info</span>
+          </li>
+          <li class="tab-item" [routerLink]="'/previous-quiz'">
+            <i class="fas fa-graduation-cap"></i>
+            <span>Academic</span>
+          </li>
+          <li class="tab-item" [routerLink]="'/favourite-universities'">
+            <i class="fas fa-star"></i>
+            <span>Favorites</span>
+          </li>
+        </ul>
+        
+        <!-- Tab content with clean layout -->
+        <div class="tab-content">
+          <!-- Personal Info Tab -->
+          <div class="tab-pane active">
+            <div class="info-card">
+              <div class="card-header">
+                <h3>Account Details</h3>
+                <span class="last-updated">Last updated: Today</span>
+              </div>
+              
+              <div class="info-grid">
+                <div class="info-item" *ngIf="user">
+                  <div class="info-label">
+                    <i class="fas fa-at"></i>
+                    <span>Username</span>
+                  </div>
+                  <div class="info-value">
+                    <span *ngIf="!editMode">{{ user.username }}</span>
+                    <div class="input-group" *ngIf="editMode">
+                      <input type="text" [(ngModel)]="user.username" class="edit-field">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="info-item" *ngIf="user">
+                  <div class="info-label">
+                    <i class="fas fa-user"></i>
+                    <span>First Name</span>
+                  </div>
+                  <div class="info-value">
+                    <span *ngIf="!editMode">{{ user.firstName }}</span>
+                    <div class="input-group" *ngIf="editMode">
+                      <input type="text" [(ngModel)]="user.firstName" class="edit-field">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="info-item" *ngIf="user">
+                  <div class="info-label">
+                    <i class="fas fa-user"></i>
+                    <span>Last Name</span>
+                  </div>
+                  <div class="info-value">
+                    <span *ngIf="!editMode">{{ user.lastName }}</span>
+                    <div class="input-group" *ngIf="editMode">
+                      <input type="text" [(ngModel)]="user.lastName" class="edit-field">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="info-item" *ngIf="user">
+                  <div class="info-label">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email</span>
+                  </div>
+                  <div class="info-value">
+                    <span *ngIf="!editMode">{{ user.email }}</span>
+                    <div class="input-group" *ngIf="editMode">
+                      <input type="email" [(ngModel)]="user.email" class="edit-field">
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="info-item" *ngIf="user">
+                  <div class="info-label">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>Phone</span>
+                  </div>
+                  <div class="info-value">
+                    <span *ngIf="!editMode">{{ user.phoneNumber }}</span>
+                    <div class="input-group" *ngIf="editMode">
+                      <input type="tel" [(ngModel)]="user.phoneNumber" class="edit-field">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modern loading state with animated spinner -->
+<div class="loading-container" *ngIf="loading">
+  <div class="loading-card">
+    <div class="pulse-spinner">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-dot"></div>
+    </div>
+    <p>Loading profile data...</p>
+  </div>
+</div>
+
+<!-- Improved error state -->
+<div class="error-container" *ngIf="error">
+  <div class="error-card">
+    <div class="error-icon">
+      <i class="fas fa-exclamation-circle"></i>
+    </div>
+    <h3>Something went wrong</h3>
+    <p>{{ error }}</p>
+    <button class="retry-btn" (click)="loadUserProfile()">
+      <i class="fas fa-sync-alt"></i>
+      <span>Try Again</span>
+    </button>
+  </div>
+</div>

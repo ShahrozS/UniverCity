@@ -1,6 +1,8 @@
 package com.shahroz.UniverCity.Notification;
 
+import com.shahroz.UniverCity.Entities.Notification;
 import com.shahroz.UniverCity.Entities.User;
+import com.shahroz.UniverCity.Repositories.NotificationRepository;
 import com.shahroz.UniverCity.University.University;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ public class NotificationService {
 
     private final NotificationEmailService emailService;
     private final WhatsappService whatsAppService;
+    private final NotificationRepository notificationRepository;
+
 
     public void sendNotification(User user, University university) throws MessagingException {
 
@@ -41,4 +45,10 @@ public class NotificationService {
         whatsAppService.sendWhatsAppTemplateMessage(user.getPhoneNumber(),university.getName(),formattedDate,university.getWebsiteLink());
 
     }
+
+    //TODO: add notification bell.
+//    public void addNotification(Notification notification){}
+
+
+
 }

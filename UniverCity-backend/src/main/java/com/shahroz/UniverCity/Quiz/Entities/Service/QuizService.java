@@ -93,6 +93,10 @@ public class QuizService {
     }
 
 
+    public List<UserQuiz> getLastFiveUserQuiz(Authentication authentication){
+        User user = userService.findUserByEmail(authentication.getName()).get();
+        return userQuizRepository.getLastFiveUserQuizByUser(user);
+    }
 
 
     //get subcategories by main category

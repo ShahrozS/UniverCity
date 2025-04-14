@@ -6,7 +6,6 @@ import { Facility } from '../models/facility';
 import { Program } from '../models/program';
 import { UniversityContact } from '../models/university-contact';
 import { UniversityLocation } from '../models/university-location';
-import { UniversityReview } from '../models/university-review';
 export interface University {
   about?: string;
   accrediatetionBody?: string;
@@ -23,7 +22,6 @@ export interface University {
   programCount?: number;
   programs?: Array<Program>;
   rank?: number;
-  reviews?: Array<UniversityReview>;
   startDate?: string;
   universityContacts?: Array<UniversityContact>;
   universityLocations?: Array<UniversityLocation>;

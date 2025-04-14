@@ -15,6 +15,7 @@ import { QuizOptionsComponent } from './Pages/quiz/quiz-options/quiz-options.com
 import { QuizResultComponent } from './Pages/quiz/quiz-result/quiz-result.component';
 import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.component';
 import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/favorited-universities.component';
+import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,8 @@ const routes: Routes = [
               canActivate:[authGuard]},
             {path: 'favourite-universities', component: FavoritedUniversitiesComponent,
               canActivate:[authGuard]},
+              {path: 'user-profile', component: UserProfileComponent,
+                canActivate:[authGuard]},
 ];
 
 @NgModule({
