@@ -5,16 +5,24 @@
   <!-- Header with University Name and Back Button -->
 
   <header class="bg-blue-600 text-white">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-      <div class="flex items-center">
+    <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+      
+      <!-- Left: Heading -->
+      <div class="flex items-center ">
+        <h1 class="text-xl md:text-2xl mb-0 font-extrabold">{{ university?.name }}</h1>
+      </div>
+      
   
-        <h1 class="text-xl md:text-2xl font-bold">{{ university?.name }}</h1>
-      </div>
+      <!-- Right: Rank -->
       <div class="flex items-center">
-        <span class="bg-blue-500 text-white text-sm font-medium px-3 py-1 rounded">Rank #{{ university?.rank }}</span>
+        <span class="bg-blue-500 text-white text-sm font-medium px-3 py-1 rounded">
+          Rank #{{ university?.rank }}
+        </span>
       </div>
+  
     </div>
   </header>
+  
 
   <!-- Main Content -->
   <main class="container mx-auto px-4">
