@@ -8,17 +8,18 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { User } from '../../models/user';
-import { UserDetailDto } from '../../models/user-detail-dto';
+import { PageNotification } from '../../models/page-notification';
 
-export interface UpdateUserDetails$Params {
-      body: UserDetailDto
+export interface GetUserNotifications$Params {
+  page?: number;
+  size?: number;
 }
 
-export function updateUserDetails(http: HttpClient, rootUrl: string, params: UpdateUserDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<User>> {
-  const rb = new RequestBuilder(rootUrl, updateUserDetails.PATH, 'put');
+export function getUserNotifications(http: HttpClient, rootUrl: string, params?: GetUserNotifications$Params, context?: HttpContext): Observable<StrictHttpResponse<PageNotification>> {
+  const rb = new RequestBuilder(rootUrl, getUserNotifications.PATH, 'get');
   if (params) {
-    rb.body(params.body, 'application/json');
+    rb.query('page', params.page, {});
+    rb.query('size', params.size, {});
   }
 
   return http.request(
@@ -26,9 +27,9 @@ export function updateUserDetails(http: HttpClient, rootUrl: string, params: Upd
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<User>;
+      return r as StrictHttpResponse<PageNotification>;
     })
   );
 }
 
-updateUserDetails.PATH = '/user-profile/edit';
+getUserNotifications.PATH = '/notifications/all-notifications';

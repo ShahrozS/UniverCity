@@ -8,17 +8,13 @@ import { filter, map } from 'rxjs/operators';
 import { StrictHttpResponse } from '../../strict-http-response';
 import { RequestBuilder } from '../../request-builder';
 
-import { User } from '../../models/user';
-import { UserDetailDto } from '../../models/user-detail-dto';
 
-export interface UpdateUserDetails$Params {
-      body: UserDetailDto
+export interface GetUnreadNotificationsCount$Params {
 }
 
-export function updateUserDetails(http: HttpClient, rootUrl: string, params: UpdateUserDetails$Params, context?: HttpContext): Observable<StrictHttpResponse<User>> {
-  const rb = new RequestBuilder(rootUrl, updateUserDetails.PATH, 'put');
+export function getUnreadNotificationsCount(http: HttpClient, rootUrl: string, params?: GetUnreadNotificationsCount$Params, context?: HttpContext): Observable<StrictHttpResponse<number>> {
+  const rb = new RequestBuilder(rootUrl, getUnreadNotificationsCount.PATH, 'get');
   if (params) {
-    rb.body(params.body, 'application/json');
   }
 
   return http.request(
@@ -26,9 +22,9 @@ export function updateUserDetails(http: HttpClient, rootUrl: string, params: Upd
   ).pipe(
     filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
     map((r: HttpResponse<any>) => {
-      return r as StrictHttpResponse<User>;
+      return (r as HttpResponse<any>).clone({ body: parseFloat(String((r as HttpResponse<any>).body)) }) as StrictHttpResponse<number>;
     })
   );
 }
 
-updateUserDetails.PATH = '/user-profile/edit';
+getUnreadNotificationsCount.PATH = '/notifications/unread-count';

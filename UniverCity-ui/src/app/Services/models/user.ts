@@ -4,7 +4,6 @@
 
 import { AcademicScore } from '../models/academic-score';
 import { GrantedAuthority } from '../models/granted-authority';
-import { Notification } from '../models/notification';
 import { Role } from '../models/role';
 import { UserLocation } from '../models/user-location';
 export interface User {
@@ -21,7 +20,6 @@ export interface User {
   lastModifiedData?: string;
   lastName?: string;
   name?: string;
-  notifications?: Array<Notification>;
   password?: string;
   phoneNumber?: string;
   roles?: Array<Role>;

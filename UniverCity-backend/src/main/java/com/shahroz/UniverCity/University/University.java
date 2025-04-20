@@ -2,6 +2,7 @@ package com.shahroz.UniverCity.University;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shahroz.UniverCity.Entities.Facility;
+import com.shahroz.UniverCity.Entities.Notification;
 import com.shahroz.UniverCity.Entities.Program;
 import com.shahroz.UniverCity.Entities.User;
 import com.shahroz.UniverCity.Review.UniversityReview;
@@ -13,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 import java.util.*;
 
 @Entity
-@ToString(exclude = "favoritedByUsers")
+@ToString(exclude = {"favoritedByUsers", "notifications"})
 @AllArgsConstructor
 @Setter
 @Getter
@@ -56,6 +57,9 @@ public class University extends BaseEntity {
 
 
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "university", fetch = FetchType.EAGER)
+    private List<Notification> notifications = new ArrayList<>();;
 
 
 
