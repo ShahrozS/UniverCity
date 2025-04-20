@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UserService } from './services/user.service';
+import { NotificationsService } from './services/notifications.service';
 import { UniversityReviewControllerService } from './services/university-review-controller.service';
 import { WhatsappControllerService } from './services/whatsapp-controller.service';
 import { UniversityService } from './services/university.service';
@@ -24,6 +25,7 @@ import { UniversityFilterService } from './services/university-filter.service';
   declarations: [],
   providers: [
     UserService,
+    NotificationsService,
     UniversityReviewControllerService,
     WhatsappControllerService,
     UniversityService,

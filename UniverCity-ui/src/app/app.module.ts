@@ -38,6 +38,7 @@ import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/f
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';  
 import { ReviewsComponent } from './Pages/reviews/reviews.component';
+import { NotificationsComponent } from './Pages/notifications/notifications.component';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { ReviewsComponent } from './Pages/reviews/reviews.component';
     FavoritedUniversitiesComponent,
     ReviewsComponent,
     UserProfileComponent,
+    NotificationsComponent,
 
   ],
   imports: [

@@ -1,0 +1,47 @@
+<!-- notification-panel.component.html -->
+<div class="notification-container">
+    <!-- Bell icon with notification count -->
+    <div class="notification-bell" (click)="togglePanel()">
+        <fa-icon class ="text-gray-100 text-2xl hover:text-gray-300" [icon]="faBell"></fa-icon>
+        <span class="notification-badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+    </div>
+    
+    <!-- Notification panel (conditionally shown) -->
+    <div class="notification-panel" *ngIf="isPanelOpen">
+      <div class="notification-header">
+        <h3>Notifications</h3>
+      </div>
+      
+      <div class="notification-body">
+        <ng-container *ngIf="notifications.length > 0; else noNotifications">
+          <div 
+            *ngFor="let notification of notifications" 
+            class="notification-item" 
+            [ngClass]="{'unread': !notification.read, 'unopened': !notification.open}"
+            (click)="viewNotification(notification)">
+            <div class="notification-content">
+              <p class="notification-title">{{ notification.title }}</p>
+              <p class="notification-message">{{ notification.subText }}</p>
+              <p class="notification-time">{{ notification.generatedAt | date:'short' }}</p>
+            </div>
+            <span class="unread-indicator" *ngIf="!notification.open"></span>
+          </div>
+        </ng-container>
+        
+        <ng-template #noNotifications>
+          <div class="no-notifications">
+            <p>You have no notifications.</p>
+          </div>
+        </ng-template>
+        
+        <div class="notification-loader" *ngIf="isLoading">
+          <div class="spinner"></div>
+          <p>Loading notifications...</p>
+        </div>
+        
+        <div class="load-more" *ngIf="hasMoreNotifications && !isLoading && notifications.length > 0">
+          <button (click)="loadMore()">Load More</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -22,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
-@ToString(exclude = "favoriteUniversities")
+@ToString(exclude = {"favoriteUniversities", "notifications", "universityreview"})
 @Builder
 @AllArgsConstructor
 @Setter
@@ -75,7 +75,8 @@ public class User implements UserDetails, Principal {
     private UniversityReview universityreview;
 
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Notification> notifications = new ArrayList<>();;
 
 

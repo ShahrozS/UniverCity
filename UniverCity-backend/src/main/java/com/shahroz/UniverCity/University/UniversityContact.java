@@ -1,6 +1,7 @@
 package com.shahroz.UniverCity.University;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,6 +23,7 @@ public class UniversityContact {
     private String email;
     private String phoneNumber;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "university-id")
     private University university;

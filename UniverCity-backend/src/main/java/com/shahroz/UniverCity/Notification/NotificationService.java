@@ -3,12 +3,22 @@ package com.shahroz.UniverCity.Notification;
 import com.shahroz.UniverCity.Entities.Notification;
 import com.shahroz.UniverCity.Entities.User;
 import com.shahroz.UniverCity.Repositories.NotificationRepository;
+import com.shahroz.UniverCity.Repositories.UserRepository;
 import com.shahroz.UniverCity.University.University;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,6 +27,7 @@ public class NotificationService {
     private final NotificationEmailService emailService;
     private final WhatsappService whatsAppService;
     private final NotificationRepository notificationRepository;
+    private final UserRepository userRepository;
 
 
     public void sendNotification(User user, University university) throws MessagingException {
@@ -41,14 +52,70 @@ public class NotificationService {
 
         String whatsappMessage = "ALERT🚨. \n"+university.getName()+"'s entry test is just around the corner!\n 📆Date: " + formattedDate + ".\n For more details visit: " + university.getWebsiteLink();
 
-        emailService.sendEmail(user.getEmail(),user.fullName(), "Upcoming Entry Test Reminder",message);
-        whatsAppService.sendWhatsAppTemplateMessage(user.getPhoneNumber(),university.getName(),formattedDate,university.getWebsiteLink());
+//        emailService.sendEmail(user.getEmail(),user.fullName(), "Upcoming Entry Test Reminder",message);
+//        whatsAppService.sendWhatsAppTemplateMessage(user.getPhoneNumber(),university.getName(),formattedDate,university.getWebsiteLink());
+
+        String notificationMessage = university.getName()+ "'s entry test is just around the corner!";
+        String subText = university.getName()+"'s entry test is scheduled at " + university.getEntryTestDate();
+
+        //saving the notification
+        Notification notification = new Notification();
+
+        notification.setUser(user);
+        notification.setRead(false);
+        notification.setTitle(notificationMessage);
+        notification.setSubText(subText);
+        notification.setUniversity(university);
+        notification.setGeneratedAt(LocalDateTime.now());
+        notification.setOpen(false);
+
+        notificationRepository.save(notification);
+
 
     }
 
-    //TODO: add notification bell.
-//    public void addNotification(Notification notification){}
+    public Page<Notification> getUserNotifications(Authentication authentication, int page, int size){
+        User user = userRepository.findByEmail(authentication.getName()).get();
+        Pageable pageable = PageRequest.of(page, size, Sort.by("generatedAt").descending());
+        return notificationRepository.getNotificationsByUser(user,pageable);
+    }
 
 
+    public void markAsRead(Long notification_id){
+        Notification notification = notificationRepository.findById(notification_id).get();
+        if(!notification.isRead()){
+            notification.setRead(true);
+        }
+        notificationRepository.save(notification);
+    }
+    public void markAsOpen(Long notification_id){
+
+        Notification notification = notificationRepository.findById(notification_id).get();
+        if(!notification.isOpen()){
+            notification.setOpen(true);
+        }
+        notificationRepository.save(notification);
+    }
+
+    public Long getUnReadCount(Authentication authentication){
+
+        User user = userRepository.findByEmail(authentication.getName()).get();
+
+        return notificationRepository.countByUserAndRead(user);
+    }
+
+
+    @Transactional
+    public void markAllNotificationsAsRead(Authentication authentication) {
+        List<Notification> notifications = notificationRepository.findByUserAndReadFalse(userRepository.findByEmail(authentication.getName()).get());
+        notifications.forEach(n -> n.setRead(true));
+        notificationRepository.saveAll(notifications);
+    }
+
+    public int countOfNotificationsByUserAndUniversity(User user, University university)
+    {
+        List<Notification> notifications = notificationRepository.findByUserAndUniversity(user, university);
+        return notifications.size();
+    }
 
 }
