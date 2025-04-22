@@ -7,10 +7,12 @@ import com.shahroz.UniverCity.Repositories.UserRepository;
 import com.shahroz.UniverCity.University.University;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,12 +24,15 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class NotificationService {
 
     private final NotificationEmailService emailService;
     private final WhatsappService whatsAppService;
     private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
+    private final NotificationDispatcherService dispatcherService;
+    private final SimpMessagingTemplate messagingTemplate;
 
 
     public void sendNotification(User user, University university) throws MessagingException {
@@ -71,6 +76,8 @@ public class NotificationService {
 
         notificationRepository.save(notification);
 
+        Long unreadCount = notificationRepository.countByUserAndRead(user);
+            dispatcherService.dispatchNotificationUpdate(notification.getUser().getUser_id(), NotificationCountDTO.builder().unReadCount(unreadCount).build());
 
     }
 
