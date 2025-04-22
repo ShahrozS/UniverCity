@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy, HostListener } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
-import { NotificationsService } from '../../Services/services';
-import { Notification } from '../../Services/models';
+import { AuthenticationService, NotificationsService } from '../../Services/services';
+import { Notification, User } from '../../Services/models';
 import { faBell } from '@fortawesome/free-solid-svg-icons';
-
+import  SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
+import { TokenService } from '../../Services/token/token.service';
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
@@ -20,10 +22,25 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   hasMoreNotifications = true;
   isLoading = false;
   private subscriptions: Subscription[] = [];
+  private notificationCountSubscription :any;
+  socketClient: any = null;
+
+
+  //Web socket 
+
+
+
+
+
+
+
 
   constructor(
     private notificationService: NotificationsService,
-    private router: Router
+    private router: Router,
+    private auth: AuthenticationService,
+    private tokenService: TokenService,
+    
   ) {}
 
   ngOnInit(): void {
@@ -34,9 +51,36 @@ export class NotificationsComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.connection();
+
+
 
     // Get initial count
     this.notificationService.getUnreadNotificationsCount().subscribe();
+    
+
+  
+  }
+
+  private connection(){
+    this.auth.getCurrentUser().subscribe(
+      data =>{
+        let ws = new SockJS('http://localhost:8088/api/v1/ws');
+      this.socketClient = Stomp.over(ws);
+      this.socketClient.connect({'Authorization:': 'Bearer ' + this.tokenService.token} , ()=>{
+          console.log("Connecting to the websocket" + `${data.user_id}`);
+          this.notificationCountSubscription = this.socketClient.subscribe(
+            `/user/${data.user_id}/notifications`,
+            (message:any)=>{
+              const count = JSON.parse(message.body);
+                 this.unreadCount = count.unReadCount
+            }
+          )
+      });
+      }
+      )
+    
+     
   }
 
   togglePanel(): void {
@@ -44,6 +88,7 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     
     if (this.isPanelOpen) {
       this.loadNotifications();
+      this.unreadCount = 0;
       
       // Mark all as read when opening panel
       this.notificationService.markAllAsRead().subscribe(() => {
