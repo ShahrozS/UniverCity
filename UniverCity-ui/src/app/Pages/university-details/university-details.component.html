@@ -10,6 +10,13 @@
       <!-- Left: Heading -->
       <div class="flex items-center ">
         <h1 class="text-xl md:text-2xl mb-0 font-extrabold">{{ university?.name }}</h1>
+
+        <fa-icon 
+        class="heart z-10 ml-5 mr-4 mt-2 cursor-pointer text-4xl p-2 relative"
+        [class.heart-inactive]="isFavorite"
+        (click)="favUni($event)"
+        [icon]="faHeart">
+      </fa-icon>
       </div>
       
   

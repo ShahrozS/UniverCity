@@ -4,3 +4,24 @@ h1{
     font-weight: bolder;
     font-size: 32px;
 }
+.heart{
+    color: rgb(224, 164, 164);
+  }
+  .heart:hover{
+    color:rgb(240, 58, 58);
+  }
+  
+  
+  
+  .heart-inactive {
+    color: red;
+    cursor: not-allowed;
+  }
+  
+  .disabled-heart {
+    cursor: not-allowed; // ❌ Prevent clicking
+    opacity: 0.6; // ✨ Slightly dim the button
+    pointer-events: none; // 🔥 Fully disables interaction
+  }
+  
+  
