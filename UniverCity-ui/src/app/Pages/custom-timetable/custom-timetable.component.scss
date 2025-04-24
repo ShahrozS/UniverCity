@@ -509,8 +509,8 @@ $transition-medium: 0.3s ease;
     
     &.reminder-btn {
       background-color: transparent;
-      color: $primary-color;
-      border: 1px solid $primary-color;
+      color: rgb(252, 57, 57);
+      border: 1px solid rgb(252, 57, 57);
       
       &:hover {
         background-color: rgba($primary-color, 0.05);

@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class UniversityLocation {
-
+//fixing commit
     @Id
     @GeneratedValue
     private long universitylocation_id;
