@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { University } from '../../Services/models';
 import { FavouritesService } from '../../Services/services';
 export interface UniversityEvent {
@@ -33,9 +33,13 @@ export class CustomTimetableComponent implements OnInit {
   loading = true;
   error = false;
  
-  constructor(private favoriteService: FavouritesService) {
+  constructor(private favoriteService: FavouritesService,
+              private cdRef: ChangeDetectorRef
+    
+  ) {
     this.currentMonth = this.currentDate.getMonth();
     this.currentYear = this.currentDate.getFullYear();
+    
   }
 
   ngOnInit(): void {
@@ -263,4 +267,25 @@ export class CustomTimetableComponent implements OnInit {
     
     return dateObj.toLocaleDateString('en-US', options);
   }
+
+  removeFavorite(universityId: number): void {
+    this.favoriteService.removeFavorite({ universityId }).subscribe(
+      () => {
+        // ✅ Update the list to remove the clicked university
+        this.favoriteUniversities = this.favoriteUniversities.filter(
+          university => university.id !== universityId
+        );
+  
+        this.closeEventDetail();
+        this.loadFavoriteUniversities();
+        // ✅ Force UI refresh
+        this.cdRef.detectChanges();
+      },
+      (error) => {
+        console.error('Error removing university from favorites', error);
+      }
+    );
+  }
+  
+  
 }
