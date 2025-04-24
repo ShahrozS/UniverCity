@@ -1,0 +1,175 @@
+<app-navbar></app-navbar>
+
+
+
+
+<div class="calendar-container  mt-24 ">
+  <!-- Header with navigation -->
+  <div class="calendar-header">
+    <div class="month-navigation">
+      <button class="nav-btn" (click)="prevMonth()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </button>
+      <h2 class="month-year">{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
+      <button class="nav-btn" (click)="nextMonth()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+
+
+   
+    </div>
+    
+    <div class="flex justify-between  items-end">
+
+      <div class="calendar-legend">
+        <div class="legend-item bg-blue-100 text-blue-600 h-8 px-2 rounded-full font-semibold">
+          <span class="dot" style="background-color: #3357FF;"></span>
+          <span>Entry Test</span>
+        </div>
+        <div class="legend-item bg-green-100 text-green-600 h-8 px-2  rounded-full font-semibold">
+          <span class="dot" style="background-color: #33FF57;"></span>
+          <span>Start Date</span>
+        </div>
+        <div class="legend-item bg-orange-100 text-orange-600 h-8 px-2  rounded-full font-semibold">
+          <span class="dot" style="background-color: #ffae00;"></span>
+          <span>Application Deadline</span>
+        </div>
+      </div> 
+      
+      <div class="note">
+        <div class="user-tip mt-3">
+          <div class="tip-content">
+            <svg class="tip-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span>Hover or click on any dot for event details</span>
+          </div>
+        </div>
+      </div>
+     
+    </div>
+    
+  </div>
+
+  <!-- Calendar grid -->
+  <div class="calendar-grid" *ngIf="!loading && !error">
+    <!-- Day names header -->
+    <div class="days-header">
+      <div class="day-name" *ngFor="let day of dayNames">{{ day }}</div>
+    </div>
+    
+    <!-- Calendar days -->
+    <div class="calendar-days">
+      <div *ngFor="let day of daysInMonth" 
+           class="day-cell"
+           [ngClass]="{'current-month': day.isCurrentMonth, 
+                      'today': isSameDay(day.date, currentDate)}">
+        <div class="day-number">{{ day.date.getDate() }}</div>
+        
+        <!-- Events for this day -->
+        <div class="event-dots" *ngIf="day.events.length > 0">
+          <div *ngFor="let event of day.events | slice:0:3" 
+               class="event-dot" 
+               [style.background-color]="getEventColor(event.eventType)"
+               (click)="viewEvent(event)">
+            <div class="event-tooltip">
+              {{ event.university.name }} - {{ getEventTypeLabel(event.eventType) }}
+            </div>
+          </div>
+          <div *ngIf="day.events.length > 3" class="more-events">+{{ day.events.length - 3 }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Loading state -->
+  <div class="calendar-loading" *ngIf="loading">
+    <div class="loader"></div>
+    <p>Loading your university timeline...</p>
+  </div>
+  
+  <!-- Error state -->
+  <div class="calendar-error" *ngIf="error">
+    <div class="error-icon">!</div>
+    <p>Unable to load your university timeline. Please try again later.</p>
+    <button class="retry-btn" (click)="loadFavoriteUniversities()">Retry</button>
+  </div>
+</div>
+
+<!-- Event Detail Modal -->
+<div class="event-detail-overlay" *ngIf="selectedEvent">
+  <div class="event-detail-card" [style.border-color]="getEventColor(selectedEvent.eventType)">
+    <div class="event-header" [style.background-color]="getEventColor(selectedEvent.eventType)">
+      <h3>{{ getEventTypeLabel(selectedEvent.eventType) }}</h3>
+      <button class="close-btn" (click)="closeEventDetail()">×</button>
+    </div>
+    <div class="event-content">
+      <h2>{{ selectedEvent.university.name }}</h2>
+      <div class="university-rank">Rank: #{{ selectedEvent.university.rank }}</div>
+      
+      <div class="event-date-display">
+        <div class="date-icon">
+          <div class="month">{{ getMonthShort(selectedEvent) }}</div>
+          <div class="day">{{ getEventDay(selectedEvent) }}</div>
+        </div>
+        <div class="date-info">
+          <div class="full-date">{{ formatEventDate(selectedEvent) }}</div>
+          <div class="countdown" *ngIf="getDaysRemaining(selectedEvent) > 0">
+            {{ getDaysRemaining(selectedEvent) }} days remaining
+          </div>
+        </div>
+      </div>
+      
+      <div class="uni-details">
+        <p *ngIf="selectedEvent.university.about" class="uni-about">
+          {{ selectedEvent.university.about | slice:0:200 }}{{ selectedEvent.university.about.length > 200 ? '...' : '' }}
+        </p>
+        
+        <div class="details-grid">
+          <div class="detail-item">
+            <span class="label">Apply by:</span>
+            <span class="value">{{ formatDate(selectedEvent.university.applyDate) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Entry Test:</span>
+            <span class="value">{{ formatDate(selectedEvent.university.entryTestDate) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Start Date:</span>
+            <span class="value">{{ formatDate(selectedEvent.university.startDate) }}</span>
+          </div>
+          <div class="detail-item">
+            <span class="label">Avg. Fees:</span>
+            <span class="value">${{ selectedEvent.university.averageFees | number:'1.0-0' }}</span>
+          </div>
+          <div class="detail-item" *ngIf="selectedEvent.university.accrediatetionBody">
+            <span class="label">Accredited by:</span>
+            <span class="value">{{ selectedEvent.university.accrediatetionBody }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <a *ngIf="selectedEvent.university.websiteLink" 
+          [href]="selectedEvent.university.websiteLink" 
+          target="_blank" 
+          class="action-btn website-btn">
+          Visit Website
+        </a>
+        <button class="action-btn reminder-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          Set Reminder
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
