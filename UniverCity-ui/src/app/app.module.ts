@@ -39,6 +39,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';  
 import { ReviewsComponent } from './Pages/reviews/reviews.component';
 import { NotificationsComponent } from './Pages/notifications/notifications.component';
+import { EventDetailsComponent } from './Pages/event-details/event-details.component';
+import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timetable.component';
 
 
 @NgModule({
@@ -67,6 +69,8 @@ import { NotificationsComponent } from './Pages/notifications/notifications.comp
     ReviewsComponent,
     UserProfileComponent,
     NotificationsComponent,
+    CustomTimetableComponent,
+    EventDetailsComponent,
 
   ],
   imports: [

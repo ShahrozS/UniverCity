@@ -1,0 +1,52 @@
+<div class="event-detail-overlay">
+    <div class="event-detail-card" [style.border-color]="eventColor">
+      <div class="event-header" [style.background-color]="eventColor">
+        <h3>{{ eventTypeLabel }}</h3>
+        <button class="close-btn" (click)="closeDetail()">×</button>
+      </div>
+      <div class="event-content">
+        <h2>{{ university.name }}</h2>
+        <div class="university-rank">Rank: #{{ university.rank }}</div>
+        <p class="event-date">{{ formatDate(getEventDate()) }}</p>
+        
+        <div class="countdown-panel" *ngIf="getDaysRemaining() > 0">
+          <div class="days-remaining">{{ getDaysRemaining() }}</div>
+          <div class="days-label">Days Remaining</div>
+        </div>
+        
+        <div class="uni-details">
+          <p *ngIf="university.about" class="uni-about">{{ university.about | slice:0:200 }}{{ university.about.length > 200 ? '...' : '' }}</p>
+          
+          <div class="details-grid">
+            <div class="detail-item">
+              <span class="label">Apply by:</span>
+              <span class="value">{{ formatDate(university.applyDate!) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Entry Test:</span>
+              <span class="value">{{ formatDate(university.entryTestDate!) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Start Date:</span>
+              <span class="value">{{ formatDate(university.startDate!) }}</span>
+            </div>
+            <div class="detail-item">
+              <span class="label">Avg. Fees:</span>
+              <span class="value">${{ university.averageFees | number:'1.0-0' }}</span>
+            </div>
+            <div class="detail-item" *ngIf="university.accrediatetionBody">
+              <span class="label">Accredited by:</span>
+              <span class="value">{{ university.accrediatetionBody }}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <a *ngIf="university.websiteLink" [href]="university.websiteLink" target="_blank" class="action-btn website-btn">
+            Visit Website
+          </a>
+          <button class="action-btn reminder-btn">Set Reminder</button>
+        </div>
+      </div>
+    </div>
+  </div>
