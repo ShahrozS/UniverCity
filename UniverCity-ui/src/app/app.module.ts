@@ -41,6 +41,8 @@ import { ReviewsComponent } from './Pages/reviews/reviews.component';
 import { NotificationsComponent } from './Pages/notifications/notifications.component';
 import { EventDetailsComponent } from './Pages/event-details/event-details.component';
 import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timetable.component';
+import { ProctoringComponent } from './Pages/quiz/proctoring/proctoring/proctoring.component';
+import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-camera.component';
 
 
 @NgModule({
@@ -71,6 +73,8 @@ import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timeta
     NotificationsComponent,
     CustomTimetableComponent,
     EventDetailsComponent,
+    ProctoringComponent,
+    TestCameraComponent,
 
   ],
   imports: [

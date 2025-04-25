@@ -1,0 +1,67 @@
+<!-- proctoring.component.html -->
+<div class="proctoring-container">
+    <div class="header">
+      <h2>Test Proctoring System</h2>
+      <h1 id ="canvas"></h1>
+    </div>
+    
+    <div class="content">
+      <div *ngIf="loadingModels" class="loading-section">
+        <div class="spinner"></div>
+        <p>Loading face detection models...</p>
+      </div>
+      
+      <div *ngIf="errorMessage" class="error-section">
+        <div class="alert alert-danger">
+          {{ errorMessage }}
+        </div>
+        <button class="btn btn-primary" (click)="startCamera()">Try Again</button>
+      </div>
+      
+      <div *ngIf="!loadingModels && !errorMessage" class="camera-section">
+        <div class="video-container">
+            <video #video id="video"  autoplay ></video>
+            
+            <div *ngIf="!cameraReady" class="camera-placeholder">
+              <i class="fa fa-camera"></i>
+              <p>Camera not started</p>
+            </div>
+          </div>
+        
+        <div class="status-indicators">
+          <div class="indicator" [ngClass]="{'active': cameraReady}">
+            <i class="fa" [ngClass]="{'fa-check': cameraReady, 'fa-times': !cameraReady}"></i>
+            Camera Ready
+          </div>
+          <div class="indicator" [ngClass]="{'active': faceDetected}">
+            <i class="fa" [ngClass]="{'fa-check': faceDetected, 'fa-times': !faceDetected}"></i>
+            Face Detected
+          </div>
+          <div class="indicator" [ngClass]="{'active': sufficientLight}">
+            <i class="fa" [ngClass]="{'fa-check': sufficientLight, 'fa-times': !sufficientLight}"></i>
+            Sufficient Light
+          </div>
+        </div>
+        
+        <div class="actions">
+          <button *ngIf="!cameraReady" class="btn btn-primary" (click)="startCamera()">
+            Start Camera
+          </button>
+          
+          <button *ngIf="cameraReady && !testStarted" class="btn btn-success" 
+                  [disabled]="!faceDetected || !sufficientLight"
+                  (click)="startTest()">
+            Start Test
+          </button>
+        </div>
+        
+        <div *ngIf="testStarted" class="test-status">
+          <div class="alert alert-info">
+            <p><strong>Test in progress.</strong> Please remain in view of the camera.</p>
+            <p *ngIf="lookingDown > 0">Warning: Looking down detected ({{ lookingDown }}/3)</p>
+            <p *ngIf="lightOffDuration > 0">Warning: Low light condition ({{ lightOffDuration.toFixed(1) }}/10 seconds)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
