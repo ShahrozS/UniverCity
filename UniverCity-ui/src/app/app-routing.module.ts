@@ -17,6 +17,8 @@ import { PreviousQuizComponent } from './Pages/quiz/previous-quiz/previous-quiz.
 import { FavoritedUniversitiesComponent } from './Pages/favorited-universities/favorited-universities.component';
 import { UserProfileComponent } from './Pages/user-profile/user-profile.component';
 import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timetable.component';
+import { ProctoringComponent } from './Pages/quiz/proctoring/proctoring/proctoring.component';
+import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-camera.component';
 
 const routes: Routes = [
   {
@@ -62,6 +64,10 @@ const routes: Routes = [
                 {path: 'custom-timetable', component: CustomTimetableComponent,
                   canActivate:[authGuard]
                 },
+                {path: 'proctoring', component: TestCameraComponent,
+                  canActivate:[authGuard]
+                },
+                
 ];
 
 @NgModule({
