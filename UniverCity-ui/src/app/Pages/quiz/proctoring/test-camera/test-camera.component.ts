@@ -23,6 +23,16 @@ export class TestCameraComponent implements OnInit {
   isForgotten = false;
   loadingModels = false;
   errorMessage = '';
+
+  //eyes/face down detection
+  lookingDownStartTime: number | null = null;
+  lookingDownDuration = 0;
+  lookingDownWarnings = 0;
+  MAX_WARNINGS = 3;
+  LOOKING_DOWN_THRESHOLD = 5 * 1000; // 5 seconds in milliseconds which is a flag for 5 secs of lookdown
+  isWarningActive = false;
+  
+
   
   // Store direct references to elements
   videoElement: HTMLVideoElement | null = null;
@@ -90,120 +100,65 @@ export class TestCameraComponent implements OnInit {
     }
   }
   
- async detectFace() {
-
-  console.log("ELEMENTS: ", this.videoElement)
-  console.log("ELEMENTS: ", this.canvasElement)
-
-  if (!this.videoElement || !this.canvasElement) return;
-     
-     console.log("in face detection?????? ");
-     const video = this.videoElement;
-     const canvas = this.canvasElement;
-     
-     // Make sure video dimensions are available
-     if (video.videoWidth === 0 || video.videoHeight === 0) {
-       console.log('Waiting for video dimensions...');
-       // Wait for metadata to load if dimensions aren't available
-       await new Promise<void>(resolve => {
-         video.addEventListener('loadedmetadata', () => resolve(), { once: true });
-       });
-     }
-     
-     // Use videoWidth/videoHeight instead of width/height
-     const displaySize = { width: video.videoWidth || 640, height: video.videoHeight || 480 };
-     console.log("Display Size:", displaySize);
-     
-     faceapi.matchDimensions(canvas, displaySize);
-     
-     const checkFace = async () => {
-       if (this.isForgotten) return;
-       
-       try {
-         const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-           .withFaceLandmarks();
-         
-         const resizedDetections = faceapi.resizeResults(detections, displaySize);
-         
-         const ctx = canvas.getContext('2d');
-         if (ctx) {
-           ctx.clearRect(0, 0, canvas.width, canvas.height);
-           faceapi.draw.drawDetections(canvas, resizedDetections);
-           faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
-         }
-         
-         // Check if face is detected
-         this.faceDetected = detections.length > 0;
-         
-         // The rest of your face detection code remains the same
-         // Check light conditions by analyzing brightness
-         if (this.faceDetected) {
-           const brightness = this.calculateBrightness(video);
-           this.sufficientLight = brightness > 50;
-           
-           if (!this.sufficientLight) {
-             if (this.lightOffStartTime === null) {
-               this.lightOffStartTime = Date.now();
-             } else {
-               this.lightOffDuration = (Date.now() - this.lightOffStartTime) / 1000;
-               
-               if (this.lightOffDuration >= 10 && this.testStarted) {
-                 this.forgeitTest('Insufficient lighting for more than 10 seconds');
-               }
-             }
-           } else {
-             this.lightOffStartTime = null;
-             this.lightOffDuration = 0;
-           }
-           
-           // Check if looking down (using y position of nose relative to eyes)
-           if (detections.length > 0 && detections[0].landmarks) {
-             const landmarks = detections[0].landmarks.positions;
-             const leftEye = landmarks[37]; // left eye
-             const rightEye = landmarks[46]; // right eye
-             const nose = landmarks[30]; // nose tip
-             
-             // If nose is significantly lower than eyes, person might be looking down
-             if (nose.y > (leftEye.y + 30) && nose.y > (rightEye.y + 30)) {
-               this.lookingDown++;
-               
-               if (this.lookingDown >= 3 && this.testStarted) {
-                 this.forgeitTest('Looking down detected 3 times');
-               }
-             }
-           }
-         } else {
-           // No face detected scenario
-           if (this.testStarted) {
-             const brightness = this.calculateBrightness(video);
-             this.sufficientLight = brightness > 50;
-             
-             if (!this.sufficientLight) {
-               if (this.lightOffStartTime === null) {
-                 this.lightOffStartTime = Date.now();
-               } else {
-                 this.lightOffDuration = (Date.now() - this.lightOffStartTime) / 1000;
-                 
-                 if (this.lightOffDuration >= 10) {
-                   this.forgeitTest('Insufficient lighting for more than 10 seconds');
-                 }
-               }
-             }
-           }
-         }
-       } catch (error) {
-         console.error('Error in face detection:', error);
-       }
-       
-       // Continue checking as long as test is active
-       if (!this.isForgotten) {
-         requestAnimationFrame(checkFace);
-       }
-     };
-     
-     checkFace();
-   }
-   
+  async detectFace() {
+    if (!this.videoElement || !this.canvasElement) return;
+    
+    const video = this.videoElement;
+    const canvas = this.canvasElement;
+    
+    // Make sure video dimensions are available
+    if (video.videoWidth === 0 || video.videoHeight === 0) {
+      console.log('Waiting for video dimensions...');
+      await new Promise<void>(resolve => {
+        video.addEventListener('loadedmetadata', () => resolve(), { once: true });
+      });
+    }
+    
+    const displaySize = { width: video.videoWidth || 640, height: video.videoHeight || 480 };
+    faceapi.matchDimensions(canvas, displaySize);
+    
+    const checkFace = async () => {
+      if (this.isForgotten) return;
+      
+      try {
+        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
+          .withFaceLandmarks();
+        
+        const resizedDetections = faceapi.resizeResults(detections, displaySize);
+        
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          faceapi.draw.drawDetections(canvas, resizedDetections);
+          faceapi.draw.drawFaceLandmarks(canvas, resizedDetections);
+        }
+        
+        // Check if face is detected
+        this.faceDetected = detections.length > 0;
+        
+        // Handle lighting conditions
+        this.handleLightingConditions(video);
+        
+        // Check head position if face is detected
+        if (this.faceDetected && detections.length > 0) {
+          this.checkHeadPosition(detections[0].landmarks.positions);
+        } else {
+          // Reset looking down timer if no face detected
+          this.lookingDownStartTime = null;
+          this.lookingDownDuration = 0;
+        }
+      } catch (error) {
+        console.error('Error in face detection:', error);
+      }
+      
+      // Continue checking as long as test is active
+      if (!this.isForgotten) {
+        requestAnimationFrame(checkFace);
+      }
+    };
+    
+    checkFace();
+  }
    calculateBrightness(video: HTMLVideoElement): number {
      const canvas = document.createElement('canvas');
      const ctx = canvas.getContext('2d');
@@ -225,18 +180,124 @@ export class TestCameraComponent implements OnInit {
      return brightness / (50 * 50);
    }
    
-   startTest() {
-     if (this.cameraReady && this.faceDetected && this.sufficientLight) {
-       this.testStarted = true;
-       this.lookingDown = 0;
-       this.lightOffDuration = 0;
-       this.lightOffStartTime = null;
-       
-       console.log('Test started!');
-     } else {
-       alert('Please ensure your camera is working, your face is visible, and lighting is sufficient.');
-     }
-   }
+
+   // claude new functions 
+   handleLightingConditions(video: HTMLVideoElement) {
+    const brightness = this.calculateBrightness(video);
+    this.sufficientLight = brightness > 30;
+    
+    if (!this.sufficientLight) {
+      if (this.lightOffStartTime === null) {
+        this.lightOffStartTime = Date.now();
+      } else {
+        this.lightOffDuration = (Date.now() - this.lightOffStartTime) / 1000;
+        
+        if (this.lightOffDuration >= 10 && this.testStarted) {
+          this.forgeitTest('Insufficient lighting for more than 10 seconds');
+        }
+      }
+    } else {
+      this.lightOffStartTime = null;
+      this.lightOffDuration = 0;
+    }
+  }
+  
+  // New method to check head position
+  checkHeadPosition(landmarks: any[]) {
+    if (!this.testStarted) return;
+    
+    // Calculate eye positions
+    const leftEyeY = (landmarks[37].y + landmarks[41].y) / 2;  // left eye center points
+    const rightEyeY = (landmarks[44].y + landmarks[46].y) / 2; // right eye center points
+    const eyeAvgY = (leftEyeY + rightEyeY) / 2;
+    
+    // Calculate nose position (use nose tip)
+    const noseY = landmarks[30].y;
+    
+    // Calculate chin position
+    const chinY = landmarks[8].y;
+    
+    // More accurate face measurements
+    const faceHeight = chinY - landmarks[27].y; // Distance from chin to top of nose bridge
+    
+    // Calculate nose-to-eye ratio - this is the key metric
+    const noseEyeDistance = noseY - eyeAvgY;
+    const noseEyeRatio = noseEyeDistance / faceHeight;
+    
+    // Debug information
+    console.log(`Face height: ${faceHeight.toFixed(2)}, Nose-Eye distance: ${noseEyeDistance.toFixed(2)}, Ratio: ${noseEyeRatio.toFixed(3)}`);
+    
+    // Calibration: determine a baseline ratio when looking straight
+    // For most faces looking straight ahead, this ratio is around 0.15-0.22
+    // Looking down significantly increases this ratio to 0.3+
+    const lookingDownThreshold = 0.36; // Adjust based on testing
+    const isLookingDown = noseEyeRatio > lookingDownThreshold;
+    
+    console.log(`Looking down: ${isLookingDown} (Ratio: ${noseEyeRatio.toFixed(3)}, Threshold: ${lookingDownThreshold})`);
+    
+    if (isLookingDown) {
+      console.log("LOOKING DOWNNN")
+      // Start or continue tracking looking down duration
+      if (this.lookingDownStartTime === null) {
+        this.lookingDownStartTime = Date.now();
+        console.log("Started looking down timer");
+      }
+      
+      this.lookingDownDuration = Date.now() - this.lookingDownStartTime;
+      console.log(`Looking down for: ${(this.lookingDownDuration/1000).toFixed(1)}s`);
+      
+      // Check if exceeded threshold and not currently showing a warning
+      if (this.lookingDownDuration >= this.LOOKING_DOWN_THRESHOLD && !this.isWarningActive) {
+        this.issueLookingDownWarning();
+      }
+    } else {
+      // Reset looking down timer
+      if (this.lookingDownStartTime !== null) {
+        console.log("Reset looking down timer");
+        this.lookingDownStartTime = null;
+        this.lookingDownDuration = 0;
+      }
+    }
+  }
+  
+  // New method to issue warnings
+  issueLookingDownWarning() {
+    this.lookingDownWarnings++;
+    this.isWarningActive = true;
+    
+    // Show warning to user
+    const warningsLeft = this.MAX_WARNINGS - this.lookingDownWarnings;
+    
+    if (this.lookingDownWarnings >= this.MAX_WARNINGS) {
+      this.forgeitTest('Looking down detected too many times. Test terminated.');
+    } else {
+      alert(`Warning: Looking down detected for an extended period. ${warningsLeft} warnings remaining before disqualification.`);
+      
+      // Reset warning state after a delay
+      setTimeout(() => {
+        this.isWarningActive = false;
+        this.lookingDownStartTime = null;
+        this.lookingDownDuration = 0;
+      }, 3000);
+    }
+  }
+  
+  startTest() {
+    if (this.cameraReady && this.faceDetected && this.sufficientLight) {
+      this.testStarted = true;
+      this.lookingDown = 0;
+      this.lightOffDuration = 0;
+      this.lightOffStartTime = null;
+      this.lookingDownWarnings = 0;
+      this.lookingDownStartTime = null;
+      this.lookingDownDuration = 0;
+      this.isWarningActive = false;
+      
+      console.log('Test started!');
+    } else {
+      alert('Please ensure your camera is working, your face is visible, and lighting is sufficient.');
+    }
+  }
    
    forgeitTest(reason: string) {
      if (!this.isForgotten) {
