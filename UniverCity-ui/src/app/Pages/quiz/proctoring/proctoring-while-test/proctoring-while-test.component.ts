@@ -38,7 +38,7 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
   videoElement: HTMLVideoElement | null = null;
   canvasElement: HTMLCanvasElement | null = null;
   
-  constructor() {}
+  constructor(private router:Router) {}
   
   async ngOnInit() {
     this.loadingModels = true;
@@ -63,7 +63,10 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
   
   async startCamera() {
     this.errorMessage = '';
-    
+    if(!this.active){
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       this.stream = stream;
@@ -178,8 +181,10 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
   handleLightingConditions(video: HTMLVideoElement) {
     const brightness = this.calculateBrightness(video);
     this.sufficientLight = brightness > 30;
-    
+    console.log(this.sufficientLight + " ----- " + brightness);
+
     if (!this.sufficientLight && this.active) {
+      console.log("LOW LIGHT");
       if (this.lightOffStartTime === null) {
         this.lightOffStartTime = Date.now();
       } else {
@@ -250,6 +255,7 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
     
     if (this.lookingDownWarnings >= this.MAX_WARNINGS) {
       this.forgeitTest('Looking down detected too many times. Test terminated.');
+      this.router.navigate(["/quiz-options"]);
     } else {
       alert(`Warning: Looking down detected for an extended period. ${warningsLeft} warnings remaining before disqualification.`);
       
@@ -276,6 +282,7 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
     
+    this.active = false;
     // Clean up camera stream
     if (this.stream) {
       this.stream.getTracks().forEach(track => track.stop());

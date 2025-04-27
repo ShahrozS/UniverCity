@@ -12,6 +12,8 @@ import * as faceapi from 'face-api.js';
 export class ProctoringComponent implements OnInit, OnDestroy {
    private destroy$ = new Subject<void>();
     
+
+    active = true;
     stream: MediaStream | null = null;
     loading = false;
     testStarted = false;
@@ -52,6 +54,11 @@ export class ProctoringComponent implements OnInit, OnDestroy {
       }
   
     async startCamera() {
+      if(!this.active){
+        console.log("not active");
+        return;
+      }
+
       this.loading = true;
       this.errorMessage = '';
       this.videoElement = document.getElementById('video') as HTMLVideoElement;
@@ -176,20 +183,20 @@ export class ProctoringComponent implements OnInit, OnDestroy {
       const brightness = this.calculateBrightness(video);
       this.sufficientLight = brightness > 30;
       
-      if (!this.sufficientLight) {
-        if (this.lightOffStartTime === null) {
-          this.lightOffStartTime = Date.now();
-        } else {
-          this.lightOffDuration = (Date.now() - this.lightOffStartTime) / 1000;
+      // if (!this.sufficientLight) {
+      //   if (this.lightOffStartTime === null) {
+      //     this.lightOffStartTime = Date.now();
+      //   } else {
+      //     this.lightOffDuration = (Date.now() - this.lightOffStartTime) / 1000;
           
-          if (this.lightOffDuration >= 10 && this.testStarted) {
-            this.forgeitTest('Insufficient lighting for more than 10 seconds');
-          }
-        }
-      } else {
-        this.lightOffStartTime = null;
-        this.lightOffDuration = 0;
-      }
+      //     if (this.lightOffDuration >= 10 && this.testStarted) {
+      //       this.forgeitTest('Insufficient lighting for more than 10 seconds');
+      //     }
+      //   }
+      // } else {
+      //   this.lightOffStartTime = null;
+      //   this.lightOffDuration = 0;
+      // }
     }
     
     // New method to check head position
@@ -206,6 +213,7 @@ export class ProctoringComponent implements OnInit, OnDestroy {
     
 
         this.router.navigate(['mock-test']);
+        this.active = false;
         console.log('Test started!');
       } else {
         alert('Please ensure your camera is working, your face is visible, and lighting is sufficient.');
@@ -222,9 +230,10 @@ export class ProctoringComponent implements OnInit, OnDestroy {
      }
      
      ngOnDestroy() {
+      console.log("DESTORYED");
        this.destroy$.next();
        this.destroy$.complete();
-       
+      this.active = false;
        // Clean up camera stream
        if (this.stream) {
          this.stream.getTracks().forEach(track => track.stop());
