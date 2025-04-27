@@ -64,7 +64,7 @@ const routes: Routes = [
                 {path: 'custom-timetable', component: CustomTimetableComponent,
                   canActivate:[authGuard]
                 },
-                {path: 'proctoring', component: TestCameraComponent,
+                {path: 'proctoring', component: ProctoringComponent,
                   canActivate:[authGuard]
                 },
                 
