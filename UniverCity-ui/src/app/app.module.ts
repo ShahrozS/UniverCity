@@ -43,6 +43,7 @@ import { EventDetailsComponent } from './Pages/event-details/event-details.compo
 import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timetable.component';
 import { ProctoringComponent } from './Pages/quiz/proctoring/proctoring/proctoring.component';
 import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-camera.component';
+import { ProctoringWhileTestComponent } from './Pages/quiz/proctoring/proctoring-while-test/proctoring-while-test.component';
 
 
 @NgModule({
@@ -75,6 +76,7 @@ import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-ca
     EventDetailsComponent,
     ProctoringComponent,
     TestCameraComponent,
+    ProctoringWhileTestComponent,
 
   ],
   imports: [

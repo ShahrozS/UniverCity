@@ -32,7 +32,7 @@ export class QuizOptionsComponent {
 
       // Stop loading and navigate
       this.loading = false;
-      this.router.navigate(['mock-test']);
+      this.router.navigate(['proctoring']);
 
       // Logging saved values
       console.log("Mode:", this.selectedMode);

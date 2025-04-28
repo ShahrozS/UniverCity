@@ -1,0 +1,19 @@
+<!-- proctoring-overlay.component.html -->
+<div class="proctoring-overlay" [ngClass]="{'active': active}">
+    <div *ngIf="loadingModels" class="loading-indicator">
+      <div class="spinner"></div>
+    </div>
+    
+    <div *ngIf="errorMessage" class="error-indicator">
+      <div class="error-icon">!</div>
+    </div>
+    
+    <video #video id="video" width="160" height="120" autoplay muted></video>
+    <!-- Hidden canvas used for face detection processing -->
+    <canvas #canvas id="canvas" width="160" height="120" style="display: none;"></canvas>
+    
+    <div class="status-dot" [ngClass]="{
+      'active': active && faceDetected && sufficientLight,
+      'warning': active && (!faceDetected || !sufficientLight || lookingDownDuration > 0)
+    }"></div>
+  </div>
