@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
 import { FavouritesService, UniversityService } from '../../../Services/services';
-import { University, UniversityResponse } from '../../../Services/models';
+import { University, UniversityLocation, UniversityResponse } from '../../../Services/models';
 
 @Component({
   selector: 'app-university-details',
@@ -11,7 +11,7 @@ import { University, UniversityResponse } from '../../../Services/models';
 })
 export class UniversityDetailsComponent implements OnInit {
   university!: UniversityResponse;
-
+  universityLocation!: UniversityLocation;
   faHeart = faHeart;
   isFavourite = false;
   isFavorite = false;
@@ -33,10 +33,10 @@ export class UniversityDetailsComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.university = JSON.parse(params['university']);
       
-      this.universityService.findUniversityById({ "university-id": this.university.id! })
+      this.universityService.getUniversityLocation({ "university-id": this.university.id! })
       .subscribe(data => {
         console.log("------>",data);
-        this.university = data;
+        this.universityLocation = data;
       });
     
     console.log("university in dets: " , this.university);

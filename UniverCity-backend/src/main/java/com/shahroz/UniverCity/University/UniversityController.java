@@ -67,6 +67,9 @@ public class UniversityController {
         return ResponseEntity.ok(service.getFacilitiesByUniversity(id));
     }
 
-
+    @GetMapping("/getUniversityLocation/{university-id}")
+    public ResponseEntity<UniversityLocation> getUniversityLocation(@PathVariable("university-id") Long id){
+        return ResponseEntity.ok(service.getUniversityLocation(id));
+    }
 
 }
