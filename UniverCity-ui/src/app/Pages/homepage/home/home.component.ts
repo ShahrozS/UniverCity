@@ -1,4 +1,4 @@
-import { FiltersComponent } from './../filters/filters.component';
+import { FiltersComponent } from '../../filters/filters.component';
 import { Component, ViewChild } from '@angular/core';
 import { UniversityListComponent } from '../university-list/university-list.component';
 

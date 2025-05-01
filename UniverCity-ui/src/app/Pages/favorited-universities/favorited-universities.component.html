@@ -62,9 +62,9 @@
             Accredited by {{university.accrediatetionBody || 'N/A'}}
           </div>
           
-          <div class="university-location" *ngIf="university.universityLocations && university.universityLocations.length > 0">
+          <div class="university-location" *ngIf="university.universityLocation">
             <mat-icon>location_on</mat-icon>
-            <span>{{university.universityLocations[0].city}}</span>
+            <span>{{university.universityLocation.city}}</span>
           </div>
           
           <div class="important-dates">

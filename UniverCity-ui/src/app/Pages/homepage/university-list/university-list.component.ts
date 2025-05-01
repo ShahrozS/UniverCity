@@ -1,26 +1,27 @@
-import { Program } from './../../Services/models/program';
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+import { Program } from '../../../Services/models/program';
+import { ChangeDetectorRef, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { UniversityCardComponent } from '../university-card/university-card.component';
 import { CommonModule } from '@angular/common';
-import { UniversityService } from '../../Services/services/university.service';
+import { UniversityService } from '../../../Services/services/university.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { PageResponseUniversityResponse } from '../../Services/models/page-response-university-response';
-import { UniversityFilterService } from '../../Services/services/university-filter.service';
+import { PageResponseUniversityResponse } from '../../../Services/models/page-response-university-response';
+import { UniversityFilterService } from '../../../Services/services/university-filter.service';
 import { HttpContext } from '@angular/common/http';
-import { University } from '../../Services/models/university';
-import { FilterInstitutions$Params } from '../../Services/fn/university/filter-institutions';
+import { University } from '../../../Services/models/university';
+import { FilterInstitutions$Params } from '../../../Services/fn/university/filter-institutions';
+import { SearchUniversities$Params } from '../../../Services/fn/university/search-universities';
 
 @Component({
-  selector: 'app-university-by-program-list',
-  standalone: true,
-  imports: [UniversityCardComponent, CommonModule],
-  templateUrl: './university-by-program-list.component.html',
-  styleUrls: ['./university-by-program-list.component.scss']
+  selector: 'app-university-list',
+  templateUrl: './university-list.component.html',
+  styleUrls: ['./university-list.component.scss']
 })
-export class UniversityByProgramListComponent {
+export class UniversityListComponent {
   universities: University[] = [];
   selectedUniversities: University[] = [];
   uniProgram: string;
+  loading: boolean = true; // Track loading state
 
   filteredUniversities: University[] = []; // Start with empty array to hold filtered results
   @Input() filter: any; // The filter input
@@ -29,15 +30,20 @@ export class UniversityByProgramListComponent {
     private universityListService: UniversityService,
     private router: Router,
     private route: ActivatedRoute,
-    private universityFilterService: UniversityFilterService
+    private universityFilterService: UniversityFilterService,
+    private cdr :ChangeDetectorRef
   ) {
     this.uniProgram = 'temp';
     this.fetchUniversitiesByProgram(this.uniProgram);
+    console.log("Here");
+
   }
 
 
 
   fetchUniversitiesByProgram(name: string): void {
+    this.loading = true; // Start loading
+
     // Fetch universities by program (for now, mock the response)
     const filterParams: FilterInstitutions$Params = {
       filter : {
@@ -51,15 +57,18 @@ export class UniversityByProgramListComponent {
     };
 
     this.universityListService.findAllUniversity().subscribe(
-
       (response: PageResponseUniversityResponse) => {
         console.log("hello");
         this.universities = response.content ?? []; // Use nullish coalescing to handle undefined
         console.log(this.universities[1]?.name); // Safely access properties
-        this.filteredUniversities = this.universities; // Apply filtering after setting the array
+        this.filteredUniversities = this.universities;
+        this.loading = false; // Stop loading after universities are fetched
+        // Apply filtering after setting the array
       },
       (error) => {
         console.error('Error fetching universities by program:', error);
+        this.loading = false; // Stop loading even if an error occurs
+
       }
     );
 
@@ -82,31 +91,51 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
 
   applyFilters(filters: any, rangedVal: number[]): void  {
     console.log('Filters applied:', filters);
-
-    // Destructure the filter values for easier access
-    const { location, accreditationBody,programNames } = filters?.filters || {};
-
-
-    // Define the filter parameters including the range for fees
+    this.loading = true;
+  
     const filterParams: FilterInstitutions$Params = {
       filter: {
         cities: filters.location ?? [],
         accreditationBodies: filters.accreditationBody ?? [],
-        minFees: rangedVal?.[0] ?? 20000,  // Default min fee if not provided
-        maxFees: rangedVal?.[1] ?? 300000, // Default max fee if not provided
+        minFees: rangedVal?.[0] ?? 20000,
+        maxFees: rangedVal?.[1] ?? 300000,
         program: filters.program ?? []
-        // Add other filter fields here as needed
       },
     };
-
-    // Call the service to filter universities with the updated filterParams
+  
     this.universityListService.filterInstitutions(filterParams).subscribe(
+      (response: University[]) => {
+        console.log('✅ Filtered universities:', response);
+  
+        this.filteredUniversities = [...response]; // 🔥 Force array reference change
+        this.loading = false;
+  
+        this.cdr.detectChanges(); // 🔥 Force UI update
+      },
+      (error) => {
+        console.error('❌ Error applying filters:', error);
+        this.loading = false;
+      }
+    );
+  }
+  
+  searchUniversities(keyword : string){
+    this.loading = true; // Start loading
+
+    const ser : SearchUniversities$Params = {
+      keyword : keyword || ''
+    }
+    this.universityListService.searchUniversities(ser).subscribe(
       (response: University[]) => {
         console.log('Filtered universities:', response);
         this.filteredUniversities = response;
+        this.loading = false; // Stop loading even if an error occurs
+
       },
       (error) => {
         console.error('Error applying filters:', error);
+        this.loading = false; // Stop loading even if an error occurs
+
       }
     );
   }
@@ -127,9 +156,11 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
     }
   }
 
+
+
   compareUniversities() {
     if (this.selectedUniversities.length === 2) {
-      this.router.navigate(['/compare-university'], {
+      this.router.navigate(['/compare-universities'], {
         queryParams: {
           university1: JSON.stringify(this.selectedUniversities[0]),
           university2: JSON.stringify(this.selectedUniversities[1])
@@ -137,4 +168,8 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
       });
     }
   }
+  trackByUniversity(index: number, university: University) {
+    return university?.id || index; // Use a unique ID if available
+  }
+  
 }

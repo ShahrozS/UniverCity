@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { Router } from '@angular/router';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { ChangeDetectorRef } from '@angular/core';
-import { FavouritesService } from '../../Services/services';
+import { FavouritesService } from '../../../Services/services';
 
 @Component({
   selector: 'app-university-cards',
