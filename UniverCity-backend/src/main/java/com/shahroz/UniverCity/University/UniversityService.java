@@ -95,4 +95,14 @@ public class UniversityService {
     }
 
 
+    public UniversityLocation getUniversityLocation(Long id){
+
+        List<UniversityLocation> universityLocations = repository.getUniversityLocationsById(id);
+
+        System.out.println("In university location: " + universityLocations.get(0));
+
+        return universityLocations.get(0);
+    }
+
+
 }

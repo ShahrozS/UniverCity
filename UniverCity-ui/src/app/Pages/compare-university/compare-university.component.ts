@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UniversityCardComponent } from '../university-card/university-card.component';
+import { UniversityCardComponent } from '../homepage/university-card/university-card.component';
 
 @Component({
   selector: 'app-compare-university',

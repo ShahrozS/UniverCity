@@ -9,7 +9,7 @@
       
       <!-- Left: Heading -->
       <div class="flex items-center ">
-        <h1 class="text-xl md:text-2xl mb-0 font-extrabold">{{ university?.name }}</h1>
+        <h1 class="text-xl md:text-2xl mb-0 font-extrabold">{{ university.name }}</h1>
 
         <fa-icon 
         class="heart z-10 ml-5 mr-4 mt-2 cursor-pointer text-4xl p-2 relative"
@@ -23,7 +23,7 @@
       <!-- Right: Rank -->
       <div class="flex items-center">
         <span class="bg-blue-500 text-white text-sm font-medium px-3 py-1 rounded">
-          Rank #{{ university?.rank }}
+          Rank #{{ university.rank }}
         </span>
       </div>
   
@@ -38,19 +38,19 @@
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
         <div class="text-center p-2">
           <p class="text-gray-600 text-sm">Average Fees</p>
-          <p class="font-bold text-lg">PKR {{ university?.averageFees | number:'1.0-0' }}</p>
+          <p class="font-bold text-lg">PKR {{ university.averageFees | number:'1.0-0' }}</p>
         </div>
         <div class="text-center p-2">
           <p class="text-gray-600 text-sm">Application Deadline</p>
-          <p class="font-bold">{{ university?.applyDate | date:'MMM d, y' }}</p>
+          <p class="font-bold">{{ university.applyDate | date:'MMM d, y' }}</p>
         </div>
         <div class="text-center p-2">
           <p class="text-gray-600 text-sm">Start Date</p>
-          <p class="font-bold">{{ university?.startDate | date:'MMM d, y' }}</p>
+          <p class="font-bold">{{ university.startDate | date:'MMM d, y' }}</p>
         </div>
         <div class="text-center p-2">
           <p class="text-gray-600 text-sm">Accreditation</p>
-          <p class="font-bold">{{ university?.accrediatetionBody }}</p>
+          <p class="font-bold">{{ university.accrediatetionBody }}</p>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@
           <div class="flex justify-between items-center mb-3">
             <h2 class="text-xl font-bold text-gray-800">About University</h2>
             <a 
-              href="{{ university?.websiteLink }}" 
+              href="{{ university.websiteLink }}" 
               target="_blank" 
               class="text-blue-600 hover:text-blue-800 flex items-center text-sm font-medium"
             >
@@ -74,7 +74,7 @@
             </a>
           </div>
           <div class="bg-white border border-gray-200 rounded p-4">
-            <p class="text-gray-700">{{ university?.about }}</p>
+            <p class="text-gray-700">{{ university.about }}</p>
           </div>
         </div>
 
@@ -110,24 +110,20 @@
    
 
         <!-- Location/Map Placeholder -->
-        <div class="mb-6">
-          <h2 class="text-xl font-bold text-gray-800 mb-3">Location</h2>
-          <div class="bg-white border border-gray-200 rounded p-4">
-            <div class="bg-gray-200 h-48 rounded flex items-center justify-center">
-              <p class="text-gray-500">University Map Placeholder</p>
-            </div>
-            <div class="mt-3">
-              <p class="text-gray-700">123 University Avenue</p>
-              <p class="text-gray-700">Islamabad, Pakistan</p>
-            </div>
-          </div>
-        </div>
+        <app-university-location
+        [latitude]="universityLocation.latitude!"
+        [longitude]="universityLocation.longitude!"
+        [zoom]="13"
+        >
+
+        </app-university-location>
+
       </div>
     </div>
 
 
     <app-reviews
-    [universityId]="university?.id"
+    [universityId]="university.id!"
     ></app-reviews>
 
   </main>

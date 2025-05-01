@@ -1,7 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {faHeart} from '@fortawesome/free-solid-svg-icons';
-import { FavouritesService } from '../../Services/services';
+import { FavouritesService, UniversityService } from '../../../Services/services';
+import { University, UniversityLocation, UniversityResponse } from '../../../Services/models';
 
 @Component({
   selector: 'app-university-details',
@@ -9,7 +10,8 @@ import { FavouritesService } from '../../Services/services';
   styleUrl: './university-details.component.scss'
 })
 export class UniversityDetailsComponent implements OnInit {
-  university: any;
+  university!: UniversityResponse;
+  universityLocation!: UniversityLocation;
   faHeart = faHeart;
   isFavourite = false;
   isFavorite = false;
@@ -18,7 +20,8 @@ export class UniversityDetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
             private favouriteUniversityService: FavouritesService,
-            private cdr: ChangeDetectorRef
+            private cdr: ChangeDetectorRef,
+            private universityService: UniversityService,
             
         
   ){
@@ -26,15 +29,24 @@ export class UniversityDetailsComponent implements OnInit {
   }
   
   ngOnInit(): void {
+
     this.route.queryParams.subscribe(params => {
       this.university = JSON.parse(params['university']);
-      console.log(this.university);
+      
+      this.universityService.getUniversityLocation({ "university-id": this.university.id! })
+      .subscribe(data => {
+        console.log("------>",data);
+        this.universityLocation = data;
+      });
+    
+    console.log("university in dets: " , this.university);
+    
     })
   }
 
   toggleFavorite() {
     if (!this.isFavorite) {
-      this.favouriteUniversityService.addFavorite({ universityId: this.university.id });
+      this.favouriteUniversityService.addFavorite({ universityId: this.university.id! });
       this.isFavorite = true;
     }
   }
@@ -46,7 +58,7 @@ export class UniversityDetailsComponent implements OnInit {
     console.log(this.university);
     console.log(universityId);
     if (!this.isFavorite) {
-      this.favouriteUniversityService.addFavorite({ universityId: this.university.id }).subscribe(
+      this.favouriteUniversityService.addFavorite({ universityId: this.university.id! }).subscribe(
         () => {
           console.log("Added to favorites!");
           this.isFavorite = true;

@@ -11,19 +11,19 @@ import {FormsModule} from '@angular/forms';
 import {CodeInputModule} from 'angular-code-input';
 import {ActivateAccountComponent} from './Pages/activate-account/activate-account.component';
 import {RegisterComponent} from './Pages/register/register.component';
-import { HomeComponent } from './Pages/home/home.component';
+import { HomeComponent } from './Pages/homepage/home/home.component';
 import { NavbarComponent } from './Pages/navbar/navbar.component';
-import { SearchbarComponent } from './Pages/searchbar/searchbar.component';
+import { SearchbarComponent } from './Pages/homepage/searchbar/searchbar.component';
 import {FeeSliderComponent} from './Pages/filters/fee-slider/fee-slider.component';
 import {FiltersComponent} from './Pages/filters/filters.component';
 import {Button} from 'primeng/button';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AuthInterceptor } from './auth.interceptor';
-import { UniversityByProgramListComponent } from "./Pages/university-by-program-list/university-by-program-list.component";
-import { UniversityListComponent } from './Pages/university-list/university-list.component';
-import { UniversityCardsComponent } from './Pages/university-cards/university-cards.component';
+import { UniversityByProgramListComponent } from "./Pages/homepage/university-by-program-list/university-by-program-list.component";
+import { UniversityListComponent } from './Pages/homepage/university-list/university-list.component';
+import { UniversityCardsComponent } from './Pages/homepage/university-cards/university-cards.component';
 import { CompareUniversitiesComponent } from './Pages/compare-universities/compare-universities.component';
-import { UniversityDetailsComponent } from './Pages/university-details/university-details.component';
+import { UniversityDetailsComponent } from './Pages/university detail page/university-details/university-details.component';
 import { MockTestComponent } from './Pages/quiz/mock-test/mock-test.component';
 import { QuizCategoryComponent } from './Pages/quiz/quiz-category/quiz-category.component';
 import { CategoryCardComponent } from './Pages/quiz/category-card/category-card.component';
@@ -44,6 +44,7 @@ import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timeta
 import { ProctoringComponent } from './Pages/quiz/proctoring/proctoring/proctoring.component';
 import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-camera.component';
 import { ProctoringWhileTestComponent } from './Pages/quiz/proctoring/proctoring-while-test/proctoring-while-test.component';
+import { UniversityLocationComponent } from './Pages/university detail page/university-location/university-location.component';
 
 
 @NgModule({
@@ -77,6 +78,7 @@ import { ProctoringWhileTestComponent } from './Pages/quiz/proctoring/proctoring
     ProctoringComponent,
     TestCameraComponent,
     ProctoringWhileTestComponent,
+    UniversityLocationComponent,
 
   ],
   imports: [

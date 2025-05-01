@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@ToString
+@ToString(exclude = {"universityLocations","userLocations"})
 @Builder
 @AllArgsConstructor
 @Setter
@@ -25,6 +25,7 @@ public class City {
     private String name;
     private String province;
 
+    @JsonIgnore
     @JsonManagedReference
     @OneToMany(mappedBy = "city", cascade = CascadeType.ALL, orphanRemoval = true)
     List<UniversityLocation> universityLocations = new ArrayList<>();
