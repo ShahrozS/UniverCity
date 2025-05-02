@@ -1,4 +1,4 @@
-<div class="w-72 mt-8 mx-auto filter">
+<div class="w-72 mt-2 mx-auto filter">
   <!-- Filter Container -->
   <div class="bg-white border rounded-lg shadow-sm">
     <div class="p-3">
@@ -12,7 +12,7 @@
 
 <!--    Filter tracking buttons -->
 
-    <div class="selected-filters p-4">
+    <div class="selected-filters p-4 z-2">
       <div *ngFor="let location of filters.location" class="selected-filter">
         <button
           class="filter-button bg-blue-500 text-white py-1 px-3 rounded-full hover:bg-blue-700"
@@ -44,7 +44,7 @@
 
 
     <!--    Drop down menus-->
-<div class="dropdowns">
+<div class="dropdowns z-2">
     <!-- By Location -->
     <div class="border-b-4">
       <button

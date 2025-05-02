@@ -78,6 +78,8 @@ export class FiltersComponent {
   toggleFilter(filterType: keyof typeof this.filters, value: string, event: Event): void {
     event.stopPropagation();
 
+    console.log("Toggled");
+
     const currentFilters = this.filters[filterType];
     const index = currentFilters.indexOf(value);
 

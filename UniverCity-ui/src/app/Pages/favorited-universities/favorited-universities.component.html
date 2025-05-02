@@ -62,12 +62,14 @@
             Accredited by {{university.accrediatetionBody || 'N/A'}}
           </div>
           
-          <div class="university-location" *ngIf="university.universityLocation">
+          <div class="university-location" *ngIf="university.universityLocations && university.universityLocations.length > 0">
+
             <mat-icon>location_on</mat-icon>
-            <span>{{university.universityLocation.city}}</span>
+            <span>{{university.universityLocations[0].city}}</span>
+
           </div>
           
-          <div class="important-dates">
+          <div class="important-dates"> 
             <div class="date-item">
               <span class="date-label">Application Deadline</span>
               <span class="date-value">{{formatStringToDate(university.applyDate ?? "")}}</span>

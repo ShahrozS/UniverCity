@@ -1,55 +1,54 @@
-<section class="bg-gray-50 dark:bg-gray-900 h-full">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>University Search Pakistan</title>
+  <style>
+  
+  </style>
+</head>
+<body>
+  <app-navbar class="navbar">
+  </app-navbar>
 
-  <app-navbar></app-navbar>
-
-  <div class="flex  w-full h-24 bg-orange-100">
-    <div class="filter ml-[18rem] z-10">
-      <!-- Listen to filter changes -->
-      <app-filters (filtersChanged)="onFiltersChanged($event)"></app-filters>
+  <section class="hero-section">
+    <div class="hero-pattern"></div>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">Bachelor's Degrees from All Over Pakistan</h1>
+        <p class="hero-subtitle">Find the perfect university and program for your future. Explore top institutions across Pakistan.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="main-heading flex justify-center items-end ml-10">
-      <h1 class="text-slate-800  font-semibold text-6xl text-left ml-8">
-        Bachelor's Degrees from All Over Pakistan
-      </h1>
-    </div>
-    
-  </div>
-
-  <div class="flex w-full flex-row  mx-auto md:h-screen lg:py-0">
-    <div style="width: 40%;"></div>
-
-    <!-- SEACH BAR -->
-    <div class="flex flex-col " style="width: 70%;">
-      <div class="flex justify-center items-center" style="height: 10%;">
-        <form class="w-[30rem] mx-auto ml-[15rem]  mt-24">
-          <div class="relative">
-            <input 
-              #searchInput
-              [(ngModel)]="searchText"
-              type="search" 
-              id="default-search" 
-              class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50" 
-              placeholder="Search by Name, Program..." 
-              required 
-            />
-            <button 
-              type="button" 
-              class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-4 py-2" 
-              (click)="searchUni(searchInput.value)">
-              Search
-            </button>
-
-          </div>
-          
-        </form>
+  <div class="container">
+    <div class="main-content">
+      <div class="filters-panel">
+        <h5 class="filters-title ">Filters</h5>
+        <app-filters (filtersChanged)="onFiltersChanged($event)"></app-filters>
       </div>
 
-      <!-- Pass filters to university list -->
-    
-    <div class="mt-28 mr-48 ">
-      <app-university-list></app-university-list>
-    </div>
+      <div class="search-results">
+        <div class="search-box">
+          <div class="search-input-container">
+            <input type="search" id="default-search" class="search-input" placeholder="Search by Name, Program..." 
+                  #searchInput [(ngModel)]="searchText" required>
+            <button type="button" class="search-button" (click)="searchUni(searchInput.value)">
+              Search
+            </button>
+          </div>
+        </div>
+
+        <div class="university-list">
+        <app-university-list class="university-list"></app-university-list>
+
+        </div>
+        
+   
+        <button class="load-more">Load More</button>
+      </div>
     </div>
   </div>
-</section>
+</body>
+</html>
