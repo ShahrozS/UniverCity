@@ -6,6 +6,7 @@ import com.shahroz.UniverCity.Entities.City;
 import com.shahroz.UniverCity.Repositories.CityRepository;
 import com.shahroz.UniverCity.University.University;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,7 +20,11 @@ public class UniversityFilterService {
     private final UniversityFilterRepository repository;
     private final CityRepository cityRepository;
 
+
+    @Cacheable(value = "universityFilters", key = "#filter.toString()")
     public List<University> getUniversitiesByFilters(UniversityFilter filter) {
+        System.out.println("Querying DB with filters: " + filter);
+
         return repository.findUniversitiesByFilters(filter);
     }
 

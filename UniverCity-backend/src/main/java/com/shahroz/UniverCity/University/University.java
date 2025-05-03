@@ -79,7 +79,6 @@ public class University extends BaseEntity {
 
 
 
-    @JsonIgnore
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL)
     private List<UniversityLocation> universityLocations = new ArrayList<>();;
 
