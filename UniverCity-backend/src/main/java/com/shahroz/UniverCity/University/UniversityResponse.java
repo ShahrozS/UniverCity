@@ -2,6 +2,7 @@ package com.shahroz.UniverCity.University;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -10,6 +11,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 public class UniversityResponse {
+    private static final long serialVersionUID = 1L;
 
     private long id;
 

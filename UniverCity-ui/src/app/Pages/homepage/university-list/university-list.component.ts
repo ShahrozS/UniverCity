@@ -11,7 +11,6 @@ import { HttpContext } from '@angular/common/http';
 import { University } from '../../../Services/models/university';
 import { FilterInstitutions$Params } from '../../../Services/fn/university/filter-institutions';
 import { SearchUniversities$Params } from '../../../Services/fn/university/search-universities';
-
 @Component({
   selector: 'app-university-list',
   templateUrl: './university-list.component.html',
@@ -23,6 +22,14 @@ export class UniversityListComponent {
   uniProgram: string;
   loading: boolean = true; // Track loading state
 
+  // Pagination parameters
+  currentPage: number = 0;
+  pageSize: number = 10;
+  totalElements: number = 0;
+  totalPages: number = 0;
+  isFirstPage: boolean = true;
+  isLastPage: boolean = false;
+
   filteredUniversities: University[] = []; // Start with empty array to hold filtered results
   @Input() filter: any; // The filter input
 
@@ -31,62 +38,60 @@ export class UniversityListComponent {
     private router: Router,
     private route: ActivatedRoute,
     private universityFilterService: UniversityFilterService,
-    private cdr :ChangeDetectorRef
+    private cdr: ChangeDetectorRef
   ) {
     this.uniProgram = 'temp';
     this.fetchUniversitiesByProgram(this.uniProgram);
     console.log("Here");
-
   }
-
-
 
   fetchUniversitiesByProgram(name: string): void {
     this.loading = true; // Start loading
 
-    // Fetch universities by program (for now, mock the response)
-    const filterParams: FilterInstitutions$Params = {
-      filter : {
-        cities: this.filter?.location ?? [],
-        accreditationBodies: this.filter?.accreditationBody ?? [],
-        program: this.filter?.Program ?? []
-      }
-
-
-
-    };
-
-    this.universityListService.findAllUniversity().subscribe(
+    // Fetch universities by program with pagination
+    this.universityListService.findAllUniversity({page:this.currentPage, size:this.pageSize}).subscribe(
       (response: PageResponseUniversityResponse) => {
-        console.log("hello");
+        console.log("Universities loaded successfully");
         this.universities = response.content ?? []; // Use nullish coalescing to handle undefined
-        console.log(this.universities[1]?.name); // Safely access properties
         this.filteredUniversities = this.universities;
+        
+        // Set pagination data
+        this.currentPage = response.number!;
+        this.pageSize = response.size!;
+        this.totalElements = response.totalElements!;
+        this.totalPages = response.totalPages!;
+        this.isFirstPage = response.first!;
+        this.isLastPage = response.last!;
+        
         this.loading = false; // Stop loading after universities are fetched
-        // Apply filtering after setting the array
       },
       (error) => {
         console.error('Error fetching universities by program:', error);
         this.loading = false; // Stop loading even if an error occurs
-
       }
     );
+  }
 
-    /*
+  // Pagination methods
+  goToPage(page: number): void {
+    if (page >= 0 && page < this.totalPages) {
+      this.currentPage = page;
+      this.fetchUniversitiesByProgram(this.uniProgram);
+    }
+  }
 
-this.universityListService.filterInstitutions(filterParams).subscribe(
-      (response: University[]) => {
-        this.universities = response;
-        this.filteredUniversities = [...this.universities]; // Initially, no filter applied
-      },
-      (error) => {
-        console.error('Error fetching universities:', error);
-      }
-    );
-    */
+  nextPage(): void {
+    if (!this.isLastPage) {
+      this.currentPage++;
+      this.fetchUniversitiesByProgram(this.uniProgram);
+    }
+  }
 
-    // Call the service to get filtered universities based on parameters
-
+  previousPage(): void {
+    if (!this.isFirstPage) {
+      this.currentPage--;
+      this.fetchUniversitiesByProgram(this.uniProgram);
+    }
   }
 
   applyFilters(filters: any, rangedVal: number[]): void  {
@@ -119,27 +124,24 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
     );
   }
   
-  searchUniversities(keyword : string){
+  searchUniversities(keyword: string) {
     this.loading = true; // Start loading
 
-    const ser : SearchUniversities$Params = {
-      keyword : keyword || ''
+    const ser: SearchUniversities$Params = {
+      keyword: keyword || ''
     }
     this.universityListService.searchUniversities(ser).subscribe(
       (response: University[]) => {
         console.log('Filtered universities:', response);
         this.filteredUniversities = response;
         this.loading = false; // Stop loading even if an error occurs
-
       },
       (error) => {
         console.error('Error applying filters:', error);
         this.loading = false; // Stop loading even if an error occurs
-
       }
     );
   }
-
 
   onCardSelectionChange(event: any) {
     if (event.isSelected) {
@@ -156,8 +158,6 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
     }
   }
 
-
-
   compareUniversities() {
     if (this.selectedUniversities.length === 2) {
       this.router.navigate(['/compare-universities'], {
@@ -168,8 +168,8 @@ this.universityListService.filterInstitutions(filterParams).subscribe(
       });
     }
   }
+  
   trackByUniversity(index: number, university: University) {
     return university?.id || index; // Use a unique ID if available
   }
-  
 }

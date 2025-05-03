@@ -60,3 +60,78 @@
     }
   }
   
+
+  // Existing styles...
+
+// Pagination controls
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+  gap: 1rem;
+}
+
+.pagination-button {
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: #2563eb;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.page-numbers {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.page-number {
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background-color: #f3f4f6;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #e5e7eb;
+  }
+
+  &.active {
+    background-color: #3b82f6;
+    color: white;
+  }
+}
+
+.pagination-info {
+  text-align: center;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  font-size: 0.875rem;
+}
+
+// For responsive pagination
+@media (max-width: 640px) {
+  .page-numbers {
+    display: none; // Hide individual page numbers on small screens
+  }
+  
+  .pagination-controls {
+    justify-content: space-between;
+  }
+}

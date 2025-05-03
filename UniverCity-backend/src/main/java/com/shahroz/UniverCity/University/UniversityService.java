@@ -62,9 +62,12 @@ public class UniversityService {
     }
 
 
+    @Cacheable(value = "universitiesCache", key = "'page_' + #page + '_size_' + #size")
     public PageResponse<UniversityResponse> findAllUniversities(int page, int size) {
 
-         Pageable pageable = PageRequest.of(page,size, Sort.by("createdDate").descending());
+        System.out.println("Cache miss for universities page: " + page + ", size: " + size);
+
+        Pageable pageable = PageRequest.of(page,size, Sort.by("createdDate").descending());
         Page<University> universities = repository.findAll(pageable);
         List<UniversityResponse> universityResponses = universities.stream()
                 .map(mapper::toUniversityResponse)

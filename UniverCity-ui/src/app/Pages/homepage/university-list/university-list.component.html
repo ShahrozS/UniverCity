@@ -8,11 +8,9 @@
 </div>
 
 <!-- Show loader while universities are being fetched -->
-<!-- Show a loader while universities are being fetched -->
 <div *ngIf="loading" class="loading-container">
   <div class="custom-spinner"></div>
 </div>
-
 
 <!-- Show "No universities available" if empty -->
 <div *ngIf="!loading && filteredUniversities.length === 0" class="no-universities">
@@ -25,8 +23,41 @@
 <!-- Display university cards when data is available -->
 <div class="card-container" *ngIf="!loading && filteredUniversities.length > 0">
   <app-university-cards
-    *ngFor="let university of filteredUniversities;trackBy: trackByUniversity;"
+    *ngFor="let university of filteredUniversities; trackBy: trackByUniversity;"
     [university]="university"
     (selectionChanged)="onCardSelectionChange($event)">
   </app-university-cards>
+</div>
+
+<!-- Pagination controls -->
+<div class="pagination-controls" *ngIf="!loading && totalPages > 1">
+  <button 
+    class="pagination-button"
+    [disabled]="isFirstPage"
+    (click)="previousPage()">
+    Previous
+  </button>
+  
+  <div class="page-numbers">
+    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+      <button 
+        class="page-number" 
+        [class.active]="i === currentPage"
+        (click)="goToPage(i)">
+        {{ i + 1 }}
+      </button>
+    </ng-container>
+  </div>
+  
+  <button 
+    class="pagination-button"
+    [disabled]="isLastPage"
+    (click)="nextPage()">
+    Next
+  </button>
+</div>
+
+<div class="pagination-info" *ngIf="!loading && filteredUniversities.length > 0">
+  Showing {{ currentPage * pageSize + 1 }} - 
+  {{ (currentPage * pageSize) + filteredUniversities.length }} of {{ totalElements }} universities
 </div>
