@@ -1,0 +1,18 @@
+<h1 class="text-3xl font-bold text-center text-white my-6 bg-blue-600 py-4">Program Recommender</h1>
+
+<div class="max-w-3xl mx-auto bg-white p-8 shadow-xl rounded-lg">
+  <div *ngFor="let question of questions" class="mb-6">
+    <app-rsquestions
+      [question]="question.rsquestion" 
+      [questionId]="question.rsquestionid" 
+      (responseChange)="handleResponse($event)">
+    </app-rsquestions>
+  </div>
+
+  <button (click)="submitResponses()" 
+    class="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+    Get Recommendations
+  </button>
+
+  
+</div>

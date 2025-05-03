@@ -14,6 +14,7 @@ import { UniversityService } from './services/university.service';
 import { QuizService } from './services/quiz.service';
 import { FavouritesService } from './services/favourites.service';
 import { AuthenticationService } from './services/authentication.service';
+import { RsControllerService } from './services/rs-controller.service';
 import { UniversityFilterService } from './services/university-filter.service';
 
 /**
@@ -32,6 +33,7 @@ import { UniversityFilterService } from './services/university-filter.service';
     QuizService,
     FavouritesService,
     AuthenticationService,
+    RsControllerService,
     UniversityFilterService,
     ApiConfiguration
   ],
