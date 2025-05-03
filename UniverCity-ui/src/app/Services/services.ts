@@ -10,4 +10,5 @@ export { UniversityService } from './services/university.service';
 export { QuizService } from './services/quiz.service';
 export { FavouritesService } from './services/favourites.service';
 export { AuthenticationService } from './services/authentication.service';
+export { RsControllerService } from './services/rs-controller.service';
 export { UniversityFilterService } from './services/university-filter.service';

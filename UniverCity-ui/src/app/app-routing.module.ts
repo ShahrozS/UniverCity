@@ -19,6 +19,9 @@ import { UserProfileComponent } from './Pages/user-profile/user-profile.componen
 import { CustomTimetableComponent } from './Pages/custom-timetable/custom-timetable.component';
 import { ProctoringComponent } from './Pages/quiz/proctoring/proctoring/proctoring.component';
 import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-camera.component';
+import { RsquestionnaireComponent } from './Pages/RecommenderSystem/rsquestionnaire/rsquestionnaire.component';
+import { RsgrouprecommendationsComponent } from './Pages/RecommenderSystem/rsgrouprecommendations/rsgrouprecommendations.component';
+import { FinalrecommendationsquestionnaireComponent } from './Pages/RecommenderSystem/finalrecommendationsquestionnaire/finalrecommendationsquestionnaire.component';
 
 const routes: Routes = [
   {
@@ -67,6 +70,12 @@ const routes: Routes = [
                 {path: 'proctoring', component: ProctoringComponent,
                   canActivate:[authGuard]
                 },
+                {path: 'rsquestionnaire',component: RsquestionnaireComponent,
+                  canActivate:[authGuard]},
+    {path: 'rsgrouprecommendation',component: RsgrouprecommendationsComponent,
+      canActivate:[authGuard]},
+    {path: 'rsfinalrecommendationquestionnaire',component: FinalrecommendationsquestionnaireComponent,
+      canActivate:[authGuard]}
                 
 ];
 

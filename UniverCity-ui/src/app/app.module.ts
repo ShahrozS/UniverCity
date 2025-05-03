@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { LoginComponent } from './Pages/login/login.component';
-import {FormsModule} from '@angular/forms';
+import {FormGroup, FormsModule} from '@angular/forms';
 import {CodeInputModule} from 'angular-code-input';
 import {ActivateAccountComponent} from './Pages/activate-account/activate-account.component';
 import {RegisterComponent} from './Pages/register/register.component';
@@ -45,6 +45,10 @@ import { ProctoringComponent } from './Pages/quiz/proctoring/proctoring/proctori
 import { TestCameraComponent } from './Pages/quiz/proctoring/test-camera/test-camera.component';
 import { ProctoringWhileTestComponent } from './Pages/quiz/proctoring/proctoring-while-test/proctoring-while-test.component';
 import { UniversityLocationComponent } from './Pages/university detail page/university-location/university-location.component';
+import { RsquestionsComponent } from './Pages/RecommenderSystem/rsquestions/rsquestions.component';
+import { RsquestionnaireComponent } from './Pages/RecommenderSystem/rsquestionnaire/rsquestionnaire.component';
+import { RsgrouprecommendationsComponent } from './Pages/RecommenderSystem/rsgrouprecommendations/rsgrouprecommendations.component';
+import { FinalrecommendationsquestionnaireComponent } from './Pages/RecommenderSystem/finalrecommendationsquestionnaire/finalrecommendationsquestionnaire.component';
 
 
 @NgModule({
@@ -79,7 +83,10 @@ import { UniversityLocationComponent } from './Pages/university detail page/univ
     TestCameraComponent,
     ProctoringWhileTestComponent,
     UniversityLocationComponent,
-
+    RsquestionsComponent,
+    RsquestionnaireComponent,
+    RsgrouprecommendationsComponent,
+    FinalrecommendationsquestionnaireComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -94,7 +101,7 @@ import { UniversityLocationComponent } from './Pages/university detail page/univ
     Button,
     UniversityByProgramListComponent,
     MatIconModule,
-    NgxPaginationModule,
+    NgxPaginationModule
 ],
   providers: [
     HttpClient,

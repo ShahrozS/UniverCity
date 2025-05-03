@@ -1,0 +1,19 @@
+.likert-question {
+    margin-bottom: 20px;
+  }
+  
+  .likert-options {
+    display: flex;
+    gap: 15px;
+  }
+  
+  label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  input[type="radio"] {
+    margin-right: 5px;
+  }
+  
