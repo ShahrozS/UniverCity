@@ -1,0 +1,43 @@
+FROM eclipse-temurin:17-jdk-alpine as build
+WORKDIR /workspace/app
+
+# Copy maven/gradle files
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+# If using Gradle, replace with:
+# COPY gradlew .
+# COPY gradle gradle
+# COPY build.gradle .
+# COPY settings.gradle .
+
+# Make the maven wrapper executable
+RUN chmod +x ./mvnw
+# Download dependencies
+RUN ./mvnw dependency:go-offline -B
+
+# Copy the source code
+COPY src src
+
+# Build the application
+RUN ./mvnw package -DskipTests
+
+# Runtime image
+FROM eclipse-temurin:17-jre-alpine
+VOLUME /tmp
+
+# Add user
+RUN addgroup -S spring && adduser -S spring -G spring
+USER spring:spring
+
+# Copy the jar file
+COPY --from=build /workspace/app/target/*.jar app.jar
+
+# Create uploads directory
+RUN mkdir -p /home/spring/uploads
+
+# Configure environment
+ENV JAVA_OPTS="-Xmx512m -Xms256m"
+
+# Set the entrypoint
+ENTRYPOINT ["sh", "-c", "java ${JAVA_OPTS} -jar /app.jar"]

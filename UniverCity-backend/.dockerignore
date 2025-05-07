@@ -1,0 +1,34 @@
+# Git files
+.git
+.gitignore
+
+# Build files
+target/
+build/
+.gradle/
+.mvn/wrapper/maven-wrapper.jar
+
+# IDE files
+../.idea/
+*.iml
+.vscode/
+*.sublime-*
+.project
+.classpath
+.settings/
+
+# Logs
+logs/
+*.log
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Docker files
+.dockerignore
+docker-compose*.yml
+
+# Misc
+README.md
+LICENSE
