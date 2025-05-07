@@ -24,6 +24,8 @@ import { RsgrouprecommendationsComponent } from './Pages/RecommenderSystem/rsgro
 import { FinalrecommendationsquestionnaireComponent } from './Pages/RecommenderSystem/finalrecommendationsquestionnaire/finalrecommendationsquestionnaire.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+
   {
     path: 'login',
     component: LoginComponent
