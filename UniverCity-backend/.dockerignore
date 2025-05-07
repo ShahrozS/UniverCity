@@ -9,7 +9,7 @@ build/
 .mvn/wrapper/maven-wrapper.jar
 
 # IDE files
-.idea/
+../.idea/
 *.iml
 .vscode/
 *.sublime-*

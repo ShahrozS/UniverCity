@@ -1,0 +1,64 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/UniverCity}
+    username: ${SPRING_DATASOURCE_USERNAME:username}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:univercity.fyp@gmail.com}
+    password: ${SPRING_MAIL_PASSWORD:riiy dreg fbbm mmxv}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  docker:
+    compose:
+      lifecycle-management: none
+
+  cache:
+    type: redis
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: ${SPRING_DATA_REDIS_PORT:6379}
+
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
+    default-property-inclusion: NON_NULL
+
+application:
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY:zqr70GooivT5urALsGX3IiqeEXqSTKJ5Pz4LnnEZeCPtpUFvd7gwbNZpNCvKTOwfYJOYynNOFYi46knIW5W8YA==}
+      expiration: ${JWT_EXPIRATION:31536000}
+  mailing:
+    frontend:
+      activation-url: ${ACTIVATION_URL:http://localhost:4200/activate-account}
+
+server:
+  port: ${SERVER_PORT:8088}
+  # Add this for proper handling of forwarded headers in a containerized environment
+  forward-headers-strategy: ${SERVER_FORWARD-HEADERS-STRATEGY:NATIVE}
+
+logging:
+  level.org.springframework.security: ${LOG_LEVEL:INFO}
