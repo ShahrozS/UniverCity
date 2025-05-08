@@ -1,7 +1,16 @@
 {
-    "rewrites": [
-      { "source": "/assets/(.*)", "destination": "/assets/$1" },
-      { "source": "/(.*)", "destination": "/index.html" }
-    ],
-    "outputDirectory": "dist/univer-city-ui"
-  }
+  "version": 2,
+  "routes": [
+    {
+      "src": "/(assets/.+)",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "/index.html"
+    }
+  ]
+}
