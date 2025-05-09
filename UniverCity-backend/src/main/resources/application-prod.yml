@@ -1,13 +1,13 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG@gondola.proxy.rlwy.net:10884/railway/UniverCity}
+    url: jdbc:postgresql://gondola.proxy.rlwy.net:10884/railway
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
+    show-sql: true # Enable to see SQL errors
     properties:
       hibernate:
         format_sql: true
@@ -34,11 +34,10 @@ spring:
     redis:
       host: ${SPRING_DATA_REDIS_HOST:redis.railway.internal}
       port: ${SPRING_DATA_REDIS_PORT:6379}
-      password: ${SPRING_DATA_REDIS_PASSWOD:fMRmravBTxbONLdbLbVAUFDrQSIGQadB  }
-      url: ${SPRING_DATA_REDIS_URL:redis://default:fMRmravBTxbONLdbLbVAUFDrQSIGQadB@redis.railway.internal:6379}
+      password: ${SPRING_DATA_REDIS_PASSWORD:fMRmravBTxbONLdbLbVAUFDrQSIGQadB}
+      url: redis://${SPRING_DATA_REDIS_HOST:redis.railway.internal}:${SPRING_DATA_REDIS_PORT:6379}
   main:
     allow-bean-definition-overriding: true
-
 
   jackson:
     serialization:
@@ -61,9 +60,12 @@ application:
       activation-url: ${ACTIVATION_URL:http://localhost:4200/activate-account}
 
 server:
-  port: ${SERVER_PORT:8088}
-  # Add this for proper handling of forwarded headers in a containerized environment
-  forward-headers-strategy: ${SERVER_FORWARD-HEADERS-STRATEGY:NATIVE}
+  port: ${SERVER_PORT:8080} # Changed to standard port 8080
+  forward-headers-strategy: ${SERVER_FORWARD_HEADERS_STRATEGY:NATIVE}
 
 logging:
-  level.org.springframework.security: ${LOG_LEVEL:INFO}
+  level:
+    org.springframework.security: ${LOG_LEVEL:INFO}
+    org.springframework.web: DEBUG
+    org.hibernate: INFO
+    com.shahroz.UniverCity: DEBUG # Add this to see your application logs
