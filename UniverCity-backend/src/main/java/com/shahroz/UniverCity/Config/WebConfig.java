@@ -14,7 +14,7 @@ import java.util.Collections;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Value("${CORS_ALLOWED_ORIGINS:http://localhost:4200,https://univer-city-6gi6wccwg-shahrozs-projects.vercel.app,https://univer-city-8lc4xxuwu-shahrozs-projects.vercel.app,https://univer-city-ui.vercel.app}")
+    @Value("${CORS_ALLOWED_ORIGINS:http://localhost:4200,https://univer-city-6gi6wccwg-shahrozs-projects.vercel.app,https://univer-city-8lc4xxuwu-shahrozs-projects.vercel.app,https://univer-city-ui.vercel.app,https://univer-city-ui.vercel.app/}")
     private String corsAllowedOrigins;
 
     @Bean

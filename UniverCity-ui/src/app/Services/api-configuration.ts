@@ -11,9 +11,16 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-  rootUrl: string = 'http://localhost:8088/api/v1';
 
+  //local
+  // rootUrl: string = 'http://localhost:8088/api/v1';
+
+  //aws
   // rootUrl: string = 'http://18.208.150.18:8088/api/v1';
+  
+
+  //railway
+  rootUrl: string = 'https://univercity-production.up.railway.app/api/v1';
   
 
 }
