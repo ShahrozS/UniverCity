@@ -12,12 +12,11 @@ spring:
       max-lifetime: 1200000
       validation-timeout: 3000
       connection-test-query: SELECT 1
-    initialization-mode: never
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+    show-sql: false
     properties:
       hibernate:
         format_sql: true

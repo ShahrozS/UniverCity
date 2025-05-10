@@ -20,7 +20,7 @@ export class ApiConfiguration {
   
 
   //railway
-  rootUrl: string = 'https://univercity-production.up.railway.app:8080/api/v1';
+  rootUrl: string = 'https://univercity-production.up.railway.app/api/v1';
   
 
 }
