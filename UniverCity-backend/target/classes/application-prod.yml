@@ -1,23 +1,24 @@
 spring:
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG@gondola.proxy.rlwy.net:10884/UniverCity}
-    username: ${SPRING_DATASOURCE_USERNAME:postgres}
-    password: ${SPRING_DATASOURCE_PASSWORD:PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG}
+    # Fixed JDBC URL format - added the missing "jdbc:" prefix
+    url: jdbc:postgresql://turntable.proxy.rlwy.net:30648/railway
+    username: postgres
+    password: SuEWWSYvwWUicvvakobafiazsJdDQgNA
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true # Enable to see SQL errors
+    show-sql: true
     properties:
       hibernate:
         format_sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   mail:
-    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
-    port: ${SPRING_MAIL_PORT:587}
-    username: ${SPRING_MAIL_USERNAME:univercity.fyp@gmail.com}
-    password: ${SPRING_MAIL_PASSWORD:riiy dreg fbbm mmxv}
+    host: smtp.gmail.com
+    port: 587
+    username: univercity.fyp@gmail.com
+    password: riiy dreg fbbm mmxv
     properties:
       mail:
         smtp:
@@ -26,16 +27,18 @@ spring:
             enable: true
   docker:
     compose:
+      enabled: false
       lifecycle-management: none
+
 
   cache:
     type: redis
   data:
     redis:
-      host: ${SPRING_DATA_REDIS_HOST:redis.railway.internal}
-      port: ${SPRING_DATA_REDIS_PORT:6379}
-      password: ${SPRING_DATA_REDIS_PASSWORD:fMRmravBTxbONLdbLbVAUFDrQSIGQadB}
-      url: ${SPRING_DATA_REDIS_URL:redis://default:fMRmravBTxbONLdbLbVAUFDrQSIGQadB@redis.railway.internal:6379}
+      # Using standard Railway Redis connection
+      host: redis-${SERVICE_NAME}.railway.internal
+      port: 6379
+      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
   main:
     allow-bean-definition-overriding: true
 
@@ -53,19 +56,25 @@ spring:
 application:
   security:
     jwt:
-      secret-key: ${JWT_SECRET_KEY:zqr70GooivT5urALsGX3IiqeEXqSTKJ5Pz4LnnEZeCPtpUFvd7gwbNZpNCvKTOwfYJOYynNOFYi46knIW5W8YA==}
-      expiration: ${JWT_EXPIRATION:31536000}
+      secret-key: zqr70GooivT5urALsGX3IiqeEXqSTKJ5Pz4LnnEZeCPtpUFvd7gwbNZpNCvKTOwfYJOYynNOFYi46knIW5W8YA==
+      expiration: 31536000
   mailing:
     frontend:
-      activation-url: ${ACTIVATION_URL:http://localhost:4200/activate-account}
+      activation-url: https://your-frontend-domain.com/activate-account
 
 server:
-  port: ${SERVER_PORT:8080} # Changed to standard port 8080
-  forward-headers-strategy: ${SERVER_FORWARD_HEADERS_STRATEGY:NATIVE}
+  port: ${PORT:8080}  # Railway provides a PORT environment variable
+  forward-headers-strategy: NATIVE
 
 logging:
   level:
-    org.springframework.security: ${LOG_LEVEL:INFO}
-    org.springframework.web: DEBUG
+    root: INFO
+    org.springframework.security: INFO
+    org.springframework.web: INFO
     org.hibernate: INFO
-    com.shahroz.UniverCity: DEBUG # Add this to see your application logs
+    com.shahroz.UniverCity: DEBUG
+    # Add specific loggers to debug connectivity issues
+    org.springframework.jdbc: DEBUG
+    org.springframework.data.redis: DEBUG
+    org.hibernate.SQL: DEBUG  # Added to show SQL queries
+    org.hibernate.type.descriptor.sql: TRACE  # Added to show SQL parameter values

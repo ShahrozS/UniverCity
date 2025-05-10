@@ -1,77 +1,80 @@
-
-  spring:
-    datasource:
-      # Fix the JDBC URL format - this was likely causing your issue
-      url: jdbc:postgresql://gondola.proxy.rlwy.net:10884/UniverCity
-      username: postgres
-      password: PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG
-      driver-class-name: org.postgresql.Driver
-    jpa:
+spring:
+  datasource:
+    # Fixed JDBC URL format - added the missing "jdbc:" prefix
+    url: jdbc:postgresql://turntable.proxy.rlwy.net:30648/railway
+    username: postgres
+    password: SuEWWSYvwWUicvvakobafiazsJdDQgNA
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
       hibernate:
-        ddl-auto: update
-      show-sql: true
-      properties:
-        hibernate:
-          format_sql: true
-      database: postgresql
-      database-platform: org.hibernate.dialect.PostgreSQLDialect
-    mail:
-      host: smtp.gmail.com
-      port: 587
-      username: univercity.fyp@gmail.com
-      password: riiy dreg fbbm mmxv
-      properties:
-        mail:
-          smtp:
-            auth: true
-            starttls:
-              enable: true
-    docker:
-      compose:
-        lifecycle-management: none
+        format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: univercity.fyp@gmail.com
+    password: riiy dreg fbbm mmxv
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  docker:
+    compose:
+      enabled: false
+      lifecycle-management: none
 
-    cache:
-      type: redis
-    data:
-      redis:
-        # Railway typically exposes Redis on internal network
-        host: redis-${SERVICE_NAME}.railway.internal
-        port: 6379
-        password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
-    main:
-      allow-bean-definition-overriding: true
 
-    jackson:
-      serialization:
-        FAIL_ON_EMPTY_BEANS: false
-        WRITE_DATES_AS_TIMESTAMPS: false
-      deserialization:
-        FAIL_ON_UNKNOWN_PROPERTIES: false
-        ACCEPT_SINGLE_VALUE_AS_ARRAY: true
-      mapper:
-        ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
-      default-property-inclusion: NON_NULL
+  cache:
+    type: redis
+  data:
+    redis:
+      # Using standard Railway Redis connection
+      host: redis-${SERVICE_NAME}.railway.internal
+      port: 6379
+      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
+  main:
+    allow-bean-definition-overriding: true
 
-  application:
-    security:
-      jwt:
-        secret-key: zqr70GooivT5urALsGX3IiqeEXqSTKJ5Pz4LnnEZeCPtpUFvd7gwbNZpNCvKTOwfYJOYynNOFYi46knIW5W8YA==
-        expiration: 31536000
-    mailing:
-      frontend:
-        activation-url: https://your-frontend-domain.com/activate-account
+  jackson:
+    serialization:
+      FAIL_ON_EMPTY_BEANS: false
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+      ACCEPT_SINGLE_VALUE_AS_ARRAY: true
+    mapper:
+      ACCEPT_CASE_INSENSITIVE_PROPERTIES: true
+    default-property-inclusion: NON_NULL
 
-  server:
-    port: ${PORT:8080}  # Railway provides a PORT environment variable
-    forward-headers-strategy: NATIVE
+application:
+  security:
+    jwt:
+      secret-key: zqr70GooivT5urALsGX3IiqeEXqSTKJ5Pz4LnnEZeCPtpUFvd7gwbNZpNCvKTOwfYJOYynNOFYi46knIW5W8YA==
+      expiration: 31536000
+  mailing:
+    frontend:
+      activation-url: https://your-frontend-domain.com/activate-account
 
-  logging:
-    level:
-      root: INFO
-      org.springframework.security: INFO
-      org.springframework.web: INFO
-      org.hibernate: INFO
-      com.shahroz.UniverCity: DEBUG
-      # Add specific loggers to debug connectivity issues
-      org.springframework.jdbc: DEBUG
-      org.springframework.data.redis: DEBUG
+server:
+  port: ${PORT:8080}  # Railway provides a PORT environment variable
+  forward-headers-strategy: NATIVE
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    com.shahroz.UniverCity: DEBUG
+    # Add specific loggers to debug connectivity issues
+    org.springframework.jdbc: DEBUG
+    org.springframework.data.redis: DEBUG
+    org.hibernate.SQL: DEBUG  # Added to show SQL queries
+    org.hibernate.type.descriptor.sql: TRACE  # Added to show SQL parameter values
