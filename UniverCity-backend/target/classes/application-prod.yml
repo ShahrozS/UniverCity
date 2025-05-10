@@ -1,10 +1,19 @@
 spring:
   datasource:
-    # Fixed JDBC URL format - added the missing "jdbc:" prefix
     url: jdbc:postgresql://turntable.proxy.rlwy.net:30648/railway
     username: postgres
     password: SuEWWSYvwWUicvvakobafiazsJdDQgNA
     driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      idle-timeout: 300000
+      max-lifetime: 1200000
+      validation-timeout: 3000
+      connection-test-query: SELECT 1
+    initialization-mode: never
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -12,8 +21,18 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          batch_size: 25
+          order_inserts: true
+          order_updates: true
+        c3p0:
+          timeout: 1800
+        cache:
+          use_second_level_cache: false
+          use_query_cache: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -25,36 +44,30 @@ spring:
           auth: true
           starttls:
             enable: true
+
   docker:
     compose:
       enabled: false
       lifecycle-management: none
 
-
+  # IMPORTANT: Temporarily disable Redis for stability
   cache:
-    type: redis
+    type: none
+
+  # Disable Redis repositories
   data:
     redis:
-      host: trolley.proxy.rlwy.net
-      port: 6379
-      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
-      # Add connection properties
-      connect-timeout: 5000
-      timeout: 10000
-      # Add retry mechanism
-      lettuce:
-        pool:
-          max-active: 8
-          max-wait: -1ms
-          max-idle: 8
-          min-idle: 0
-        shutdown-timeout: 100ms
+      repositories:
+        enabled: false
 
-  # Set to false if Redis issues persist
+  # Disable session storage
   session:
     store-type: none
+
   main:
     allow-bean-definition-overriding: true
+    fail-fast: false
+    lazy-initialization: true
 
   jackson:
     serialization:
@@ -77,9 +90,33 @@ application:
       activation-url: https://your-frontend-domain.com/activate-account
 
 server:
-  port: ${PORT:8080}  # Railway provides a PORT environment variable
+  port: ${PORT:8080}
   forward-headers-strategy: NATIVE
+  tomcat:
+    max-threads: 200
+    min-spare-threads: 20
+    max-connections: 8192
+    accept-count: 100
+    connection-timeout: 20000
 
+# Management endpoints for health checks
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: db
+        liveness:
+          include: ping
+
+# Logging configuration
 logging:
   level:
     root: INFO
@@ -87,8 +124,9 @@ logging:
     org.springframework.web: INFO
     org.hibernate: INFO
     com.shahroz.UniverCity: DEBUG
-    # Add specific loggers to debug connectivity issues
     org.springframework.jdbc: DEBUG
-    #    org.springframework.data.redis: DEBUG
-    org.hibernate.SQL: DEBUG  # Added to show SQL queries
-    org.hibernate.type.descriptor.sql: TRACE  # Added to show SQL parameter values
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql: TRACE
+    com.zaxxer.hikari: DEBUG
+
+  
