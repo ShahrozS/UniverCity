@@ -31,14 +31,14 @@ spring:
       lifecycle-management: none
 
 
-  cache:
-    type: redis
-  data:
-    redis:
-      # Using standard Railway Redis connection
-      host: trolley.proxy.rlwy.net
-      port: 6379
-      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
+#  cache:
+#    type: redis
+#  data:
+#    redis:
+#      # Using standard Railway Redis connection
+#      host: trolley.proxy.rlwy.net
+#      port: 6379
+#      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
   main:
     allow-bean-definition-overriding: true
 
