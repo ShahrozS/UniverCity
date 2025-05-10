@@ -36,7 +36,7 @@ spring:
   data:
     redis:
       # Using standard Railway Redis connection
-      host: redis-${SERVICE_NAME}.railway.internal
+      host: redis.railway.internal
       port: 6379
       password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
   main:
