@@ -31,14 +31,28 @@ spring:
       lifecycle-management: none
 
 
-#  cache:
-#    type: redis
-#  data:
-#    redis:
-#      # Using standard Railway Redis connection
-#      host: trolley.proxy.rlwy.net
-#      port: 6379
-#      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
+  cache:
+    type: redis
+  data:
+    redis:
+      host: trolley.proxy.rlwy.net
+      port: 6379
+      password: fMRmravBTxbONLdbLbVAUFDrQSIGQadB
+      # Add connection properties
+      connect-timeout: 5000
+      timeout: 10000
+      # Add retry mechanism
+      lettuce:
+        pool:
+          max-active: 8
+          max-wait: -1ms
+          max-idle: 8
+          min-idle: 0
+        shutdown-timeout: 100ms
+
+  # Set to false if Redis issues persist
+  session:
+    store-type: none
   main:
     allow-bean-definition-overriding: true
 
@@ -75,6 +89,6 @@ logging:
     com.shahroz.UniverCity: DEBUG
     # Add specific loggers to debug connectivity issues
     org.springframework.jdbc: DEBUG
-    org.springframework.data.redis: DEBUG
+    #    org.springframework.data.redis: DEBUG
     org.hibernate.SQL: DEBUG  # Added to show SQL queries
     org.hibernate.type.descriptor.sql: TRACE  # Added to show SQL parameter values
