@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:postgresql://gondola.proxy.rlwy.net:10884/railway
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://postgres:PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG@gondola.proxy.rlwy.net:10884/UniverCity}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:PEuXGHbXiYVhidQUUIwJfjtrYqxuFVDG}
     driver-class-name: org.postgresql.Driver
@@ -35,7 +35,7 @@ spring:
       host: ${SPRING_DATA_REDIS_HOST:redis.railway.internal}
       port: ${SPRING_DATA_REDIS_PORT:6379}
       password: ${SPRING_DATA_REDIS_PASSWORD:fMRmravBTxbONLdbLbVAUFDrQSIGQadB}
-      url: redis://${SPRING_DATA_REDIS_HOST:redis.railway.internal}:${SPRING_DATA_REDIS_PORT:6379}
+      url: ${SPRING_DATA_REDIS_URL:redis://default:fMRmravBTxbONLdbLbVAUFDrQSIGQadB@redis.railway.internal:6379}
   main:
     allow-bean-definition-overriding: true
 
