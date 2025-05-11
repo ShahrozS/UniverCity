@@ -103,6 +103,7 @@ server:
     max-connections: 8192
     accept-count: 100
     connection-timeout: 20000
+    use-native: false
 
 # Management endpoints for health checks
 management:
