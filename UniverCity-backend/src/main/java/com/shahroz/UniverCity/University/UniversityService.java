@@ -39,7 +39,7 @@ public class UniversityService {
 
     }
 
-    @Cacheable(value = "universities", key = "#id")
+//    @Cacheable(value = "universities", key = "#id")
     public UniversityResponse findById(Long id){
 
         return repository.findById(id)
@@ -62,7 +62,7 @@ public class UniversityService {
     }
 
 
-    @Cacheable(value = "universitiesCache", key = "'page_' + #page + '_size_' + #size")
+//    @Cacheable(value = "universitiesCache", key = "'page_' + #page + '_size_' + #size")
     public PageResponse<UniversityResponse> findAllUniversities(int page, int size) {
 
         System.out.println("Cache miss for universities page: " + page + ", size: " + size);

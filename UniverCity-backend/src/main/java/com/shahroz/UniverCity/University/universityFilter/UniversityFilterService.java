@@ -21,7 +21,7 @@ public class UniversityFilterService {
     private final CityRepository cityRepository;
 
 
-    @Cacheable(value = "universityFilters", key = "#filter.toString()")
+//    @Cacheable(value = "universityFilters", key = "#filter.toString()")
     public List<University> getUniversitiesByFilters(UniversityFilter filter) {
         System.out.println("Querying DB with filters: " + filter);
 

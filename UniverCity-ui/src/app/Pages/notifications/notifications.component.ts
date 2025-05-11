@@ -62,26 +62,42 @@ export class NotificationsComponent implements OnInit, OnDestroy {
   
   }
 
-  private connection(){
-    this.auth.getCurrentUser().subscribe(
-      data =>{
-        let ws = new SockJS('http://localhost:8088/api/v1/ws');
+ private connection() {
+  this.auth.getCurrentUser().subscribe(
+    data => {
+      // 1. Fix the WebSocket URL to match your server configuration
+    
+      
+      // Use the correct path that matches your server config
+      let ws = new SockJS(`https://localhost:8080/api/v1/ws`);
+      
+      // For Prod
+      // let ws = new SockJS('https://univercity-production.up.railway.app/api/v1/ws');
+      
       this.socketClient = Stomp.over(ws);
-      this.socketClient.connect({'Authorization:': 'Bearer ' + this.tokenService.token} , ()=>{
-          console.log("Connecting to the websocket" + `${data.user_id}`);
+      
+      // Fix the header syntax
+      this.socketClient.connect(
+        { 'Authorization': 'Bearer ' + this.tokenService.token }, 
+        () => {
+          console.log("Connected to the websocket for user " + `${data.user_id}`);
           this.notificationCountSubscription = this.socketClient.subscribe(
             `/user/${data.user_id}/notifications`,
-            (message:any)=>{
+            (message: any) => {
               const count = JSON.parse(message.body);
-                 this.unreadCount = count.unReadCount
+              this.unreadCount = count.unReadCount;
             }
-          )
-      });
-      }
-      )
-    
-     
-  }
+          );
+        },
+        (error:any) => {
+          // Add error handling
+          console.error("WebSocket connection error:", error);
+          // Implement reconnection logic if needed
+        }
+      );
+    }
+  );
+}
 
   togglePanel(): void {
     this.isPanelOpen = !this.isPanelOpen;

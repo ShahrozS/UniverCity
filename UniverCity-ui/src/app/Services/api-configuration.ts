@@ -13,14 +13,14 @@ import { Injectable } from '@angular/core';
 export class ApiConfiguration {
 
   //local
-  // rootUrl: string = 'http://localhost:8088/api/v1';
+  rootUrl: string = 'https://localhost:8080/api/v1';
 
   //aws
   // rootUrl: string = 'http://18.208.150.18:8088/api/v1';
   
 
   //railway
-  rootUrl: string = 'https://univercity-production.up.railway.app/api/v1';
+  // rootUrl: string = 'https://univercity-production.up.railway.app/api/v1';
   
 
 }

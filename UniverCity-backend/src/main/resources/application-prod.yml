@@ -89,6 +89,11 @@ application:
       activation-url: https://your-frontend-domain.com/activate-account
 
 server:
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: UniverCity
+#    key-store-type: PKCS12
+#    key-alias: my-local-cert
   port: ${PORT:8080}
   forward-headers-strategy: NATIVE
   tomcat:
@@ -124,7 +129,13 @@ logging:
     org.hibernate: INFO
     com.shahroz.UniverCity: DEBUG
     org.springframework.jdbc: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor.sql: TRACE
     com.zaxxer.hikari: DEBUG
+
+
+
+# to enable redis
+# enable in prod
+#enable the cofig
+#main class
+#university service class uncomment all redis
 

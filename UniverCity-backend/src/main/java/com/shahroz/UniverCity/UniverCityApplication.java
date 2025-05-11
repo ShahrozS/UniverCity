@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAsync
-@EnableCaching
+//@EnableCaching
 @SpringBootApplication
 public class UniverCityApplication {
 
