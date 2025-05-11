@@ -4,14 +4,7 @@ spring:
     username: postgres
     password: SuEWWSYvwWUicvvakobafiazsJdDQgNA
     driver-class-name: org.postgresql.Driver
-    hikari:
-      connection-timeout: 30000
-      maximum-pool-size: 10
-      minimum-idle: 5
-      idle-timeout: 300000
-      max-lifetime: 1200000
-      validation-timeout: 3000
-      connection-test-query: SELECT 1
+
 
   jpa:
     hibernate:
@@ -19,11 +12,11 @@ spring:
     show-sql: false
     properties:
       hibernate:
-        format_sql: true
+        format_sql: false
         jdbc:
           batch_size: 25
-          order_inserts: true
-          order_updates: true
+          order_inserts: false
+          order_updates: false
         c3p0:
           timeout: 1800
         cache:
@@ -67,7 +60,7 @@ spring:
     allow-bean-definition-overriding: true
     fail-fast: false
     lazy-initialization: true
-    log-startup-info: true
+    log-startup-info: false
 
   jackson:
     serialization:
@@ -87,7 +80,7 @@ application:
       expiration: 31536000
   mailing:
     frontend:
-      activation-url: https://your-frontend-domain.com/activate-account
+      activation-url: https://univer-city-ui.vercel.app/activate-account
 
 server:
 #  ssl:
@@ -110,10 +103,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include:
   endpoint:
     health:
-      show-details: always
+      show-details: false
       probes:
         enabled: true
       group:
@@ -125,13 +118,12 @@ management:
 # Logging configuration
 logging:
   level:
-    root: DEBUG
+    root: info
     org.springframework.security: INFO
     org.springframework.web: INFO
     org.hibernate: INFO
-    com.shahroz.UniverCity: DEBUG
-    org.springframework.jdbc: DEBUG
-    com.zaxxer.hikari: DEBUG
+    com.shahroz.UniverCity: info
+    org.springframework.jdbc: info
 
 
 
