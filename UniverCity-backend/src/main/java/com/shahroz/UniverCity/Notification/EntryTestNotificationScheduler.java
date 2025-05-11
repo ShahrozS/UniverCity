@@ -33,7 +33,7 @@ public class EntryTestNotificationScheduler {
 
 
 //    @Scheduled(cron = "0 0 12 * * ?")
-    @Scheduled(cron = "*/10 * * * * *")
+//    @Scheduled(cron = "*/10 * * * * *")
     @Transactional// Runs daily at noon
     public void sendEntryTestNotifications() throws MessagingException {
 

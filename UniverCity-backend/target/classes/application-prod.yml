@@ -67,6 +67,7 @@ spring:
     allow-bean-definition-overriding: true
     fail-fast: false
     lazy-initialization: true
+    log-startup-info: true
 
   jackson:
     serialization:
@@ -89,11 +90,11 @@ application:
       activation-url: https://your-frontend-domain.com/activate-account
 
 server:
-  ssl:
-    key-store: classpath:keystore.p12
-    key-store-password: UniverCity
-    key-store-type: PKCS12
-    key-alias: my-local-cert
+#  ssl:
+#    key-store: classpath:keystore.p12
+#    key-store-password: UniverCity
+#    key-store-type: PKCS12
+#    key-alias: my-local-cert
   port: ${PORT:8080}
   forward-headers-strategy: NATIVE
   tomcat:
@@ -102,6 +103,7 @@ server:
     max-connections: 8192
     accept-count: 100
     connection-timeout: 20000
+    use-native: false
 
 # Management endpoints for health checks
 management:
@@ -123,7 +125,7 @@ management:
 # Logging configuration
 logging:
   level:
-    root: INFO
+    root: DEBUG
     org.springframework.security: INFO
     org.springframework.web: INFO
     org.hibernate: INFO
