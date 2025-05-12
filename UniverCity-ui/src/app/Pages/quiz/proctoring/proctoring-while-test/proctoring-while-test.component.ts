@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as faceapi from 'face-api.js';
+
 @Component({
   selector: 'app-proctoring-while-test',
   templateUrl: './proctoring-while-test.component.html',
@@ -25,6 +26,10 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
   isForgotten = false;
   loadingModels = false;
   errorMessage = '';
+  
+  // No face detection timeout
+  noFaceDetectedStartTime: number | null = null;
+  NO_FACE_TIMEOUT = 10 * 1000; // 10 seconds
   
   // eyes/face down detection
   lookingDownStartTime: number | null = null;
@@ -132,6 +137,22 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
         
         // Check if face is detected
         this.faceDetected = detections.length > 0;
+        
+        // Handle no face detection timeout
+        if (!this.faceDetected) {
+          if (this.noFaceDetectedStartTime === null) {
+            this.noFaceDetectedStartTime = Date.now();
+          } else {
+            const noFaceDuration = Date.now() - this.noFaceDetectedStartTime;
+            if (noFaceDuration >= this.NO_FACE_TIMEOUT) {
+              this.forgeitTest('No face detected for 10 consecutive seconds');
+              return;
+            }
+          }
+        } else {
+          // Reset no face detection timer
+          this.noFaceDetectedStartTime = null;
+        }
         
         // Handle lighting conditions
         this.handleLightingConditions(video);
@@ -275,6 +296,8 @@ export class ProctoringWhileTestComponent implements OnInit, OnDestroy {
       
       alert(`Test forfeited: ${reason}`);
       // You might want to emit an event here to notify the parent component
+       this.router.navigate(["/quiz-options"]);
+
     }
   }
   

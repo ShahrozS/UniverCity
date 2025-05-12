@@ -51,12 +51,12 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // Option 1: Keep the original path but ensure client uses the same
         registry.addEndpoint("/ws")
-                .setAllowedOrigins("http://localhost:4200", "https://univer-city-ui.vercel.app")
+                .setAllowedOrigins("https://localhost:4200", "https://univer-city-ui.vercel.app")
                 .withSockJS();
 
         // Option 2: Add the path that matches what the client is using
         registry.addEndpoint("/api/v1/ws")
-                .setAllowedOrigins("http://localhost:4200", "https://univer-city-ui.vercel.app")
+                .setAllowedOrigins("https://localhost:4200", "https://univer-city-ui.vercel.app")
                 .withSockJS();
     }
 

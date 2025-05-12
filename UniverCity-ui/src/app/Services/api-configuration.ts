@@ -13,7 +13,7 @@ import { Injectable } from '@angular/core';
 export class ApiConfiguration {
 
   //local
-  rootUrl: string = 'https://localhost:8080/api/v1';
+  rootUrl: string = 'http://localhost:8080/api/v1';
 
   //aws
   // rootUrl: string = 'http://18.208.150.18:8088/api/v1';
