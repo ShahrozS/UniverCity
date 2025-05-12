@@ -83,7 +83,13 @@ application:
       activation-url: https://univer-city-ui.vercel.app/activate-account
 
 server:
-#  ssl:
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: /etc/ssl/UniverCity/keystore.p12
+    key-store-password: UniverCity
+    key-alias: tomcat
+
 #    key-store: classpath:keystore.p12
 #    key-store-password: UniverCity
 #    key-store-type: PKCS12
@@ -99,31 +105,13 @@ server:
     use-native: false
 
 # Management endpoints for health checks
-management:
-  endpoints:
-    web:
-      exposure:
-        include:
-  endpoint:
-    health:
-      show-details: false
-      probes:
-        enabled: true
-      group:
-        readiness:
-          include: db
-        liveness:
-          include: ping
+
 
 # Logging configuration
 logging:
   level:
     root: info
     org.springframework.security: INFO
-    org.springframework.web: INFO
-    org.hibernate: INFO
-    com.shahroz.UniverCity: info
-    org.springframework.jdbc: info
 
 
 

@@ -69,10 +69,10 @@ export class NotificationsComponent implements OnInit, OnDestroy {
     
       
       // Use the correct path that matches your server config
-      let ws = new SockJS(`https://localhost:8080/api/v1/ws`);
+      // let ws = new SockJS(`https://localhost:8080/api/v1/ws`);
       
       // For Prod
-      // let ws = new SockJS('https://univercity-production.up.railway.app/api/v1/ws');
+      let ws = new SockJS('https://16-171-233-30.nip.io:8080/api/v1/ws');
       
       this.socketClient = Stomp.over(ws);
       

@@ -42,7 +42,7 @@ public class EntryTestNotificationScheduler {
         List<University> universities = universityRepository.findAll();
 
         Date currentDate = new Date();
-        System.out.println("Working out");
+//        System.out.println("Working out");
         for (University university : universities) {
 //            System.out.println("Working start " + university.getEntryTestDate());
 
@@ -50,11 +50,11 @@ public class EntryTestNotificationScheduler {
                 long daysLeft = ChronoUnit.DAYS.between(
                         currentDate.toInstant(), university.getEntryTestDate().toInstant()
                 );
-                System.out.println( university.getName()+ ":" + daysLeft);
+//                System.out.println( university.getName()+ ":" + daysLeft);
 
                 if (daysLeft == 7 || daysLeft == 1) { // Notify 7 days and 1 day before
                     for (User user : university.getFavoritedByUsers()) {
-                        System.out.println(user.fullName() + " --> " + university.getName());
+//                        System.out.println(user.fullName() + " --> " + university.getName());
                         notificationService.sendNotification(user, university);
                     }
                 }
