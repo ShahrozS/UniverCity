@@ -82,13 +82,6 @@ button:active {
   transform: translateY(0);
 }
 
-/* Password strength colors */
-.strength-very-weak { color: #ef4444; }
-.strength-weak { color: #f97316; }
-.strength-medium { color: #f59e0b; }
-.strength-strong { color: #84cc16; }
-.strength-very-strong { color: #22c55e; }
-
 /* Card shadow enhancement */
 .shadow-lg {
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
