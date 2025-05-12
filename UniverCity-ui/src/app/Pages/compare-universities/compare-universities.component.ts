@@ -14,6 +14,8 @@ export class CompareUniversitiesComponent implements OnInit{
 
   }
 
+  
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.university1 = JSON.parse(params['university1']);
