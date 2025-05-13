@@ -11,18 +11,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ApiConfiguration {
-
-  //local
-  // rootUrl: string = 'http://localhost:8080/api/v1';
-
-  //aws
-  rootUrl: string = 'https://100-27-117-114.nip.io:8080/api/v1';
-  
-
-  //railway
-  // rootUrl: string = 'https://univercity-production.up.railway.app/api/v1';
-  
-
+  rootUrl: string = 'http://localhost:8080/api/v1';
 }
 
 /**

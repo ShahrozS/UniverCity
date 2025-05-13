@@ -2,6 +2,7 @@ package com.shahroz.UniverCity.University;
 
 
 import com.shahroz.UniverCity.Entities.Facility;
+import com.shahroz.UniverCity.Entities.Program;
 import com.shahroz.UniverCity.Repositories.FacilityRepository;
 import com.shahroz.UniverCity.Repositories.UniversityRepository;
 import com.shahroz.UniverCity.Utility.PageResponse;
@@ -110,5 +111,10 @@ public class UniversityService {
         return universityLocations.get(0);
     }
 
+
+    public List<Program>  getUniversityPrograms(Long id){
+        List<Program>  programs = repository.getProgramsByUniversityId(id);
+        return programs;
+    }
 
 }

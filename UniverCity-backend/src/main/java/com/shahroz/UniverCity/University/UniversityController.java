@@ -2,6 +2,7 @@ package com.shahroz.UniverCity.University;
 
 
 import com.shahroz.UniverCity.Entities.Facility;
+import com.shahroz.UniverCity.Entities.Program;
 import com.shahroz.UniverCity.University.universityFilter.UniversityFilter;
 import com.shahroz.UniverCity.University.universityFilter.UniversityFilterService;
 import com.shahroz.UniverCity.Utility.PageResponse;
@@ -72,4 +73,9 @@ public class UniversityController {
         return ResponseEntity.ok(service.getUniversityLocation(id));
     }
 
+
+    @GetMapping("/getUniversityPrograms/{university-id}")
+    public ResponseEntity<List<Program>> getProgramsByUniversity(@PathVariable("university-id") Long id){
+        return ResponseEntity.ok(service.getUniversityPrograms(id));
+    }
 }

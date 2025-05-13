@@ -78,26 +78,24 @@
           </div>
         </div>
 
-        <!-- Programs Offered (Optional additional section) -->
+        <!-- Programs Offered (Dynamic Section) -->
         <div class="mb-6">
           <h2 class="text-xl font-bold text-gray-800 mb-3">Programs Offered</h2>
           <div class="bg-white border border-gray-200 rounded p-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
-              <div class="p-2 border-l-4 border-blue-500 bg-gray-50">
-                <p class="font-medium">Computer Science</p>
-                <p class="text-sm text-gray-600">Undergraduate & Graduate</p>
-              </div>
-              <div class="p-2 border-l-4 border-blue-500 bg-gray-50">
-                <p class="font-medium">Business Administration</p>
-                <p class="text-sm text-gray-600">Undergraduate & MBA</p>
-              </div>
-              <div class="p-2 border-l-4 border-blue-500 bg-gray-50">
-                <p class="font-medium">Engineering</p>
-                <p class="text-sm text-gray-600">Multiple Disciplines</p>
-              </div>
-              <div class="p-2 border-l-4 border-blue-500 bg-gray-50">
-                <p class="font-medium">Health Sciences</p>
-                <p class="text-sm text-gray-600">Various Programs</p>
+            <!-- Loading indicator -->
+            <div *ngIf="isLoadingPrograms" class="flex justify-center py-4">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+            </div>
+            
+            <!-- No programs message -->
+            <div *ngIf="!isLoadingPrograms && programs.length === 0" class="text-center py-4 text-gray-500">
+              No programs available for this university.
+            </div>
+            
+            <!-- Programs grid -->
+            <div *ngIf="!isLoadingPrograms && programs.length > 0" class="grid grid-cols-1 md:grid-cols-2 gap-2">
+              <div *ngFor="let program of programs" class="p-2 border-l-4 border-blue-500 bg-gray-50">
+                <p class="font-medium">{{ program.name }}</p>
               </div>
             </div>
           </div>
@@ -106,21 +104,15 @@
 
       <!-- Right Column: Reviews and Map -->
       <div class="lg:col-span-1">
-        <!-- Reviews Section -->
-   
-
         <!-- Location/Map Placeholder -->
         <app-university-location
         [latitude]="universityLocation.latitude!"
         [longitude]="universityLocation.longitude!"
         [zoom]="13"
         >
-
         </app-university-location>
-
       </div>
     </div>
-
 
     <app-reviews
     [universityId]="university.id!"

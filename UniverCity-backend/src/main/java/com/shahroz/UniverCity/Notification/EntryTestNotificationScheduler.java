@@ -33,7 +33,7 @@ public class EntryTestNotificationScheduler {
 
 
 //    @Scheduled(cron = "0 0 12 * * ?")
-//    @Scheduled(cron = "*/10 * * * * *")
+    @Scheduled(cron = "*/10 * * * * *")
     @Transactional// Runs daily at noon
     public void sendEntryTestNotifications() throws MessagingException {
 
@@ -50,7 +50,7 @@ public class EntryTestNotificationScheduler {
                 long daysLeft = ChronoUnit.DAYS.between(
                         currentDate.toInstant(), university.getEntryTestDate().toInstant()
                 );
-//                System.out.println( university.getName()+ ":" + daysLeft);
+                System.out.println( university.getName()+ ":" + daysLeft);
 
                 if (daysLeft == 7 || daysLeft == 1) { // Notify 7 days and 1 day before
                     for (User user : university.getFavoritedByUsers()) {

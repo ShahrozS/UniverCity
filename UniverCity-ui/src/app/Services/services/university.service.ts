@@ -20,9 +20,12 @@ import { findUniversityById } from '../fn/university/find-university-by-id';
 import { FindUniversityById$Params } from '../fn/university/find-university-by-id';
 import { getFacilitiesByUniversity } from '../fn/university/get-facilities-by-university';
 import { GetFacilitiesByUniversity$Params } from '../fn/university/get-facilities-by-university';
+import { getProgramsByUniversity } from '../fn/university/get-programs-by-university';
+import { GetProgramsByUniversity$Params } from '../fn/university/get-programs-by-university';
 import { getUniversityLocation } from '../fn/university/get-university-location';
 import { GetUniversityLocation$Params } from '../fn/university/get-university-location';
 import { PageResponseUniversityResponse } from '../models/page-response-university-response';
+import { Program } from '../models/program';
 import { saveUniversity } from '../fn/university/save-university';
 import { SaveUniversity$Params } from '../fn/university/save-university';
 import { searchUniversities } from '../fn/university/search-universities';
@@ -134,6 +137,31 @@ export class UniversityService extends BaseService {
   searchUniversities(params: SearchUniversities$Params, context?: HttpContext): Observable<Array<University>> {
     return this.searchUniversities$Response(params, context).pipe(
       map((r: StrictHttpResponse<Array<University>>): Array<University> => r.body)
+    );
+  }
+
+  /** Path part for operation `getProgramsByUniversity()` */
+  static readonly GetProgramsByUniversityPath = '/university/getUniversityPrograms/{university-id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `getProgramsByUniversity()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getProgramsByUniversity$Response(params: GetProgramsByUniversity$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<Program>>> {
+    return getProgramsByUniversity(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `getProgramsByUniversity$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  getProgramsByUniversity(params: GetProgramsByUniversity$Params, context?: HttpContext): Observable<Array<Program>> {
+    return this.getProgramsByUniversity$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<Program>>): Array<Program> => r.body)
     );
   }
 

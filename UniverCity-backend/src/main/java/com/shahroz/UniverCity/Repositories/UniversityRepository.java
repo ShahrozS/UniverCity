@@ -1,5 +1,6 @@
 package com.shahroz.UniverCity.Repositories;
 
+import com.shahroz.UniverCity.Entities.Program;
 import com.shahroz.UniverCity.University.University;
 import com.shahroz.UniverCity.University.UniversityLocation;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,5 +21,9 @@ public interface UniversityRepository   extends JpaRepository<University, Long> 
 
     @Query("SELECT u.universityLocations FROM University u WHERE u.id = :id")
     List<UniversityLocation> getUniversityLocationsById(@Param("id") Long id);
+
+
+    @Query("SELECT u.programs FROM University u WHERE u.id = :id")
+    List<Program> getProgramsByUniversityId(@Param("id") Long id);
 
 }
