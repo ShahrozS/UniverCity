@@ -4,9 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum EmailTemplateName {
-
-    ACTIVATE_ACCOUNT("activate_account");
-
+    ACTIVATE_ACCOUNT("activate_account");  // Match your actual file name
 
     private final String name;
     EmailTemplateName(String name) {
