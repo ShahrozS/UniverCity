@@ -20,8 +20,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
-     private final JwtFilter jwtAuthFilter;
-   private final AuthenticationProvider authenticationProvider;
+    private final JwtFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -44,9 +44,9 @@ public class SecurityConfig {
                                         "/swagger-ui.html",
                                         "/ws/**"
                                 )
-                                    .permitAll()
+                                .permitAll()
                                 .anyRequest()
-                                    .authenticated()
+                                .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
