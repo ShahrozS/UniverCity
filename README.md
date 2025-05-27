@@ -1,6 +1,5 @@
-![image](https://github.com/user-attachments/assets/499fb1b2-2a25-4f7f-bae3-40089c15873b)![image](https://github.com/user-attachments/assets/08d0db04-02f2-4526-846c-d351f2309553)# Save the README content to a .md file
 
-readme_content = """
+
 # UniverCity
 
 A full-stack web application developed as a **Final Year Project at FAST University**, designed to help **high school graduates** make informed decisions when choosing from **160+ universities** across the country.
